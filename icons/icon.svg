@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="45%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="35%" stop-color="#f59e0b"/>
+      <stop offset="70%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <!-- Dome Body Gradient -->
+    <linearGradient id="domeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="40%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+
+    <!-- Inner Glow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Base Circle Background with Islamic Border Ring -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Decorative Ring -->
+  <circle cx="256" cy="256" r="236" fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-dasharray="14 8" opacity="0.4"/>
+  <circle cx="256" cy="256" r="226" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+
+  <!-- Stars / Sparkles in Sky -->
+  <g fill="#fef08a" opacity="0.75">
+    <circle cx="100" cy="110" r="3" />
+    <circle cx="140" cy="80" r="2" />
+    <circle cx="380" cy="95" r="3.5" />
+    <circle cx="420" cy="130" r="2" />
+    <circle cx="85" cy="210" r="2.5" />
+    <circle cx="430" cy="220" r="2.5" />
+    <!-- 8-pointed Islamic Star left -->
+    <path d="M120 150 L123 158 L131 161 L123 164 L120 172 L117 164 L109 161 L117 158 Z" fill="url(#goldGrad)" opacity="0.6"/>
+    <!-- 8-pointed Islamic Star right -->
+    <path d="M390 160 L393 168 L401 171 L393 174 L390 182 L387 174 L379 171 L387 168 Z" fill="url(#goldGrad)" opacity="0.6"/>
+  </g>
+
+  <!-- Mosque Building & Dome Silhouette Shadow -->
+  <g filter="url(#shadowFilter)">
+    
+    <!-- Mosque Base Wall / Building Body -->
+    <path d="M 116 350 L 396 350 L 396 385 C 396 395 388 402 376 402 L 136 402 C 124 402 116 395 116 385 Z" fill="#064e3b" stroke="url(#goldGrad)" stroke-width="3"/>
+    
+    <!-- Mosque Lower Columns & Archways -->
+    <!-- Center Arch -->
+    <path d="M 226 402 L 226 350 C 226 332 256 322 256 322 C 256 322 286 332 286 350 L 286 402 Z" fill="#022c22" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    <!-- Left Arch -->
+    <path d="M 156 402 L 156 360 C 156 348 176 342 176 342 C 176 342 196 348 196 360 L 196 402 Z" fill="#022c22" stroke="url(#goldGrad)" stroke-width="2"/>
+    <!-- Right Arch -->
+    <path d="M 316 402 L 316 360 C 316 348 336 342 336 342 C 336 342 356 348 356 360 L 356 402 Z" fill="#022c22" stroke="url(#goldGrad)" stroke-width="2"/>
+
+    <!-- Dome Drum / Neck Base -->
+    <rect x="156" y="315" width="200" height="35" rx="6" fill="#047857" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    
+    <!-- Dome Windows on Drum -->
+    <rect x="176" y="323" width="16" height="20" rx="8" fill="#fef08a" opacity="0.8"/>
+    <rect x="216" y="323" width="16" height="20" rx="8" fill="#fef08a" opacity="0.8"/>
+    <rect x="248" y="323" width="16" height="20" rx="8" fill="#fef08a" opacity="0.9"/>
+    <rect x="280" y="323" width="16" height="20" rx="8" fill="#fef08a" opacity="0.8"/>
+    <rect x="320" y="323" width="16" height="20" rx="8" fill="#fef08a" opacity="0.8"/>
+
+    <!-- GRAND ISLAMIC DOME (KUBAH MASJID) -->
+    <!-- Smooth authentic pointed onion dome curve -->
+    <path d="M 146 315 C 146 220 220 185 256 128 C 292 185 366 220 366 315 Z" 
+          fill="url(#domeGrad)" 
+          stroke="url(#goldGrad)" 
+          stroke-width="5"/>
+
+    <!-- Decorative Gold Ribs / Segments on Dome -->
+    <path d="M 256 128 C 240 195 210 250 200 315" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.75"/>
+    <path d="M 256 128 C 272 195 302 250 312 315" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.75"/>
+    <path d="M 256 128 L 256 315" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+
+    <!-- Side Minarets (Menara Kecil Kiri & Kanan) -->
+    <!-- Left Minaret -->
+    <rect x="96" y="270" width="20" height="132" rx="4" fill="#065f46" stroke="url(#goldGrad)" stroke-width="2"/>
+    <polygon points="106,236 94,270 118,270" fill="url(#goldGrad)"/>
+    <circle cx="106" cy="232" r="3" fill="#fef08a"/>
+    <!-- Right Minaret -->
+    <rect x="396" y="270" width="20" height="132" rx="4" fill="#065f46" stroke="url(#goldGrad)" stroke-width="2"/>
+    <polygon points="406,236 394,270 418,270" fill="url(#goldGrad)"/>
+    <circle cx="406" cy="232" r="3" fill="#fef08a"/>
+
+    <!-- Pinnacle Spire & Crescent Moon (Bulan Sabit Hilal Emas) -->
+    <!-- Spire Pole -->
+    <line x1="256" y1="128" x2="256" y2="70" stroke="url(#goldGrad)" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="256" cy="98" r="6" fill="url(#goldGrad)"/>
+    <circle cx="256" cy="80" r="4.5" fill="url(#goldGrad)"/>
+    
+    <!-- Crescent Moon (Hilal) -->
+    <path d="M 256 50 C 242 50 232 62 234 76 C 235 88 245 98 259 98 C 253 94 249 86 249 78 C 249 68 254 58 266 54 C 263 51 259.5 50 256 50 Z" 
+          fill="url(#goldGrad)" 
+          filter="url(#goldGlow)"/>
+  </g>
+
+  <!-- Typography Ribbon / Emblem: "KAS MUSHOLA" -->
+  <g filter="url(#shadowFilter)">
+    <!-- Badge Background Banner -->
+    <rect x="96" y="420" width="320" height="52" rx="26" fill="#022c22" stroke="url(#goldGrad)" stroke-width="3"/>
+    
+    <!-- Small Coin / Wallet Accent on Banner -->
+    <circle cx="132" cy="446" r="14" fill="url(#goldGrad)"/>
+    <text x="132" y="451" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="14" fill="#022c22" text-anchor="middle">Rp</text>
+    
+    <!-- Text: KAS MUSHOLA -->
+    <text x="265" y="454" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="800" font-size="22" letter-spacing="2" fill="url(#goldGrad)" text-anchor="middle">
+      KAS MUSHOLA
+    </text>
+
+    <!-- Star right -->
+    <circle cx="395" cy="446" r="4" fill="#fef08a"/>
+  </g>
+</svg>

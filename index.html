@@ -6,7 +6,16 @@
   <title>Kas Mushola Pasar - Real-time & Transparan</title>
   <meta name="description" content="Sistem Administrasi Kas Mushola Pasar Real-time & Transparan untuk Jamaah, Pedagang, dan Pengurus DKM.">
   <meta name="theme-color" content="#047857">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20100%22><text y=%22.9em%22 font-size=%2290%22>🕌</text></svg>">
+  
+  <!-- PWA Meta & Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kas Mushola">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -82,7 +91,7 @@
         background: white !important;
         color: black !important;
       }
-      .no-print, header, nav, #fab-add-btn, #toast, .modal, #connection-banner {
+      .no-print, header, nav, #fab-add-btn, #toast, .modal, #connection-banner, #pwa-install-banner {
         display: none !important;
       }
       #main-container {
@@ -116,15 +125,36 @@
     </div>
   </div>
 
+  <!-- ==================== PWA INSTALL PROMPT BANNER ==================== -->
+  <div id="pwa-install-banner" class="hidden bg-gradient-to-r from-emerald-900 to-mosque-800 text-white text-xs py-2 px-4 shadow-md z-40 relative border-b border-emerald-600/40">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <img src="icons/icon.svg" alt="Kas Mushola" class="w-7 h-7 rounded-lg shadow-sm">
+        <div>
+          <span class="font-bold block text-[11px] md:text-xs">Pasang Aplikasi Kas Mushola</span>
+          <span class="text-[10px] text-emerald-200 block">Akses cepat & offline langsung dari layar utama HP</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="window.app.installPwa()" class="bg-gold-500 hover:bg-gold-600 active:scale-95 text-amber-950 font-bold px-3 py-1.5 rounded-xl text-[11px] shadow transition">
+          Install App
+        </button>
+        <button onclick="document.getElementById('pwa-install-banner').classList.add('hidden')" class="text-white/70 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== DEMO / STATUS BANNER ==================== -->
-  <div id="connection-banner" class="hidden bg-amber-500 text-amber-950 text-xs py-1.5 px-4 font-medium text-center flex items-center justify-center gap-2 shadow-sm transition-all z-40 relative">
+  <div id="connection-banner" class="hidden bg-amber-500 text-amber-950 text-xs py-1.5 px-4 font-medium text-center flex items-center justify-center gap-2 shadow-sm transition-all z-30 relative">
     <i class="fa-solid fa-store text-sm"></i>
     <span id="connection-status-text">Mode Demo Lokal aktif (Data tersimpan di browser). Klik untuk konfigurasi Firebase.</span>
     <button onclick="window.app.openFirebaseConfigModal()" class="underline font-bold hover:text-white transition ml-1">Setup Firebase</button>
   </div>
 
   <!-- ==================== RESPONSIVE MAIN CONTAINER (MOBILE, TABLET, DESKTOP) ==================== -->
-  <div id="main-container" class="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-screen bg-slate-50 md:my-4 md:rounded-3xl shadow-2xl relative overflow-hidden">
+  <div id="main-container" class="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-screen bg-slate-50 md:my-3 md:rounded-3xl shadow-2xl relative overflow-hidden">
 
     <!-- ==================== APP HEADER ==================== -->
     <header class="bg-gradient-to-r from-mosque-800 via-mosque-700 to-mosque-800 text-white px-4 py-3.5 md:px-6 md:py-4 sticky top-0 z-30 shadow-md">
@@ -132,9 +162,7 @@
         
         <!-- Logo & Nama Mushola Pasar -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center shadow-inner text-emerald-300 text-xl md:text-2xl flex-shrink-0">
-            <i class="fa-solid fa-mosque"></i>
-          </div>
+          <img src="icons/icon.svg" alt="Logo Kas Mushola" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl shadow-md border border-white/20 flex-shrink-0 object-contain bg-emerald-950/40 p-0.5">
           <div>
             <div class="flex items-center gap-2">
               <h1 id="header-nama-masjid" class="text-base md:text-lg font-extrabold tracking-tight leading-tight line-clamp-1">Mushola Al-Barokah Pasar Besar</h1>
@@ -147,7 +175,7 @@
           </div>
         </div>
 
-        <!-- Desktop & Tablet Top Navigation Tabs (Hidden on mobile) -->
+        <!-- Desktop & Tablet Top Navigation Tabs -->
         <nav class="hidden md:flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 backdrop-blur-md">
           <button id="top-nav-btn-beranda" onclick="window.app.switchTab('beranda')" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-white text-mosque-800 shadow-sm transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-house-chimney text-xs"></i>
@@ -158,8 +186,8 @@
             <span>Laporan</span>
           </button>
           <button id="top-nav-btn-profil" onclick="window.app.switchTab('profil')" class="px-4 py-1.5 rounded-xl text-xs font-semibold text-emerald-100 hover:text-white hover:bg-white/10 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-store text-xs"></i>
-            <span>Profil Mushola</span>
+            <i class="fa-solid fa-users text-xs"></i>
+            <span>Profil & Pengurus</span>
           </button>
           <button id="top-nav-btn-pengaturan" onclick="window.app.switchTab('pengaturan')" class="hidden px-4 py-1.5 rounded-xl text-xs font-semibold text-emerald-100 hover:text-white hover:bg-white/10 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-sliders text-xs"></i>
@@ -169,7 +197,12 @@
 
         <!-- Action Buttons (Admin & Catat Transaksi) -->
         <div class="flex items-center gap-2">
-          <!-- Desktop Quick Add Button (hanya saat mode admin aktif) -->
+          <!-- Install Icon Button (jika tersedia prompt) -->
+          <button id="btn-header-install" onclick="window.app.installPwa()" title="Install Aplikasi Kas" class="hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gold-400 text-xs active:scale-95 transition">
+            <i class="fa-solid fa-download"></i>
+          </button>
+
+          <!-- Desktop Quick Add Button -->
           <button id="header-desktop-add-btn" onclick="window.app.openAddTransactionModal()" class="hidden md:hidden px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-white shadow-md active:scale-95 transition items-center gap-1.5">
             <i class="fa-solid fa-plus"></i>
             <span>Catat Kas</span>
@@ -195,7 +228,7 @@
       </div>
     </header>
 
-    <!-- PRINT HEADER (Hanya muncul saat dicetak ke PDF/Kertas) -->
+    <!-- PRINT HEADER -->
     <div class="print-only p-6 border-b-2 border-slate-800 text-center">
       <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-BAROKAH PASAR BESAR</h2>
       <p id="print-alamat-masjid" class="text-sm text-slate-600">Laporan Kas & Transparansi Dana Umat</p>
@@ -210,10 +243,9 @@
       <!-- ============================================================ -->
       <section id="view-beranda" class="space-y-5">
 
-        <!-- Grid Container: 1 Col di Mobile, 12 Col di Desktop/Tablet -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           
-          <!-- LEFT / MAIN COLUMN (Hero Card, Summary, Transaksi) -->
+          <!-- LEFT / MAIN COLUMN -->
           <div class="lg:col-span-7 xl:col-span-8 space-y-4">
             
             <!-- 1. HERO BALANCE CARD -->
@@ -232,7 +264,6 @@
                   </span>
                 </div>
 
-                <!-- Nominal Saldo -->
                 <div class="text-3xl md:text-4xl font-extrabold tracking-tight my-2 text-white flex items-baseline gap-1">
                   <span id="total-saldo-display">Rp 0</span>
                 </div>
@@ -241,7 +272,6 @@
                   Amanah infaq pedagang, pembeli, dan jamaah pasar yang dikelola secara transparan dan bertanggung jawab.
                 </p>
 
-                <!-- Quick Action Buttons -->
                 <div class="pt-3 border-t border-emerald-600/50 flex flex-wrap items-center gap-2.5">
                   <button onclick="window.app.openQrisModal()" class="bg-gold-500 hover:bg-gold-600 active:scale-95 text-amber-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all duration-200">
                     <i class="fa-solid fa-qrcode text-sm"></i>
@@ -261,7 +291,6 @@
 
             <!-- 2. MONTHLY SUMMARY CARDS (IN & OUT) -->
             <div class="grid grid-cols-2 gap-3.5">
-              <!-- Pemasukan Bulan Ini -->
               <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-emerald-200 transition">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">Masuk Bulan Ini</span>
@@ -275,7 +304,6 @@
                 </div>
               </div>
 
-              <!-- Pengeluaran Bulan Ini -->
               <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-rose-200 transition">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">Keluar Bulan Ini</span>
@@ -303,7 +331,6 @@
                 </button>
               </div>
 
-              <!-- List Container -->
               <div id="recent-transactions-list" class="space-y-2.5">
                 <div class="text-center py-8 text-slate-400 text-xs flex flex-col items-center gap-2">
                   <div class="w-6 h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
@@ -314,7 +341,7 @@
 
           </div>
 
-          <!-- RIGHT / SIDEBAR COLUMN (Grafik, Infaq QRIS Box, Info Mushola Pasar) -->
+          <!-- RIGHT / SIDEBAR COLUMN -->
           <div class="lg:col-span-5 xl:col-span-4 space-y-4">
             
             <!-- 1. GRAFIK PERBANDINGAN CHART.JS -->
@@ -327,14 +354,12 @@
                 <span class="text-[10px] font-semibold text-mosque-700 bg-mosque-50 px-2.5 py-0.5 rounded-full" id="chart-month-label">Bulan Ini</span>
               </div>
 
-              <!-- Canvas Container -->
               <div class="relative flex items-center justify-center py-2">
                 <div class="w-44 h-44 relative">
                   <canvas id="cashflowChart"></canvas>
                 </div>
               </div>
 
-              <!-- Legend Box -->
               <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 text-center">
                 <div class="bg-emerald-50/60 rounded-xl p-2.5">
                   <span class="text-[10px] text-emerald-800 font-medium block">Pemasukan</span>
@@ -347,7 +372,7 @@
               </div>
             </div>
 
-            <!-- 2. QRIS QUICK CARD (DESKTOP / SIDE PANEL) -->
+            <!-- 2. QRIS QUICK CARD -->
             <div class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white rounded-2xl p-4 md:p-5 shadow-sm space-y-3 relative overflow-hidden">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -393,11 +418,10 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 2: LAPORAN LENGKAP (RESPONSIVE TABLE / CARDS)             -->
+      <!-- TAB 2: LAPORAN LENGKAP                                        -->
       <!-- ============================================================ -->
       <section id="view-laporan" class="hidden space-y-4">
         
-        <!-- Header & Action Tools -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div>
             <h2 class="text-base md:text-lg font-bold text-slate-800">Laporan Kas Mushola Pasar</h2>
@@ -411,10 +435,8 @@
           </div>
         </div>
 
-        <!-- Filter Controls (Responsive Toolbar) -->
+        <!-- Filter Controls -->
         <div class="no-print grid grid-cols-1 sm:grid-cols-12 gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
-          
-          <!-- Filter Jenis (Semua / Masuk / Keluar) -->
           <div class="sm:col-span-5 flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
             <button id="filter-btn-semua" onclick="window.app.setFilterType('semua')" class="flex-1 py-1.5 rounded-lg bg-white text-mosque-700 shadow-sm transition-all duration-200 text-center font-bold">
               Semua
@@ -427,22 +449,18 @@
             </button>
           </div>
 
-          <!-- Search Box -->
           <div class="sm:col-span-4 relative">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
             <input type="text" id="filter-search-input" oninput="window.app.renderLaporan()" placeholder="Cari keterangan/kategori..." class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600 transition">
           </div>
 
-          <!-- Filter Month Dropdown -->
           <div class="sm:col-span-3">
             <select id="filter-month-select" onchange="window.app.renderLaporan()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600">
               <option value="all">Semua Bulan</option>
             </select>
           </div>
-
         </div>
 
-        <!-- Filter Summary Box -->
         <div class="bg-emerald-900/5 border border-emerald-900/10 rounded-2xl p-3.5 flex items-center justify-between text-xs">
           <div>
             <span class="text-slate-500 text-[11px] block">Total Kas Sesuai Filter</span>
@@ -454,7 +472,6 @@
           </div>
         </div>
 
-        <!-- All Transactions List -->
         <div id="full-transactions-list" class="space-y-2.5">
           <!-- Dynamically populated -->
         </div>
@@ -462,7 +479,7 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 3: PROFIL MUSHOLA & PENGURUS (RESPONSIVE 2-COL)          -->
+      <!-- TAB 3: PROFIL MUSHOLA & SUSUNAN PENGURUS (DENGAN FOTO)        -->
       <!-- ============================================================ -->
       <section id="view-profil" class="hidden space-y-5">
 
@@ -471,10 +488,9 @@
           <!-- LEFT COL: Profil Mushola Pasar & Rekening -->
           <div class="space-y-4">
             
-            <!-- Identitas Mushola -->
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
-              <div class="w-20 h-20 rounded-full bg-mosque-50 border-4 border-mosque-100 flex items-center justify-center text-3xl text-mosque-700 mx-auto shadow-inner mb-3">
-                <i class="fa-solid fa-mosque"></i>
+              <div class="w-20 h-20 rounded-full mx-auto mb-3 p-1 border-4 border-mosque-100 bg-white shadow-inner flex items-center justify-center">
+                <img src="icons/icon.svg" alt="Logo Mushola" class="w-full h-full object-contain rounded-full">
               </div>
               <h2 id="profil-nama-masjid" class="text-xl font-black text-slate-800 tracking-tight">Mushola Al-Barokah Pasar Besar</h2>
               <p id="profil-alamat-masjid" class="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional</p>
@@ -491,7 +507,6 @@
               </div>
             </div>
 
-            <!-- Rekening Card -->
             <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-gold-400 text-lg flex-shrink-0">
@@ -507,30 +522,30 @@
               </button>
             </div>
 
-            <!-- Nilai Transparansi Mushola Pasar -->
             <div class="bg-mosque-50 border border-mosque-200/60 rounded-2xl p-4 text-xs text-mosque-900 space-y-1.5">
               <div class="font-bold flex items-center gap-1.5 text-mosque-800">
                 <i class="fa-solid fa-scale-balanced text-sm"></i>
                 <span>Komitmen Kas Terbuka & Bersih</span>
               </div>
               <p class="text-[11px] leading-relaxed text-mosque-800/90">
-                Mushola Pasar adalah sarana ibadah bersama bagi para pedagang dan pengunjung. Setiap rupiah infaq kotak amal maupun donasi dicatat secara real-time untuk operasional, kebersihan, dan bisaroh petugas mushola.
+                Mushola Pasar adalah sarana ibadah bersama bagi para pedagang dan pengunjung. Setiap rupiah infaq dicatat secara real-time untuk operasional, kebersihan, dan bisaroh petugas mushola.
               </p>
             </div>
 
           </div>
 
-          <!-- RIGHT COL: Susunan Pengurus DKM Mushola -->
+          <!-- RIGHT COL: Susunan Pengurus DKM Mushola dengan Foto Menarik -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-4 bg-mosque-600 rounded-full"></div>
                 <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider">Susunan Pengurus Mushola Pasar</h3>
               </div>
-              <span class="text-[10px] text-slate-400">Pengelola Amanah</span>
+              <span class="text-[10px] text-slate-400 font-medium">Pengelola Amanah</span>
             </div>
 
-            <div id="pengurus-list-container" class="space-y-2">
+            <!-- Grid Kartu Pengurus Menarik -->
+            <div id="pengurus-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <!-- Dynamically populated -->
             </div>
           </div>
@@ -540,14 +555,14 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 4: PENGATURAN (KHUSUS ADMIN / RESPONSIVE GRID)           -->
+      <!-- TAB 4: PENGATURAN (KHUSUS ADMIN / UPLOAD FOTO PENGURUS)      -->
       <!-- ============================================================ -->
       <section id="view-pengaturan" class="hidden space-y-5">
         
         <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div>
             <h2 class="text-base md:text-lg font-bold text-slate-800">Pengaturan DKM Mushola</h2>
-            <p class="text-xs text-slate-500">Kelola identitas mushola, susunan pengurus, dan kategori kustom dinamis.</p>
+            <p class="text-xs text-slate-500">Kelola identitas, upload foto pengurus, dan kategori dinamis.</p>
           </div>
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
             Mode Pengurus
@@ -626,7 +641,7 @@
                 <span id="firebase-active-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Local/Demo</span>
               </div>
               <p class="text-[11px] text-slate-500 leading-relaxed">
-                Sinkronisasikan database kas mushola secara gratis ke Google Firebase Firestore agar data tersimpan di awan secara aman dan real-time.
+                Sinkronisasikan database kas mushola secara gratis ke Google Firebase Firestore agar data tersimpan di cloud secara aman dan real-time.
               </p>
               <button onclick="window.app.openFirebaseConfigModal()" class="w-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-800 font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-2 transition">
                 <i class="fa-solid fa-gear"></i>
@@ -636,10 +651,66 @@
 
           </div>
 
-          <!-- RIGHT COL: Manajemen Kategori Dinamis & Susunan Pengurus -->
+          <!-- RIGHT COL: Upload Foto Pengurus & Kategori Dinamis -->
           <div class="space-y-5">
             
-            <!-- 1. MANAJEMEN KATEGORI DINAMIS (CUSTOM KATEGORI) -->
+            <!-- 1. MANAJEMEN SUSUNAN PENGURUS & UPLOAD FOTO (DENGAN AUTO-KOMPRESI) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-users-gear text-mosque-600 text-sm"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pengurus & Foto Profil</h3>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">
+                  Auto Kompresi Canvas
+                </span>
+              </div>
+
+              <!-- Form Tambah Pengurus Baru dengan Upload Foto -->
+              <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-3">
+                <span class="text-xs font-bold text-slate-700 block">Tambah Pengurus & Foto</span>
+                
+                <div class="flex items-center gap-3">
+                  <!-- Avatar Picker & Preview -->
+                  <div class="relative flex-shrink-0">
+                    <div id="new-pengurus-photo-preview" class="w-14 h-14 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center text-emerald-700 overflow-hidden shadow-sm">
+                      <i class="fa-solid fa-user text-xl"></i>
+                    </div>
+                    <label for="new-pengurus-foto-input" class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-mosque-700 hover:bg-mosque-800 text-white flex items-center justify-center text-[10px] shadow cursor-pointer active:scale-90 transition">
+                      <i class="fa-solid fa-camera"></i>
+                    </label>
+                    <input type="file" id="new-pengurus-foto-input" accept="image/*" onchange="window.app.handleNewPengurusPhoto(this)" class="hidden">
+                  </div>
+                  <div class="text-[11px] text-slate-500 flex-1 leading-tight">
+                    <span class="font-semibold text-slate-700 block">Upload Foto Pengurus</span>
+                    <span id="new-photo-compression-info" class="text-[10px] text-slate-400 block mt-0.5">Otomatis dikompres ringan (~25 KB)</span>
+                    <button type="button" id="btn-cancel-new-photo" onclick="window.app.clearNewPengurusPhoto()" class="hidden text-[10px] text-rose-500 underline mt-0.5">Hapus Pilihan</button>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <input type="text" id="new-pengurus-nama" placeholder="Nama Lengkap" class="bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  <input type="text" id="new-pengurus-jabatan" placeholder="Jabatan (e.g. Bendahara)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                </div>
+                <button onclick="window.app.addPengurus()" class="w-full bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm">
+                  <i class="fa-solid fa-user-plus text-[10px]"></i>
+                  <span>Simpan Pengurus Baru</span>
+                </button>
+              </div>
+
+              <!-- List Pengurus untuk Edit/Ganti Foto/Hapus -->
+              <div class="pt-1">
+                <span class="text-[11px] font-semibold text-slate-500 block mb-1.5">Daftar Pengurus Terdaftar:</span>
+                <div id="settings-pengurus-list" class="space-y-2 max-h-60 overflow-y-auto">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Hidden input for replacing photo of existing pengurus -->
+              <input type="file" id="replace-pengurus-foto-input" accept="image/*" onchange="window.app.handleReplacePengurusPhoto(this)" class="hidden">
+            </div>
+
+            <!-- 2. MANAJEMEN KATEGORI DINAMIS -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2">
@@ -651,7 +722,6 @@
                 </button>
               </div>
 
-              <!-- Switcher Kategori Pengeluaran vs Pemasukan -->
               <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
                 <button id="cat-tab-keluar" onclick="window.app.switchCategoryTab('keluar')" class="flex-1 py-1.5 rounded-lg bg-white text-rose-600 shadow-sm transition font-bold flex items-center justify-center gap-1">
                   <i class="fa-solid fa-circle-arrow-up text-[10px]"></i> Pengeluaran (Bisaroh dll)
@@ -661,7 +731,6 @@
                 </button>
               </div>
 
-              <!-- Form Tambah Kategori Baru -->
               <div class="flex gap-2">
                 <input type="text" id="new-category-name" placeholder="Tambah kategori baru..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
                 <button onclick="window.app.addCustomCategory()" class="bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-sm transition flex-shrink-0">
@@ -670,40 +739,11 @@
                 </button>
               </div>
 
-              <!-- Active Categories List (Chips with delete button) -->
               <div class="space-y-1.5 pt-1">
                 <span class="text-[11px] font-semibold text-slate-500 block">Daftar Kategori Saat Ini:</span>
                 <div id="custom-categories-list" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
                   <!-- Dynamically populated -->
                 </div>
-              </div>
-            </div>
-
-            <!-- 2. Manajemen Susunan Pengurus -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
-              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                <div class="flex items-center gap-2">
-                  <i class="fa-solid fa-users-gear text-mosque-600 text-sm"></i>
-                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Susunan Pengurus Mushola</h3>
-                </div>
-              </div>
-
-              <!-- Form Tambah Pengurus Baru -->
-              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-2">
-                <span class="text-[11px] font-bold text-slate-700 block">Tambah Pengurus / Petugas Baru</span>
-                <div class="grid grid-cols-2 gap-2">
-                  <input type="text" id="new-pengurus-nama" placeholder="Nama Lengkap" class="bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
-                  <input type="text" id="new-pengurus-jabatan" placeholder="Jabatan (e.g. Bendahara)" class="bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
-                </div>
-                <button onclick="window.app.addPengurus()" class="w-full bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-semibold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1 transition">
-                  <i class="fa-solid fa-user-plus text-[10px]"></i>
-                  <span>Tambahkan Pengurus</span>
-                </button>
-              </div>
-
-              <!-- List Pengurus untuk Edit/Hapus -->
-              <div id="settings-pengurus-list" class="space-y-2 pt-1 max-h-56 overflow-y-auto">
-                <!-- Dynamically populated -->
               </div>
             </div>
 
@@ -735,8 +775,8 @@
         </button>
 
         <button id="nav-btn-profil" onclick="window.app.switchTab('profil')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 py-1 px-3 rounded-2xl transition-all duration-200 active:scale-95">
-          <i class="fa-solid fa-store text-base"></i>
-          <span class="text-[10px] font-bold mt-1">Profil</span>
+          <i class="fa-solid fa-users text-base"></i>
+          <span class="text-[10px] font-bold mt-1">Pengurus</span>
         </button>
 
         <button id="nav-btn-pengaturan" onclick="window.app.switchTab('pengaturan')" class="hidden flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 py-1 px-3 rounded-2xl transition-all duration-200 active:scale-95">
@@ -830,7 +870,7 @@
           <input type="date" id="trx-tanggal-input" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600">
         </div>
 
-        <!-- Input Kategori & Quick Chips (Dinamis dari state categories) -->
+        <!-- Input Kategori & Quick Chips -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block text-xs font-semibold text-slate-700">Kategori</label>
@@ -1029,7 +1069,7 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     /* ==========================================================================
-       1. DEFAULT CATEGORIES & PROFILE (KONTEKS MUSHOLA PASAR & BISAROH)
+       1. DEFAULT CATEGORIES & PROFILE
        ========================================================================== */
     const DEFAULT_CATEGORIES = {
       masuk: [
@@ -1059,11 +1099,11 @@
       pin: "123456",
       categories: { ...DEFAULT_CATEGORIES },
       pengurus: [
-        { id: "1", nama: "H. Subur Hartanto", jabatan: "Ketua DKM Mushola Pasar" },
-        { id: "2", nama: "Pak Manto (Kios Blok B)", jabatan: "Sekretaris & Humas Pedagang" },
-        { id: "3", nama: "Hj. Siti Rohmah", jabatan: "Bendahara Kas" },
-        { id: "4", nama: "Ust. M. Ridho", jabatan: "Imam Rawatib Mushola" },
-        { id: "5", nama: "Kang Dedi", jabatan: "Petugas Kebersihan & Marbot Mushola" }
+        { id: "1", nama: "H. Subur Hartanto", jabatan: "Ketua DKM Mushola Pasar", foto: null },
+        { id: "2", nama: "Pak Manto (Kios Blok B)", jabatan: "Sekretaris & Humas Pedagang", foto: null },
+        { id: "3", nama: "Hj. Siti Rohmah", jabatan: "Bendahara Kas", foto: null },
+        { id: "4", nama: "Ust. M. Ridho", jabatan: "Imam Rawatib Mushola", foto: null },
+        { id: "5", nama: "Kang Dedi", jabatan: "Petugas Kebersihan & Marbot Mushola", foto: null }
       ]
     };
 
@@ -1132,12 +1172,57 @@
       pendingDeleteId: null,
       lastSavedTransaction: null,
       chartInstance: null,
+      newPengurusFotoBase64: null,
+      activeReplacePengurusId: null,
+      deferredPwaPrompt: null,
       db: null,
       auth: null
     };
 
     /* ==========================================================================
-       3. HELPER FUNCTIONS
+       3. CLIENT-SIDE CANVAS IMAGE COMPRESSION (~25 KB)
+       ========================================================================== */
+    const compressImage = (file, maxDim = 320, quality = 0.78) => {
+      return new Promise((resolve, reject) => {
+        if (!file || !file.type.startsWith('image/')) {
+          reject(new Error("File yang dipilih bukan gambar!"));
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const width = img.width;
+            const height = img.height;
+
+            // Square crop from center for avatar
+            const minSide = Math.min(width, height);
+            const sx = (width - minSide) / 2;
+            const sy = (height - minSide) / 2;
+
+            canvas.width = maxDim;
+            canvas.height = maxDim;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxDim, maxDim);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            const sizeKb = Math.round((dataUrl.length * 3 / 4) / 1024);
+            resolve({ dataUrl, sizeKb });
+          };
+          img.onerror = () => reject(new Error("Gagal membaca file gambar"));
+        };
+        reader.onerror = () => reject(new Error("Gagal membaca file"));
+      });
+    };
+
+    /* ==========================================================================
+       4. HELPER FUNCTIONS
        ========================================================================== */
     const formatRupiah = (number) => {
       const num = Number(number) || 0;
@@ -1189,7 +1274,7 @@
     };
 
     /* ==========================================================================
-       4. FIREBASE OR LOCAL STORAGE INITIALIZATION
+       5. FIREBASE OR LOCAL STORAGE INITIALIZATION
        ========================================================================== */
     const initFirebase = async () => {
       const storedConfig = localStorage.getItem('kas_masjid_firebase_config');
@@ -1310,7 +1395,7 @@
     };
 
     /* ==========================================================================
-       5. CHART.JS CONFIGURATION
+       6. CHART.JS CONFIGURATION
        ========================================================================== */
     const initOrUpdateChart = (totalIn, totalOut) => {
       const ctx = document.getElementById('cashflowChart');
@@ -1368,7 +1453,7 @@
     };
 
     /* ==========================================================================
-       6. RENDERING LOGIC (CLIENT-SIDE FILTER & SORT)
+       7. RENDERING LOGIC (CLIENT-SIDE FILTER & SORT)
        ========================================================================== */
     const renderAll = () => {
       renderDashboard();
@@ -1539,40 +1624,75 @@
       if (qrisImg) qrisImg.src = qrisSrc;
       if (sideQrisImg) sideQrisImg.src = qrisSrc;
 
-      // Susunan Pengurus
-      const pengurusContainer = document.getElementById('pengurus-list-container');
+      // Render Susunan Pengurus Menarik di Tab Profil
+      const pengurusCardsContainer = document.getElementById('pengurus-cards-container');
       const settingsPengurusList = document.getElementById('settings-pengurus-list');
 
       const pengurusList = p.pengurus || [];
 
       if (pengurusList.length === 0) {
-        pengurusContainer.innerHTML = `<p class="text-xs text-slate-400 py-3 text-center">Belum ada data susunan pengurus.</p>`;
+        if (pengurusCardsContainer) pengurusCardsContainer.innerHTML = `<p class="text-xs text-slate-400 py-3 text-center col-span-2">Belum ada susunan pengurus.</p>`;
         if (settingsPengurusList) settingsPengurusList.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">Belum ada pengurus.</p>`;
       } else {
-        pengurusContainer.innerHTML = pengurusList.map((item, idx) => `
-          <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-            <div class="w-8 h-8 rounded-full bg-mosque-100 text-mosque-800 font-bold text-xs flex items-center justify-center flex-shrink-0">
-              ${idx + 1}
-            </div>
-            <div class="flex-1 min-w-0">
-              <span class="text-xs font-bold text-slate-800 block truncate">${escapeHtml(item.nama)}</span>
-              <span class="text-[11px] text-slate-500 block truncate">${escapeHtml(item.jabatan)}</span>
-            </div>
-          </div>
-        `).join('');
+        // Tampilan Menarik di Tab Profil
+        if (pengurusCardsContainer) {
+          pengurusCardsContainer.innerHTML = pengurusList.map((item, idx) => {
+            const hasPhoto = item.foto && item.foto.startsWith('data:image');
+            const avatarHtml = hasPhoto 
+              ? `<img src="${item.foto}" alt="${escapeHtml(item.nama)}" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-500 shadow-sm flex-shrink-0">`
+              : `<div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-teal-800 text-white font-bold text-sm flex items-center justify-center border-2 border-emerald-400/50 shadow-sm flex-shrink-0">
+                  ${getInitials(item.nama)}
+                </div>`;
 
-        if (settingsPengurusList) {
-          settingsPengurusList.innerHTML = pengurusList.map((item) => `
-            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200 text-xs">
-              <div class="min-w-0">
-                <span class="font-bold text-slate-800 block truncate">${escapeHtml(item.nama)}</span>
-                <span class="text-slate-500 text-[10px] block truncate">${escapeHtml(item.jabatan)}</span>
+            return `
+              <div class="bg-slate-50 hover:bg-emerald-50/40 p-3 rounded-2xl border border-slate-200/80 flex items-center gap-3 transition group">
+                ${avatarHtml}
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-xs md:text-sm font-bold text-slate-800 truncate">${escapeHtml(item.nama)}</h4>
+                  <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100/80 text-emerald-800 mt-0.5 truncate max-w-full">
+                    ${escapeHtml(item.jabatan)}
+                  </span>
+                </div>
               </div>
-              <button onclick="window.app.deletePengurus('${item.id}')" class="text-rose-500 hover:text-rose-700 p-1.5 rounded active:scale-90 transition flex-shrink-0">
-                <i class="fa-solid fa-trash-can text-xs"></i>
-              </button>
-            </div>
-          `).join('');
+            `;
+          }).join('');
+        }
+
+        // Tampilan di Tab Pengaturan (dengan opsi ganti foto & hapus foto)
+        if (settingsPengurusList) {
+          settingsPengurusList.innerHTML = pengurusList.map((item) => {
+            const hasPhoto = item.foto && item.foto.startsWith('data:image');
+            const avatarThumb = hasPhoto 
+              ? `<img src="${item.foto}" alt="${escapeHtml(item.nama)}" class="w-9 h-9 rounded-full object-cover border border-emerald-500 shadow-inner flex-shrink-0">`
+              : `<div class="w-9 h-9 rounded-full bg-slate-200 text-slate-600 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  ${getInitials(item.nama)}
+                </div>`;
+
+            return `
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 text-xs gap-2 hover:border-slate-300 transition">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  ${avatarThumb}
+                  <div class="min-w-0">
+                    <span class="font-bold text-slate-800 block truncate">${escapeHtml(item.nama)}</span>
+                    <span class="text-slate-500 text-[10px] block truncate">${escapeHtml(item.jabatan)}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                  <button onclick="window.app.triggerReplacePhoto('${item.id}')" title="Upload / Ganti Foto" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 active:scale-90 transition">
+                    <i class="fa-solid fa-camera text-xs"></i>
+                  </button>
+                  ${hasPhoto ? `
+                    <button onclick="window.app.removePengurusPhoto('${item.id}')" title="Hapus Foto" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 active:scale-90 transition">
+                      <i class="fa-solid fa-image-slash text-xs"></i>
+                    </button>
+                  ` : ''}
+                  <button onclick="window.app.deletePengurus('${item.id}')" title="Hapus Pengurus" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 active:scale-90 transition">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
         }
       }
 
@@ -1588,8 +1708,15 @@
       if (inputQris) inputQris.value = p.qrisUrl || '';
     };
 
+    const getInitials = (name) => {
+      if (!name) return 'KM';
+      const parts = name.trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
+
     /* ==========================================================================
-       7. DYNAMIC CATEGORIES MANAGEMENT (CUSTOM CATEGORIES)
+       8. DYNAMIC CATEGORIES MANAGEMENT (CUSTOM CATEGORIES)
        ========================================================================== */
     const getCategories = (type) => {
       const cats = state.profile.categories || DEFAULT_CATEGORIES;
@@ -1661,44 +1788,52 @@
     };
 
     /* ==========================================================================
-       8. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
+       9. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
        ========================================================================== */
     window.app = {
-      // Tab Navigation (Responsive: Top Bar + Bottom Bar)
+      // PWA Installation Prompt
+      installPwa: async () => {
+        if (state.deferredPwaPrompt) {
+          state.deferredPwaPrompt.prompt();
+          const { outcome } = await state.deferredPwaPrompt.userChoice;
+          console.log(`[PWA] Install prompt outcome: ${outcome}`);
+          state.deferredPwaPrompt = null;
+          document.getElementById('pwa-install-banner')?.classList.add('hidden');
+          document.getElementById('btn-header-install')?.classList.add('hidden');
+        } else {
+          showToast("Untuk menginstall, pilih menu 'Tambahkan ke Layar Utama' pada browser Anda.", "info");
+        }
+      },
+
+      // Tab Navigation
       switchTab: (tabId) => {
         state.activeTab = tabId;
 
-        // Hide all views
         ['beranda', 'laporan', 'profil', 'pengaturan'].forEach(id => {
           const el = document.getElementById(`view-${id}`);
           if (el) el.classList.add('hidden');
 
-          // Bottom nav button
           const navBtn = document.getElementById(`nav-btn-${id}`);
           if (navBtn) {
             navBtn.classList.remove('text-mosque-700');
             navBtn.classList.add('text-slate-400');
           }
 
-          // Top nav button
           const topBtn = document.getElementById(`top-nav-btn-${id}`);
           if (topBtn) {
             topBtn.className = "px-4 py-1.5 rounded-xl text-xs font-semibold text-emerald-100 hover:text-white hover:bg-white/10 transition-all duration-200 flex items-center gap-1.5";
           }
         });
 
-        // Show active view
         const targetView = document.getElementById(`view-${tabId}`);
         if (targetView) targetView.classList.remove('hidden');
 
-        // Bottom nav active highlight
         const activeNavBtn = document.getElementById(`nav-btn-${tabId}`);
         if (activeNavBtn) {
           activeNavBtn.classList.add('text-mosque-700');
           activeNavBtn.classList.remove('text-slate-400');
         }
 
-        // Top nav active highlight
         const activeTopBtn = document.getElementById(`top-nav-btn-${tabId}`);
         if (activeTopBtn) {
           activeTopBtn.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-white text-mosque-800 shadow-sm transition-all duration-200 flex items-center gap-1.5";
@@ -1829,7 +1964,7 @@
         renderLaporan();
       },
 
-      // Add Transaction Form & Dynamic Category integration
+      // Add Transaction Form
       openAddTransactionModal: () => {
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('trx-tanggal-input').value = today;
@@ -1852,7 +1987,6 @@
           btnMasuk.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
         }
 
-        // Populate Categories from Dynamic List
         const select = document.getElementById('trx-kategori-select');
         const chipsContainer = document.getElementById('trx-quick-chips');
         const options = getCategories(type);
@@ -2008,7 +2142,6 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         });
       },
 
-      // Settings: Profile & Pengurus
       saveProfileSettings: async () => {
         const nama = document.getElementById('settings-nama-masjid').value.trim();
         const alamat = document.getElementById('settings-alamat-masjid').value.trim();
@@ -2038,7 +2171,167 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         }
       },
 
-      // Dynamic Categories UI & Actions
+      // FOTO PENGURUS DENGAN AUTO-KOMPRESI CANVAS
+      handleNewPengurusPhoto: async (input) => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        try {
+          showToast("Mengompresi foto...", "info");
+          const { dataUrl, sizeKb } = await compressImage(file, 320, 0.78);
+          state.newPengurusFotoBase64 = dataUrl;
+
+          const previewEl = document.getElementById('new-pengurus-photo-preview');
+          if (previewEl) {
+            previewEl.innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`;
+          }
+
+          const infoEl = document.getElementById('new-photo-compression-info');
+          if (infoEl) {
+            infoEl.innerText = `Terkompres: ${sizeKb} KB (Super Ringan)`;
+            infoEl.className = "text-[10px] text-emerald-600 font-bold block mt-0.5";
+          }
+
+          document.getElementById('btn-cancel-new-photo')?.classList.remove('hidden');
+          showToast(`Foto berhasil dikompres ke ${sizeKb} KB!`, "success");
+        } catch (err) {
+          console.error("Compression error:", err);
+          showToast("Gagal mengompresi foto: " + err.message, "error");
+        }
+      },
+
+      clearNewPengurusPhoto: () => {
+        state.newPengurusFotoBase64 = null;
+        const input = document.getElementById('new-pengurus-foto-input');
+        if (input) input.value = '';
+
+        const previewEl = document.getElementById('new-pengurus-photo-preview');
+        if (previewEl) {
+          previewEl.innerHTML = `<i class="fa-solid fa-user text-xl"></i>`;
+        }
+
+        const infoEl = document.getElementById('new-photo-compression-info');
+        if (infoEl) {
+          infoEl.innerText = "Otomatis dikompres ringan (~25 KB)";
+          infoEl.className = "text-[10px] text-slate-400 block mt-0.5";
+        }
+
+        document.getElementById('btn-cancel-new-photo')?.classList.add('hidden');
+      },
+
+      triggerReplacePhoto: (pengurusId) => {
+        state.activeReplacePengurusId = pengurusId;
+        const fileInput = document.getElementById('replace-pengurus-foto-input');
+        if (fileInput) {
+          fileInput.value = '';
+          fileInput.click();
+        }
+      },
+
+      handleReplacePengurusPhoto: async (input) => {
+        const file = input.files && input.files[0];
+        const id = state.activeReplacePengurusId;
+        if (!file || !id) return;
+
+        try {
+          showToast("Mengompresi foto pengurus...", "info");
+          const { dataUrl, sizeKb } = await compressImage(file, 320, 0.78);
+
+          const pList = state.profile.pengurus || [];
+          const target = pList.find(p => p.id === id);
+          if (target) {
+            target.foto = dataUrl;
+
+            if (state.isFirebaseReady && state.db) {
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+            } else {
+              syncLocal();
+            }
+
+            renderProfile();
+            showToast(`Foto ${target.nama} berhasil diperbarui (${sizeKb} KB)!`, "success");
+          }
+        } catch (err) {
+          console.error("Replace photo error:", err);
+          showToast("Gagal mengganti foto: " + err.message, "error");
+        } finally {
+          state.activeReplacePengurusId = null;
+        }
+      },
+
+      removePengurusPhoto: async (pengurusId) => {
+        const pList = state.profile.pengurus || [];
+        const target = pList.find(p => p.id === pengurusId);
+        if (target) {
+          target.foto = null;
+
+          try {
+            if (state.isFirebaseReady && state.db) {
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+            } else {
+              syncLocal();
+            }
+            renderProfile();
+            showToast(`Foto ${target.nama} telah dihapus.`, "info");
+          } catch(e) {
+            showToast("Gagal menghapus foto.", "error");
+          }
+        }
+      },
+
+      addPengurus: async () => {
+        const namaInput = document.getElementById('new-pengurus-nama');
+        const jabatanInput = document.getElementById('new-pengurus-jabatan');
+
+        const nama = namaInput.value.trim();
+        const jabatan = jabatanInput.value.trim();
+
+        if (!nama || !jabatan) {
+          showToast("Nama dan jabatan pengurus harus diisi!", "error");
+          return;
+        }
+
+        if (!state.profile.pengurus) state.profile.pengurus = [];
+        state.profile.pengurus.push({
+          id: "pengurus-" + Date.now(),
+          nama,
+          jabatan,
+          foto: state.newPengurusFotoBase64 || null
+        });
+
+        namaInput.value = '';
+        jabatanInput.value = '';
+        window.app.clearNewPengurusPhoto();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+          } else {
+            syncLocal();
+          }
+          renderProfile();
+          showToast("Pengurus baru berhasil ditambahkan!", "success");
+        } catch (err) {
+          showToast("Gagal menambah pengurus: " + err.message, "error");
+        }
+      },
+
+      deletePengurus: async (id) => {
+        state.profile.pengurus = (state.profile.pengurus || []).filter(p => p.id !== id);
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+          } else {
+            syncLocal();
+          }
+          renderProfile();
+          showToast("Pengurus berhasil dihapus.", "info");
+        } catch (err) {
+          showToast("Gagal menghapus pengurus: " + err.message, "error");
+        }
+      },
+
+      // Dynamic Categories
       switchCategoryTab: (type) => {
         state.categoryTab = type;
         const btnKeluar = document.getElementById('cat-tab-keluar');
@@ -2130,56 +2423,6 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         }
       },
 
-      addPengurus: async () => {
-        const namaInput = document.getElementById('new-pengurus-nama');
-        const jabatanInput = document.getElementById('new-pengurus-jabatan');
-
-        const nama = namaInput.value.trim();
-        const jabatan = jabatanInput.value.trim();
-
-        if (!nama || !jabatan) {
-          showToast("Nama dan jabatan pengurus harus diisi!", "error");
-          return;
-        }
-
-        if (!state.profile.pengurus) state.profile.pengurus = [];
-        state.profile.pengurus.push({
-          id: "pengurus-" + Date.now(),
-          nama,
-          jabatan
-        });
-
-        namaInput.value = '';
-        jabatanInput.value = '';
-
-        try {
-          if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
-          }
-          renderProfile();
-          showToast("Pengurus baru berhasil ditambahkan!", "success");
-        } catch (err) {
-          showToast("Gagal menambah pengurus: " + err.message, "error");
-        }
-      },
-
-      deletePengurus: async (id) => {
-        state.profile.pengurus = (state.profile.pengurus || []).filter(p => p.id !== id);
-        try {
-          if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
-          }
-          renderProfile();
-          showToast("Pengurus berhasil dihapus.", "info");
-        } catch (err) {
-          showToast("Gagal menghapus pengurus: " + err.message, "error");
-        }
-      },
-
       updatePin: async () => {
         const pin1 = document.getElementById('settings-new-pin').value.trim();
         const pin2 = document.getElementById('settings-confirm-pin').value.trim();
@@ -2253,9 +2496,10 @@ _Amanah jamaah, berkah bersama pasar kita._`;
     };
 
     /* ==========================================================================
-       9. DOM CONTENT LOADED & RUNTIME BOOTSTRAP
+       10. DOM CONTENT LOADED & RUNTIME BOOTSTRAP (PWA & SERVICE WORKER)
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
+      // Indonesian Date Header
       const now = new Date();
       const dateText = new Intl.DateTimeFormat('id-ID', {
         weekday: 'long',
@@ -2266,11 +2510,39 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       document.getElementById('current-date-text').innerText = dateText;
       document.getElementById('print-tanggal').innerText = `Dicetak pada: ${dateText}`;
 
+      // Persistent Admin Session
       if (localStorage.getItem('kas_masjid_admin_session') === 'true') {
         state.isAdmin = true;
       }
       window.app.applyAdminState();
 
+      // Register PWA Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => {
+            console.log('[PWA] Service Worker terdaftar:', reg.scope);
+          })
+          .catch((err) => {
+            console.warn('[PWA] Service Worker gagal terdaftar:', err);
+          });
+      }
+
+      // Handle PWA Install Prompt
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        state.deferredPwaPrompt = e;
+        document.getElementById('pwa-install-banner')?.classList.remove('hidden');
+        document.getElementById('btn-header-install')?.classList.remove('hidden');
+      });
+
+      window.addEventListener('appinstalled', () => {
+        state.deferredPwaPrompt = null;
+        document.getElementById('pwa-install-banner')?.classList.add('hidden');
+        document.getElementById('btn-header-install')?.classList.add('hidden');
+        showToast("Aplikasi Kas Mushola berhasil dipasang di layar utama!", "success");
+      });
+
+      // Init Firebase or Local Demo
       initFirebase();
     });
   </script>

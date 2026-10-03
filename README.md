@@ -1,42 +1,38 @@
-# 🕌 Sistem Kas Mushola Pasar - Real-time & Transparan
+# 🕌 Sistem Kas Mushola Pasar - Real-time & Transparan (PWA)
 
-Aplikasi web Single Page Application (SPA) modern, ringan, dan **responsif penuh (Mobile, Tablet, dan Desktop)** untuk pencatatan dan transparansi keuangan kas **Mushola Pasar**. Didesain khusus untuk kebutuhan pedagang, pembeli, dan pengurus DKM mushola pasar.
+Aplikasi web **Progressive Web App (PWA)** modern, ringan, dan **responsif penuh (Mobile, Tablet, dan Desktop)** untuk pencatatan dan transparansi keuangan kas **Mushola Pasar**. Didesain khusus untuk kebutuhan pedagang, pembeli, dan pengurus DKM mushola pasar.
 
-Dibuat dalam **satu file tunggal (`index.html`)** tanpa proses *build/compile*, siap di-deploy langsung ke **Cloudflare Pages** atau **GitHub Pages**.
+Aplikasi ini dapat di-install langsung ke layar utama smartphone (Android/iOS) atau desktop seperti aplikasi native dengan icon kubah masjid bernuansa islami modern.
 
 🔗 **Repository GitHub:** [https://github.com/angga2103/Kas-mushola.git](https://github.com/angga2103/Kas-mushola.git)
 
 ---
 
-## 🌟 Fitur Utama & Keunggulan
+## 🌟 Fitur Unggulan Terbaru
 
-### 1. 🖥️ Desain Responsif Multi-Perangkat
-- **Tampilan Smartphone (Mobile):** Dilengkapi *Bottom Navigation Bar* ergonomis yang nyaman dioperasikan dengan satu jempol.
-- **Tampilan Tablet & Desktop:** Layout melebar otomatis dengan *Top Navigation Bar* di header dan dashboard multi-kolom (sisi kiri ringkasan kas & riwayat transaksi, sisi kanan grafik donat & widget QRIS infaq cepat).
+### 1. 📱 Progressive Web App (PWA) & Offline Ready
+- **Bisa Di-install (Add to Home Screen):** Mendukung instalasi langsung pada Android (Chrome) dan iOS (Safari) tanpa perlu download dari PlayStore.
+- **Icon Kubah Masjid "Kas Mushola":** Ikon vektor resolusi tinggi (`icons/icon.svg`) dan PNG (`192x192`, `512x512`, `apple-touch-icon`) dengan gambar kubah masjid hijau emerald, aksen bulan sabit emas (*hilal*), dan emblem bertuliskan "KAS MUSHOLA".
+- **Service Worker (`sw.js`):** Caching otomatis untuk app shell agar aplikasi tetap terbuka seketika bahkan saat koneksi pasar terganggu/offline.
 
-### 2. 🏪 Kategori Khusus Mushola Pasar & Istilah Bisaroh
+### 2. 📸 Upload Foto Pengurus & Auto-Kompresi Canvas (~25 KB)
+- **Kompresi Otomatis di Sisi Klien:** Foto asli dari kamera HP (biasanya 3-8 MB) langsung dikompres oleh browser menjadi gambar persegi berdimensi 320x320 px (~20-30 KB) sebelum disimpan.
+- **Web Tetap Super Cepat:** Tidak membebani memori, hemat kuota internet, dan tidak memerlukan biaya penyimpanan cloud storage tambahan.
+- **Tampilan Menarik di Tab Profil:** Foto pengurus ditampilkan dalam bentuk kartu avatar modern dengan bingkai cincin emerald, bayangan lembut, dan badge jabatan yang rapi.
+- **Kelola Foto di Pengaturan:** Pengurus dapat menambah foto saat mendaftarkan pengurus baru, mengganti foto yang ada, atau menghapus foto kapan saja.
+
+### 3. 🖥️ Desain Responsif Multi-Perangkat
+- **Smartphone (Mobile):** Dilengkapi *Bottom Navigation Bar* ergonomis yang nyaman dioperasikan dengan satu jempol.
+- **Tablet & Desktop:** Layout melebar otomatis (`max-w-6xl`) dengan *Top Navigation Bar* di header dan dashboard multi-kolom (sisi kiri ringkasan kas & riwayat transaksi, sisi kanan grafik donat & widget QRIS infaq cepat).
+
+### 4. 🏪 Kategori Khusus Mushola Pasar & Istilah Bisaroh
 - Disesuaikan khusus untuk aktivitas mushola di pasar (tanpa shalat Jumat & tanpa shalat Tarawih).
 - **Pemasukan:** Kotak Amal Harian Mushola, Infaq Pedagang & Kios Pasar, Infaq Shalat Berjamaah, Donatur & Pengunjung Pasar, Kotak Wudhu & Sarana, dll.
 - **Pengeluaran:** Menggunakan istilah **Bisaroh** (Imam & Petugas Mushola), Listrik & Token Air Pasar, Kebersihan & Sanitasi Mushola, Operasional, dsb.
 
-### 3. 🏷️ Kategori Dinamis & Kustom (Bisa Ditambah/Dihapus)
+### 5. 🏷️ Kategori Dinamis & Kustom
 - Pengurus DKM dapat menambah atau menghapus kategori pengeluaran dan pemasukan secara fleksibel melalui tab **Pengaturan** > **Kategori Transaksi Dinamis**.
-- Kategori baru yang ditambahkan otomatis muncul pada formulir pencatatan kas baru dan pilihan cepat (quick chips).
-
-### 4. 👥 Mode Publik (Akses Jamaah & Pedagang Pasar)
-- **Dashboard Real-time:** Menampilkan saldo kas terkini, total pemasukan bulan ini, dan total pengeluaran bulan ini.
-- **Grafik Interaktif (Chart.js):** Visualisasi diagram *doughnut* perbandingan pemasukan vs pengeluaran bulan berjalan.
-- **Infaq Digital (QRIS):** Pop-up gambar QRIS resmi mushola pasar dan tombol cepat salin rekening bank.
-- **Riwayat Lengkap & Filter:** Filter jenis (Masuk/Keluar), pencarian keterangan/kategori, dan filter per bulan.
-- **Cetak Laporan / PDF:** Dilengkapi format ramah cetak (`@media print`) untuk mencetak fisik atau simpan PDF.
-- **Profil & Struktur Pengurus:** Menampilkan identitas mushola pasar, rekening, dan susunan kepengurusan.
-
-### 5. 🔐 Mode Pengurus / Admin (PIN Protected: `123456`)
-- **Autentikasi PIN:** Klik tombol gembok di header dan masukkan PIN (Default awal: `123456`).
-- **Catat Transaksi Cepat:** Tombol melayang (+) atau tombol atas untuk mencatat kas masuk/keluar dengan auto-format rupiah.
-- **Broadcast WhatsApp Otomatis:** Setelah menyimpan transaksi baru, otomatis muncul pop-up konfirmasi untuk membagikan laporan rapi ke grup WhatsApp jamaah & pedagang pasar.
-- **Hapus Transaksi:** Tombol hapus muncul di setiap baris transaksi saat mode pengurus aktif.
-- **Pengaturan Lengkap:** Kelola identitas mushola, kelola susunan pengurus, kelola kategori kustom, ganti PIN, dan hubungkan Firebase.
+- Kategori baru otomatis muncul pada formulir pencatatan kas baru dan pilihan cepat (*quick chips*).
 
 ---
 
@@ -54,7 +50,7 @@ Aplikasi ini menggunakan **Google Firebase Firestore** untuk sinkronisasi data s
 
 ### Langkah 3: Aktifkan Cloud Firestore Database
 1. Pilih menu **Build** > **Firestore Database** > **Create database**.
-2. Pilih lokasi server (misal: `asia-southeast2` untuk Jakarta).
+2. Pilih lokasi server terdekat (misal: `asia-southeast2` untuk Jakarta).
 
 ### Langkah 4: Atur Security Rules Firestore
 Masuk ke tab **Rules** pada Firestore Database, ganti dengan aturan berikut:
