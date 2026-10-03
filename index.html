@@ -237,6 +237,12 @@
       <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-BAROKAH PASAR BESAR</h2>
       <p id="print-alamat-masjid" class="text-sm text-slate-600">Laporan Kas & Transparansi Dana Umat</p>
       <p id="print-tanggal" class="text-xs text-slate-500 mt-1">Dicetak pada: -</p>
+      <div class="mt-4 pt-3 border-t border-slate-300 text-xs grid grid-cols-4 gap-2 text-center">
+        <div><span class="text-slate-500 block">Saldo Bulan Lalu:</span><strong id="print-prior-saldo">Rp 0</strong></div>
+        <div><span class="text-slate-500 block">Total Pemasukan:</span><strong id="print-total-masuk">Rp 0</strong></div>
+        <div><span class="text-slate-500 block">Total Pengeluaran:</span><strong id="print-total-keluar">Rp 0</strong></div>
+        <div><span class="text-slate-500 block">Saldo Kas Terkini:</span><strong id="print-total-saldo">Rp 0</strong></div>
+      </div>
     </div>
 
     <!-- ==================== BODY CONTENT VIEWS ==================== -->
@@ -293,31 +299,80 @@
               </div>
             </div>
 
-            <!-- 2. MONTHLY SUMMARY CARDS (IN & OUT) -->
-            <div class="grid grid-cols-2 gap-3.5">
-              <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-emerald-200 transition">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">Masuk Bulan Ini</span>
-                  <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-arrow-down-left"></i>
+            <!-- 2. MONTHLY SUMMARY & SALDO BULAN LALU CARDS -->
+            <div class="space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                
+                <!-- Card A: Saldo Bulan Lalu -->
+                <div class="bg-white rounded-2xl p-3.5 sm:p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-amber-200 transition">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Saldo Bulan Lalu</span>
+                    <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xs shadow-inner">
+                      <i class="fa-solid fa-vault"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div id="saldo-bulan-lalu-display" class="text-base sm:text-lg font-bold text-slate-800 leading-tight">Rp 0</div>
+                    <p class="text-[10px] text-slate-400 mt-1">Sisa kas s/d akhir bulan lalu</p>
                   </div>
                 </div>
-                <div>
-                  <div id="monthly-in-display" class="text-lg md:text-xl font-bold text-emerald-600 leading-tight">Rp 0</div>
-                  <p class="text-[10px] md:text-xs text-slate-400 mt-1"><span id="count-in-display">0</span> transaksi masuk</p>
+
+                <!-- Card B: Masuk Bulan Ini -->
+                <div class="bg-white rounded-2xl p-3.5 sm:p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-emerald-200 transition">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Masuk Bulan Ini (+)</span>
+                    <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs shadow-inner">
+                      <i class="fa-solid fa-arrow-down-left"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div id="monthly-in-display" class="text-base sm:text-lg font-bold text-emerald-600 leading-tight">Rp 0</div>
+                    <p class="text-[10px] text-slate-400 mt-1"><span id="count-in-display">0</span> transaksi masuk</p>
+                  </div>
                 </div>
+
+                <!-- Card C: Keluar Bulan Ini -->
+                <div class="bg-white rounded-2xl p-3.5 sm:p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-rose-200 transition">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Keluar Bulan Ini (-)</span>
+                    <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xs shadow-inner">
+                      <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div id="monthly-out-display" class="text-base sm:text-lg font-bold text-rose-600 leading-tight">Rp 0</div>
+                    <p class="text-[10px] text-slate-400 mt-1"><span id="count-out-display">0</span> transaksi keluar</p>
+                  </div>
+                </div>
+
               </div>
 
-              <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-rose-200 transition">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">Keluar Bulan Ini</span>
-                  <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-arrow-up-right"></i>
-                  </div>
+              <!-- Equation Banner -->
+              <div class="bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200/80 rounded-2xl p-3 shadow-xs">
+                <div class="flex items-center justify-between mb-1.5 text-[11px] font-bold text-emerald-900">
+                  <span class="flex items-center gap-1.5"><i class="fa-solid fa-calculator text-emerald-600"></i> Rumus Arus Kas Bulan Ini:</span>
+                  <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full">Transparan & Real-time</span>
                 </div>
-                <div>
-                  <div id="monthly-out-display" class="text-lg md:text-xl font-bold text-rose-600 leading-tight">Rp 0</div>
-                  <p class="text-[10px] md:text-xs text-slate-400 mt-1"><span id="count-out-display">0</span> transaksi keluar</p>
+                <div class="flex items-center justify-between flex-wrap gap-2 text-xs pt-1.5 border-t border-emerald-200/60 font-semibold">
+                  <div class="text-center sm:text-left">
+                    <span class="text-[9.5px] text-slate-500 block">Saldo Bulan Lalu</span>
+                    <span id="eq-prior-display" class="font-bold text-slate-800 text-xs">Rp 0</span>
+                  </div>
+                  <span class="text-emerald-600 font-extrabold text-sm">+</span>
+                  <div class="text-center sm:text-left">
+                    <span class="text-[9.5px] text-emerald-700 block">Pemasukan</span>
+                    <span id="eq-in-display" class="font-bold text-emerald-700 text-xs">Rp 0</span>
+                  </div>
+                  <span class="text-rose-600 font-extrabold text-sm">-</span>
+                  <div class="text-center sm:text-left">
+                    <span class="text-[9.5px] text-rose-700 block">Pengeluaran</span>
+                    <span id="eq-out-display" class="font-bold text-rose-700 text-xs">Rp 0</span>
+                  </div>
+                  <span class="text-slate-400 font-extrabold text-sm">=</span>
+                  <div class="text-center sm:text-right bg-white px-2.5 py-1 rounded-xl border border-emerald-300 shadow-xs">
+                    <span class="text-[9.5px] text-emerald-800 font-bold block">Saldo Kas Terkini</span>
+                    <span id="eq-total-display" class="font-extrabold text-emerald-700 text-xs sm:text-sm">Rp 0</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -465,6 +520,36 @@
           </div>
         </div>
 
+        <!-- Monthly Accounting Breakdown Box (When specific month selected) -->
+        <div id="laporan-monthly-breakdown" class="hidden bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-file-invoice-dollar text-mosque-700 text-sm"></i>
+              <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Rekap Kas Periode Terpilih</h4>
+            </div>
+            <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-full" id="laporan-period-badge">Bulan Terpilih</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs text-center">
+            <div class="bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/60">
+              <span class="text-[10px] text-slate-500 font-medium block">Saldo Awal (Bulan Lalu)</span>
+              <span id="laporan-prior-val" class="font-bold text-slate-800 block text-xs sm:text-sm mt-0.5">Rp 0</span>
+            </div>
+            <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200/60">
+              <span class="text-[10px] text-emerald-700 font-medium block">Total Pemasukan (+)</span>
+              <span id="laporan-in-val" class="font-bold text-emerald-700 block text-xs sm:text-sm mt-0.5">Rp 0</span>
+            </div>
+            <div class="bg-rose-50/70 p-2.5 rounded-xl border border-rose-200/60">
+              <span class="text-[10px] text-rose-700 font-medium block">Total Pengeluaran (-)</span>
+              <span id="laporan-out-val" class="font-bold text-rose-700 block text-xs sm:text-sm mt-0.5">Rp 0</span>
+            </div>
+            <div class="bg-slate-800 text-white p-2.5 rounded-xl shadow-xs">
+              <span class="text-[10px] text-slate-300 font-medium block">Saldo Kas Akhir (=)</span>
+              <span id="laporan-end-val" class="font-extrabold text-white block text-xs sm:text-sm mt-0.5">Rp 0</span>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-emerald-900/5 border border-emerald-900/10 rounded-2xl p-3.5 flex items-center justify-between text-xs">
           <div>
             <span class="text-slate-500 text-[11px] block">Total Kas Sesuai Filter</span>
@@ -606,6 +691,20 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">URL Gambar QRIS (Opsional)</label>
                 <input type="text" id="settings-qris-url" placeholder="https://... atau biarkan kosong" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-xs font-semibold text-slate-700">Saldo Kas Awal / Berjalan (Sebelum Sistem)</label>
+                  <span class="text-[10px] text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full font-bold">Saldo Berjalan</span>
+                </div>
+                <div class="relative">
+                  <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">Rp</span>
+                  <input type="text" id="settings-saldo-awal" inputmode="numeric" placeholder="0" oninput="window.app.formatNominalInput(this)" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1 leading-tight">
+                  Jika kas mushola sudah berjalan sebelum aplikasi ini digunakan, masukkan nominal sisa saldo awalnya di sini agar perhitungan kas langsung akurat.
+                </p>
               </div>
 
               <button onclick="window.app.saveProfileSettings()" class="w-full bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md transition">
@@ -801,11 +900,11 @@
               </div>
 
               <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
-                <button id="cat-tab-keluar" onclick="window.app.switchCategoryTab('keluar')" class="flex-1 py-1.5 rounded-lg bg-white text-rose-600 shadow-sm transition font-bold flex items-center justify-center gap-1">
-                  <i class="fa-solid fa-circle-arrow-up text-[10px]"></i> Pengeluaran (Bisaroh dll)
+                <button id="cat-tab-masuk" onclick="window.app.switchCategoryTab('masuk')" class="flex-1 py-1.5 rounded-lg bg-white text-emerald-600 shadow-sm transition font-bold flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-circle-arrow-down text-[10px]"></i> Kategori Pemasukan
                 </button>
-                <button id="cat-tab-masuk" onclick="window.app.switchCategoryTab('masuk')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
-                  <i class="fa-solid fa-circle-arrow-down text-[10px]"></i> Pemasukan
+                <button id="cat-tab-keluar" onclick="window.app.switchCategoryTab('keluar')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-circle-arrow-up text-[10px]"></i> Kategori Pengeluaran
                 </button>
               </div>
 
@@ -818,7 +917,10 @@
               </div>
 
               <div class="space-y-1.5 pt-1">
-                <span class="text-[11px] font-semibold text-slate-500 block">Daftar Kategori Saat Ini:</span>
+                <div class="flex items-center justify-between">
+                  <span id="cat-list-label" class="text-[11px] font-semibold text-slate-500 block">Daftar Kategori Saat Ini:</span>
+                  <span id="cat-count-badge" class="text-[10px] text-slate-400 font-medium">0 Kategori</span>
+                </div>
                 <div id="custom-categories-list" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
                   <!-- Dynamically populated -->
                 </div>
@@ -1051,10 +1153,25 @@
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block text-xs font-semibold text-slate-700">Kategori</label>
-            <button type="button" onclick="window.app.switchTab('pengaturan'); window.app.closeModal('modal-add-trx');" class="text-[10px] text-mosque-700 hover:underline">
-              + Kelola Kategori
+            <button type="button" onclick="window.app.toggleQuickAddCategory()" class="text-[10px] text-mosque-700 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span>+ Tambah Kategori Baru</span>
             </button>
           </div>
+
+          <!-- Inline Quick Add Category Box -->
+          <div id="inline-add-cat-box" class="hidden mb-2 p-2 bg-emerald-50 rounded-xl border border-emerald-200">
+            <div class="flex gap-1.5 items-center">
+              <input type="text" id="inline-new-cat-input" placeholder="Nama kategori baru..." class="flex-1 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-mosque-600">
+              <button type="button" onclick="window.app.submitQuickAddCategory()" class="bg-mosque-700 hover:bg-mosque-800 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex-shrink-0">
+                Simpan
+              </button>
+              <button type="button" onclick="window.app.toggleQuickAddCategory(false)" class="bg-slate-200 text-slate-600 px-2 py-1.5 rounded-lg text-xs hover:bg-slate-300 flex-shrink-0">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+
           <select id="trx-kategori-select" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600 mb-1.5">
             <!-- Dynamically populated -->
           </select>
@@ -1290,6 +1407,7 @@
       alamat: "Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional",
       rekening: "BSI: 7123456789 a.n Kas Mushola Pasar",
       qrisUrl: "",
+      saldoAwal: 0,
       categories: { ...DEFAULT_CATEGORIES },
       pengurus: [
         { id: "1", nama: "H. Subur Hartanto", jabatan: "Ketua DKM Mushola Pasar", foto: null },
@@ -1378,7 +1496,7 @@
       filterMonth: 'all',
       filterSearch: '',
       formType: 'masuk',
-      categoryTab: 'keluar',
+      categoryTab: 'masuk',
       pendingDeleteId: null,
       lastSavedTransaction: null,
       chartInstance: null,
@@ -1756,36 +1874,76 @@
         return new Date(b.timestamp || b.tanggal) - new Date(a.timestamp || a.tanggal);
       });
 
-      let totalSaldo = 0;
+      const saldoAwal = Number(state.profile.saldoAwal) || 0;
+      const currentYearMonth = new Date().toISOString().slice(0, 7);
+      const firstDayOfCurrentMonth = `${currentYearMonth}-01`;
+
+      let priorBalance = saldoAwal;
       let monthlyIn = 0;
       let monthlyOut = 0;
       let countIn = 0;
       let countOut = 0;
-
-      const currentYearMonth = new Date().toISOString().slice(0, 7);
+      let totalSaldo = saldoAwal;
 
       sorted.forEach(t => {
         const nominal = Number(t.nominal) || 0;
+        const tDate = t.tanggal || '';
+
         if (t.jenis === 'masuk') {
           totalSaldo += nominal;
-          if ((t.tanggal || '').startsWith(currentYearMonth)) {
+          if (tDate.startsWith(currentYearMonth)) {
             monthlyIn += nominal;
             countIn++;
+          } else if (tDate < firstDayOfCurrentMonth) {
+            priorBalance += nominal;
           }
         } else {
           totalSaldo -= nominal;
-          if ((t.tanggal || '').startsWith(currentYearMonth)) {
+          if (tDate.startsWith(currentYearMonth)) {
             monthlyOut += nominal;
             countOut++;
+          } else if (tDate < firstDayOfCurrentMonth) {
+            priorBalance -= nominal;
           }
         }
       });
 
       document.getElementById('total-saldo-display').innerText = formatRupiah(totalSaldo);
+      if (document.getElementById('saldo-bulan-lalu-display')) {
+        document.getElementById('saldo-bulan-lalu-display').innerText = formatRupiah(priorBalance);
+      }
       document.getElementById('monthly-in-display').innerText = formatRupiah(monthlyIn);
       document.getElementById('monthly-out-display').innerText = formatRupiah(monthlyOut);
       document.getElementById('count-in-display').innerText = countIn;
       document.getElementById('count-out-display').innerText = countOut;
+
+      // Equation displays
+      if (document.getElementById('eq-prior-display')) {
+        document.getElementById('eq-prior-display').innerText = formatRupiah(priorBalance);
+      }
+      if (document.getElementById('eq-in-display')) {
+        document.getElementById('eq-in-display').innerText = formatRupiah(monthlyIn);
+      }
+      if (document.getElementById('eq-out-display')) {
+        document.getElementById('eq-out-display').innerText = formatRupiah(monthlyOut);
+      }
+      if (document.getElementById('eq-total-display')) {
+        document.getElementById('eq-total-display').innerText = formatRupiah(totalSaldo);
+      }
+
+      // Print displays
+      if (document.getElementById('print-prior-saldo')) {
+        document.getElementById('print-prior-saldo').innerText = formatRupiah(priorBalance);
+      }
+      if (document.getElementById('print-total-masuk')) {
+        document.getElementById('print-total-masuk').innerText = formatRupiah(monthlyIn);
+      }
+      if (document.getElementById('print-total-keluar')) {
+        document.getElementById('print-total-keluar').innerText = formatRupiah(monthlyOut);
+      }
+      if (document.getElementById('print-total-saldo')) {
+        document.getElementById('print-total-saldo').innerText = formatRupiah(totalSaldo);
+      }
 
       initOrUpdateChart(monthlyIn, monthlyOut);
 
@@ -1829,12 +1987,59 @@
         );
       }
 
+      const saldoAwal = Number(state.profile.saldoAwal) || 0;
       let netFiltered = 0;
       filtered.forEach(t => {
         const nom = Number(t.nominal) || 0;
         if (t.jenis === 'masuk') netFiltered += nom;
         else netFiltered -= nom;
       });
+
+      // Monthly Accounting Breakdown if a specific month is selected
+      const monthlyBreakdownBox = document.getElementById('laporan-monthly-breakdown');
+      if (monthlyBreakdownBox) {
+        if (monthVal !== 'all') {
+          monthlyBreakdownBox.classList.remove('hidden');
+          const firstDayOfMonth = `${monthVal}-01`;
+          let priorMonthBal = saldoAwal;
+          let pMasuk = 0;
+          let pKeluar = 0;
+
+          state.transactions.forEach(t => {
+            const nom = Number(t.nominal) || 0;
+            const tDate = t.tanggal || '';
+            if (t.jenis === 'masuk') {
+              if (tDate < firstDayOfMonth) priorMonthBal += nom;
+              else if (tDate.startsWith(monthVal)) pMasuk += nom;
+            } else {
+              if (tDate < firstDayOfMonth) priorMonthBal -= nom;
+              else if (tDate.startsWith(monthVal)) pKeluar += nom;
+            }
+          });
+
+          const pAkhir = priorMonthBal + pMasuk - pKeluar;
+
+          // Format month label
+          const [year, month] = monthVal.split('-');
+          const monthDateObj = new Date(parseInt(year), parseInt(month) - 1, 1);
+          const monthName = new Intl.DateTimeFormat('id-ID', { month: 'long', year: 'numeric' }).format(monthDateObj);
+
+          const badgeEl = document.getElementById('laporan-period-badge');
+          if (badgeEl) badgeEl.innerText = monthName;
+
+          const elPrior = document.getElementById('laporan-prior-val');
+          const elIn = document.getElementById('laporan-in-val');
+          const elOut = document.getElementById('laporan-out-val');
+          const elEnd = document.getElementById('laporan-end-val');
+
+          if (elPrior) elPrior.innerText = formatRupiah(priorMonthBal);
+          if (elIn) elIn.innerText = formatRupiah(pMasuk);
+          if (elOut) elOut.innerText = formatRupiah(pKeluar);
+          if (elEnd) elEnd.innerText = formatRupiah(pAkhir);
+        } else {
+          monthlyBreakdownBox.classList.add('hidden');
+        }
+      }
 
       document.getElementById('filtered-total-text').innerText = formatRupiah(netFiltered);
       document.getElementById('filtered-count-text').innerText = `${filtered.length} Transaksi`;
@@ -1987,11 +2192,15 @@
       const inputAlamat = document.getElementById('settings-alamat-masjid');
       const inputRekening = document.getElementById('settings-rekening-masjid');
       const inputQris = document.getElementById('settings-qris-url');
+      const inputSaldoAwal = document.getElementById('settings-saldo-awal');
 
       if (inputNama) inputNama.value = p.nama || '';
       if (inputAlamat) inputAlamat.value = p.alamat || '';
       if (inputRekening) inputRekening.value = p.rekening || '';
       if (inputQris) inputQris.value = p.qrisUrl || '';
+      if (inputSaldoAwal) {
+        inputSaldoAwal.value = p.saldoAwal ? new Intl.NumberFormat('id-ID').format(p.saldoAwal) : '';
+      }
     };
 
     const getInitials = (name) => {
@@ -2013,15 +2222,30 @@
       const container = document.getElementById('custom-categories-list');
       if (!container) return;
 
-      const currentType = state.categoryTab || 'keluar';
+      const currentType = state.categoryTab || 'masuk';
       const categories = getCategories(currentType);
+
+      const isKeluar = currentType === 'keluar';
+      const labelEl = document.getElementById('cat-list-label');
+      if (labelEl) {
+        labelEl.innerText = isKeluar ? 'Daftar Kategori Pengeluaran Dinamis:' : 'Daftar Kategori Pemasukan Dinamis:';
+      }
+      const countEl = document.getElementById('cat-count-badge');
+      if (countEl) {
+        countEl.innerText = `${categories.length} Kategori`;
+      }
+      const inputEl = document.getElementById('new-category-name');
+      if (inputEl) {
+        inputEl.placeholder = isKeluar 
+          ? 'Tambah kategori pengeluaran baru (Bisaroh, dll)...'
+          : 'Tambah kategori pemasukan baru (Infaq Pedagang, dll)...';
+      }
 
       if (categories.length === 0) {
         container.innerHTML = `<span class="text-xs text-slate-400 italic">Belum ada kategori.</span>`;
         return;
       }
 
-      const isKeluar = currentType === 'keluar';
       const bgClass = isKeluar ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200';
 
       container.innerHTML = categories.map(cat => `
@@ -2681,6 +2905,8 @@ Password: ${adm.rawPassword}`;
           btnMasuk.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
         }
 
+        window.app.toggleQuickAddCategory(false);
+
         const select = document.getElementById('trx-kategori-select');
         const chipsContainer = document.getElementById('trx-quick-chips');
         const options = getCategories(type);
@@ -2691,6 +2917,64 @@ Password: ${adm.rawPassword}`;
             ${opt}
           </button>
         `).join('');
+      },
+
+      toggleQuickAddCategory: (force = null) => {
+        const box = document.getElementById('inline-add-cat-box');
+        if (!box) return;
+        const isHidden = box.classList.contains('hidden');
+        const show = force !== null ? force : isHidden;
+        if (show) {
+          box.classList.remove('hidden');
+          const input = document.getElementById('inline-new-cat-input');
+          if (input) {
+            input.value = '';
+            input.placeholder = state.formType === 'masuk' 
+              ? 'Nama kategori pemasukan baru...' 
+              : 'Nama kategori pengeluaran baru...';
+            setTimeout(() => input.focus(), 50);
+          }
+        } else {
+          box.classList.add('hidden');
+        }
+      },
+
+      submitQuickAddCategory: async () => {
+        const input = document.getElementById('inline-new-cat-input');
+        const val = input ? input.value.trim() : '';
+        if (!val) {
+          showToast("Nama kategori tidak boleh kosong!", "error");
+          return;
+        }
+
+        const type = state.formType || 'masuk';
+        if (!state.profile.categories) {
+          state.profile.categories = { ...DEFAULT_CATEGORIES };
+        }
+        if (!state.profile.categories[type]) {
+          state.profile.categories[type] = [];
+        }
+
+        if (!state.profile.categories[type].includes(val)) {
+          state.profile.categories[type].push(val);
+
+          try {
+            if (state.isFirebaseReady && state.db) {
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+            } else {
+              syncLocal();
+            }
+          } catch (err) {
+            console.warn("Save quick category error:", err);
+          }
+        }
+
+        window.app.toggleQuickAddCategory(false);
+        window.app.setFormType(type);
+        const select = document.getElementById('trx-kategori-select');
+        if (select) select.value = val;
+        renderCategoryManager();
+        showToast(`Kategori "${val}" berhasil ditambahkan & dipilih!`, "success");
       },
 
       formatNominalInput: (el) => {
@@ -2784,10 +3068,27 @@ Password: ${adm.rawPassword}`;
 
       // WhatsApp Broadcast
       openWhatsAppModal: (trx) => {
-        let total = 0;
+        const saldoAwal = Number(state.profile.saldoAwal) || 0;
+        const currentYearMonth = new Date().toISOString().slice(0, 7);
+        const firstDayOfCurrentMonth = `${currentYearMonth}-01`;
+
+        let priorBalance = saldoAwal;
+        let monthlyIn = 0;
+        let monthlyOut = 0;
+        let total = saldoAwal;
+
         state.transactions.forEach(t => {
-          if (t.jenis === 'masuk') total += Number(t.nominal) || 0;
-          else total -= Number(t.nominal) || 0;
+          const nom = Number(t.nominal) || 0;
+          const tDate = t.tanggal || '';
+          if (t.jenis === 'masuk') {
+            total += nom;
+            if (tDate.startsWith(currentYearMonth)) monthlyIn += nom;
+            else if (tDate < firstDayOfCurrentMonth) priorBalance += nom;
+          } else {
+            total -= nom;
+            if (tDate.startsWith(currentYearMonth)) monthlyOut += nom;
+            else if (tDate < firstDayOfCurrentMonth) priorBalance -= nom;
+          }
         });
 
         const namaMasjid = state.profile.nama || DEFAULT_PROFILE.nama;
@@ -2805,7 +3106,12 @@ Alhamdulillah, telah dicatat transaksi kas mushola pasar:
 *Keterangan:* ${trx.keterangan || '-'}
 
 ━━━━━━━━━━━━━━━━━━━
-💰 *SALDO KAS TERKINI: ${formatRupiah(total)}*
+📊 *REKAP KAS BULAN INI:*
+• Saldo Bulan Lalu: ${formatRupiah(priorBalance)}
+• Pemasukan Bulan Ini: +${formatRupiah(monthlyIn)}
+• Pengeluaran Bulan Ini: -${formatRupiah(monthlyOut)}
+━━━━━━━━━━━━━━━━━━━
+💰 *SALDO KAS SAAT INI: ${formatRupiah(total)}*
 ━━━━━━━━━━━━━━━━━━━
 
 _Jazakumullahu khairan katsiran kepada segenap pedagang, pengunjung pasar, & para muhsinin atas infaq dan dukungannya._
@@ -2841,6 +3147,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         const alamat = document.getElementById('settings-alamat-masjid').value.trim();
         const rekening = document.getElementById('settings-rekening-masjid').value.trim();
         const qrisUrl = document.getElementById('settings-qris-url').value.trim();
+        const rawSaldoAwal = (document.getElementById('settings-saldo-awal')?.value || '').replace(/\D/g, '');
+        const saldoAwal = parseInt(rawSaldoAwal, 10) || 0;
 
         if (!nama) {
           showToast("Nama mushola tidak boleh kosong!", "error");
@@ -2851,6 +3159,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         state.profile.alamat = alamat;
         state.profile.rekening = rekening;
         state.profile.qrisUrl = qrisUrl;
+        state.profile.saldoAwal = saldoAwal;
 
         try {
           if (state.isFirebaseReady && state.db) {
@@ -2859,7 +3168,9 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderProfile();
-          showToast("Profil mushola berhasil diperbarui!", "success");
+          renderDashboard();
+          renderLaporan();
+          showToast("Profil dan saldo awal mushola berhasil disimpan!", "success");
         } catch (err) {
           showToast("Gagal menyimpan profil: " + err.message, "error");
         }
@@ -3052,7 +3363,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           return;
         }
 
-        const type = state.categoryTab || 'keluar';
+        const type = state.categoryTab || 'masuk';
         if (!state.profile.categories) {
           state.profile.categories = { ...DEFAULT_CATEGORIES };
         }
@@ -3075,14 +3386,15 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderCategoryManager();
-          showToast(`Kategori "${val}" berhasil ditambahkan!`, "success");
+          window.app.setFormType(state.formType);
+          showToast(`Kategori ${type === 'masuk' ? 'pemasukan' : 'pengeluaran'} "${val}" berhasil ditambahkan!`, "success");
         } catch (err) {
           showToast("Gagal menambah kategori: " + err.message, "error");
         }
       },
 
       deleteCustomCategory: async (categoryName) => {
-        const type = state.categoryTab || 'keluar';
+        const type = state.categoryTab || 'masuk';
         if (!state.profile.categories || !state.profile.categories[type]) return;
 
         state.profile.categories[type] = state.profile.categories[type].filter(c => c !== categoryName);
@@ -3094,6 +3406,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderCategoryManager();
+          window.app.setFormType(state.formType);
           showToast(`Kategori "${categoryName}" dihapus.`, "info");
         } catch (err) {
           showToast("Gagal menghapus kategori: " + err.message, "error");
@@ -3113,6 +3426,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderCategoryManager();
+          window.app.setFormType(state.formType);
           showToast("Kategori berhasil di-reset ke bawaan mushola pasar.", "success");
         } catch (err) {
           showToast("Gagal me-reset kategori: " + err.message, "error");

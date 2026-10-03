@@ -188,3 +188,18 @@ Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu m
    - `kas-mushola.pages.dev`
 4. Klik **Add**. Sekarang login pengurus di domain resmi Anda siap digunakan 100%!
 
+---
+
+## 💰 Fitur Finansial Unggulan: Saldo Bulan Lalu & Kategori Dinamis
+
+### 1. Skema Saldo Kas Berjalan (Saldo Bulan Lalu / Saldo Awal)
+- Jika mushola sudah memiliki kas fisik atau rekening yang berjalan sebelum aplikasi digunakan:
+  - Buka tab **Pengaturan** ➔ isi **"Saldo Kas Awal / Berjalan (Sebelum Sistem)"** ➔ klik **Simpan Informasi Mushola**.
+- Rumus perhitungan saldo otomatis:
+  $$\text{Saldo Kas Terkini} = \text{Saldo Bulan Lalu} + \text{Pemasukan Bulan Ini} - \text{Pengeluaran Bulan Ini}$$
+- Tersedia kartu rumus transparan di Beranda, tabel pembukuan bulanan di Laporan, rincian cetak PDF, serta otomatis terformat di broadcast WhatsApp!
+
+### 2. Kategori Pemasukan & Pengeluaran Dinamis
+- Kategori Pemasukan (Kotak Amal, Infaq Pedagang, dll) dan Pengeluaran (Bisaroh, Listrik, Kebersihan, dll) kini sepenuhnya dinamis.
+- Pengurus dapat menambah kategori baru dari menu **Pengaturan**, atau menambahkan langsung secara instan (*+ Tambah Kategori Baru*) saat mengisi form transaksi tanpa harus berpindah halaman.
+
