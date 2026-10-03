@@ -2453,7 +2453,9 @@
               categories: data.categories || { ...DEFAULT_CATEGORIES },
               pengurus: data.pengurus || [...DEFAULT_PROFILE.pengurus],
               admins: rawAdmins,
-              agendas: data.agendas || []
+              agendas: data.agendas || [],
+              quotesIntervalHours: data.quotesIntervalHours !== undefined ? Number(data.quotesIntervalHours) : (state.profile.quotesIntervalHours !== undefined ? state.profile.quotesIntervalHours : 3),
+              quotes: (data.quotes && data.quotes.length > 0) ? data.quotes : (state.profile.quotes && state.profile.quotes.length > 0 ? state.profile.quotes : [...DEFAULT_QUOTES])
             };
           } else {
             setDoc(profileDocRef, DEFAULT_PROFILE);
@@ -2463,6 +2465,8 @@
           renderAdminManager();
           renderAgendaManager();
           renderAgendaSection();
+          renderRandomQuote();
+          renderQuotesManager();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
         });
@@ -2521,7 +2525,9 @@
             ...DEFAULT_PROFILE,
             ...parsed,
             categories: parsed.categories || { ...DEFAULT_CATEGORIES },
-            agendas: parsed.agendas || []
+            agendas: parsed.agendas || [],
+            quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 3,
+            quotes: (parsed.quotes && parsed.quotes.length > 0) ? parsed.quotes : [...DEFAULT_QUOTES]
           };
         } catch (e) {
           state.profile = { ...DEFAULT_PROFILE };
@@ -2543,13 +2549,13 @@
       renderAdminManager();
       renderAgendaManager();
       renderAgendaSection();
+      renderRandomQuote();
+      renderQuotesManager();
     };
 
     const syncLocal = () => {
-      if (!state.isFirebaseReady) {
-        localStorage.setItem('kas_masjid_local_transactions', JSON.stringify(state.transactions));
-        localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
-      }
+      localStorage.setItem('kas_masjid_local_transactions', JSON.stringify(state.transactions));
+      localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
     };
 
     /* ==========================================================================
@@ -2620,6 +2626,8 @@
       renderCategoryManager();
       renderAgendaSection();
       renderAgendaManager();
+      renderRandomQuote();
+      renderQuotesManager();
       updateMonthSelectOptions();
     };
 
@@ -3358,6 +3366,170 @@
       }).join('');
     };
 
+
+    /* ==========================================================================
+       8B. MUTIARA HADITS & AYAT AL-QUR'AN RENDERING LOGIC
+       ========================================================================== */
+    const renderRandomQuote = (forceNext = false) => {
+      const card = document.getElementById('beranda-quotes-card');
+      if (!card) return;
+
+      const quotes = (state.profile.quotes && state.profile.quotes.length > 0)
+        ? state.profile.quotes
+        : (typeof DEFAULT_QUOTES !== 'undefined' ? DEFAULT_QUOTES : []);
+
+      if (!quotes || quotes.length === 0) return;
+
+      const interval = state.profile.quotesIntervalHours !== undefined 
+        ? Number(state.profile.quotesIntervalHours) 
+        : 3;
+
+      if (interval === 0 || forceNext) {
+        // Mode setiap buka web / tombol acak ditekan
+        state.currentQuoteIndex = Math.floor(Math.random() * quotes.length);
+      } else {
+        // Mode rotasi waktu berkala (deterministik berdasarkan jam)
+        const hours = interval > 0 ? interval : 3;
+        const blockMs = hours * 60 * 60 * 1000;
+        const currentBlock = Math.floor(Date.now() / blockMs);
+        state.currentQuoteIndex = Math.abs(currentBlock) % quotes.length;
+      }
+
+      const item = quotes[state.currentQuoteIndex] || quotes[0];
+      if (!item) return;
+
+      // Update Kategori Badge
+      const badgeEl = document.getElementById('quote-category-badge');
+      if (badgeEl) {
+        if (item.kategori === 'sedekah') {
+          badgeEl.className = 'text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full inline-block mt-0.5';
+          badgeEl.innerText = '💰 Fadilah Sedekah';
+        } else if (item.kategori === 'sholat') {
+          badgeEl.className = 'text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full inline-block mt-0.5';
+          badgeEl.innerText = '🕌 Sholat Berjamaah';
+        } else {
+          badgeEl.className = 'text-[10px] font-bold text-sky-800 bg-sky-100 px-2 py-0.5 rounded-full inline-block mt-0.5';
+          badgeEl.innerText = '✨ Mutiara Nasehat';
+        }
+      }
+
+      // Update Teks Arab
+      const arabEl = document.getElementById('quote-arab-display');
+      if (arabEl) {
+        if (item.arab && item.arab.trim()) {
+          arabEl.innerText = item.arab;
+          arabEl.classList.remove('hidden');
+        } else {
+          arabEl.innerText = '';
+          arabEl.classList.add('hidden');
+        }
+      }
+
+      // Update Terjemahan
+      const terjemahEl = document.getElementById('quote-terjemah-display');
+      if (terjemahEl) {
+        terjemahEl.innerText = `“${item.terjemah}”`;
+      }
+
+      // Update Sumber Riwayat
+      const sumberEl = document.getElementById('quote-sumber-display');
+      if (sumberEl) {
+        sumberEl.innerHTML = `<i class="fa-solid fa-bookmark text-emerald-600 text-[9px]"></i> <span>${escapeHtml(item.sumber)}</span>`;
+      }
+
+      // Update Keterangan Timer
+      const timerInfoEl = document.getElementById('quote-timer-info');
+      if (timerInfoEl) {
+        timerInfoEl.innerText = interval === 0 ? 'Berganti acak tiap buka' : `Berganti tiap ${interval} jam`;
+      }
+    };
+
+    const renderQuotesManager = () => {
+      const container = document.getElementById('settings-quotes-manager-card');
+      if (!container) return;
+
+      const quotes = (state.profile.quotes && state.profile.quotes.length > 0)
+        ? state.profile.quotes
+        : (typeof DEFAULT_QUOTES !== 'undefined' ? DEFAULT_QUOTES : []);
+
+      // Set nilai dropdown interval rotasi
+      const intervalSelect = document.getElementById('settings-quote-interval');
+      if (intervalSelect) {
+        intervalSelect.value = String(state.profile.quotesIntervalHours !== undefined ? state.profile.quotesIntervalHours : 3);
+      }
+
+      // Update badge jumlah kutipan
+      const countBadge = document.getElementById('settings-quotes-count-badge');
+      if (countBadge) {
+        countBadge.innerText = `${quotes.length} Kutipan`;
+      }
+
+      // Update active filter button
+      const curFilter = state.adminQuotesFilter || 'semua';
+      ['semua', 'sedekah', 'sholat'].forEach(f => {
+        const btn = document.getElementById(`quote-filter-${f}`);
+        if (btn) {
+          if (f === curFilter) {
+            btn.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-white transition';
+          } else {
+            btn.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+          }
+        }
+      });
+
+      // Filter daftar kutipan
+      let filtered = quotes;
+      if (curFilter !== 'semua') {
+        filtered = quotes.filter(q => q.kategori === curFilter);
+      }
+
+      const listEl = document.getElementById('settings-quotes-list');
+      if (!listEl) return;
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            Belum ada kutipan pada kategori ini. Klik "+ Tambah Hadits/Ayat" untuk menambahkan.
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(item => {
+        const isSedekah = item.kategori === 'sedekah';
+        const isSholat = item.kategori === 'sholat';
+        const tagBg = isSedekah ? 'bg-emerald-100 text-emerald-800' : (isSholat ? 'bg-amber-100 text-amber-800' : 'bg-sky-100 text-sky-800');
+        const tagLabel = isSedekah ? 'Sedekah' : (isSholat ? 'Sholat' : 'Umum');
+
+        return `
+          <div class="p-2.5 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 transition flex items-start justify-between gap-2 text-left">
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[9.5px] font-bold px-2 py-0.5 rounded-md ${tagBg}">
+                  ${tagLabel}
+                </span>
+                <span class="text-[10.5px] font-bold text-slate-700 truncate">
+                  ${escapeHtml(item.sumber)}
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 line-clamp-2 leading-snug italic">
+                “${escapeHtml(item.terjemah)}”
+              </p>
+            </div>
+
+            <div class="flex items-center gap-1.5 flex-shrink-0 self-end sm:self-start pt-1">
+              <button type="button" onclick="window.app.editQuote('${item.id}')" title="Edit Kutipan" class="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs active:scale-90 transition">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button type="button" onclick="window.app.deleteQuote('${item.id}')" title="Hapus Kutipan" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs active:scale-90 transition">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
     /* ==========================================================================
        9. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
        ========================================================================== */
@@ -3617,6 +3789,7 @@
         renderAdminManager();
         renderAgendaManager();
         renderAgendaSection();
+        renderQuotesManager();
       },
 
       // PENGURUS ADMIN ACCESS MANAGEMENT
@@ -4683,7 +4856,221 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
         const msg = lines.join('\n');
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+      },
+
+      // ==================== MUTIARA QUR'AN & HADITS CONTROLLER ====================
+      nextRandomQuote: () => {
+        renderRandomQuote(true);
+      },
+
+      shareQuoteWA: () => {
+        const quotes = (state.profile.quotes && state.profile.quotes.length > 0)
+          ? state.profile.quotes
+          : DEFAULT_QUOTES;
+        const item = quotes[state.currentQuoteIndex] || quotes[0];
+        if (!item) return;
+
+        const namaMasjid = state.profile.nama || DEFAULT_PROFILE.nama;
+        const webUrl = window.location.href.split('#')[0];
+        const katLabel = item.kategori === 'sedekah' 
+          ? 'Fadilah Sedekah & Infaq' 
+          : (item.kategori === 'sholat' ? 'Fadilah Sholat Berjamaah' : 'Mutiara Hikmah');
+
+        let lines = [];
+        lines.push(`*Assalamu'alaikum Warahmatullahi Wabarakatuh,*`);
+        lines.push(``);
+        lines.push(`✨ *[MUTIARA QUR'AN & HADITS - ${namaMasjid.toUpperCase()}]*`);
+        lines.push(`Tema: _${katLabel}_`);
+        lines.push(``);
+        if (item.arab) {
+          lines.push(item.arab);
+          lines.push(``);
+        }
+        lines.push(`*Artinya:*`);
+        lines.push(`"${item.terjemah}"`);
+        lines.push(``);
+        lines.push(`📖 *Sumber:* ${item.sumber}`);
+        lines.push(``);
+        lines.push(`🌐 *Transparansi Kas & Info Mushola:*`);
+        lines.push(webUrl);
+        lines.push(``);
+        lines.push(`Semoga menjadi pengingat dan penyejuk hati bagi kita semua. Aamiin.`);
+        lines.push(`_DKM ${namaMasjid}_`);
+
+        const msg = lines.join('\n');
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+      },
+
+      saveQuoteInterval: async (hours) => {
+        const h = Number(hours);
+        state.profile.quotesIntervalHours = h;
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
+          }
+          renderRandomQuote();
+          renderQuotesManager();
+          showToast(h === 0 ? "Kutipan akan berganti acak setiap buka web." : `Interval rotasi disimpan: berganti tiap ${h} jam.`, "success");
+        } catch (err) {
+          console.error("Error saving interval:", err);
+          showToast("Gagal menyimpan ke server: " + err.message + " (tersimpan lokal)", "error");
+        }
+      },
+
+      filterQuotesAdmin: (cat) => {
+        state.adminQuotesFilter = cat;
+        renderQuotesManager();
+      },
+
+      toggleQuoteForm: (show, isEdit = false) => {
+        const box = document.getElementById('quote-form-box');
+        if (!box) return;
+        if (show) {
+          box.classList.remove('hidden');
+          if (!isEdit) {
+            document.getElementById('quote-edit-id').value = '';
+            document.getElementById('quote-form-title').innerHTML = `
+              <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+              <span>Tambah Hadits / Ayat Baru</span>
+            `;
+            document.getElementById('quote-btn-submit-label').innerText = 'Simpan Kutipan';
+            document.getElementById('quote-input-kategori').value = 'sedekah';
+            document.getElementById('quote-input-arab').value = '';
+            document.getElementById('quote-input-terjemah').value = '';
+            document.getElementById('quote-input-sumber').value = '';
+          }
+          setTimeout(() => {
+            document.getElementById('quote-input-terjemah')?.focus();
+          }, 50);
+        } else {
+          box.classList.add('hidden');
+          document.getElementById('quote-edit-id').value = '';
+        }
+      },
+
+      saveQuoteForm: async () => {
+        const editId = (document.getElementById('quote-edit-id')?.value || '').trim();
+        const kategori = document.getElementById('quote-input-kategori')?.value || 'sedekah';
+        const arab = (document.getElementById('quote-input-arab')?.value || '').trim();
+        const terjemah = (document.getElementById('quote-input-terjemah')?.value || '').trim();
+        const sumber = (document.getElementById('quote-input-sumber')?.value || '').trim();
+
+        if (!terjemah || !sumber) {
+          showToast("Terjemahan dan sumber hadits/ayat wajib diisi!", "error");
+          return;
+        }
+
+        if (!state.profile.quotes || state.profile.quotes.length === 0) {
+          state.profile.quotes = [...DEFAULT_QUOTES];
+        }
+
+        if (editId) {
+          const idx = state.profile.quotes.findIndex(q => q.id === editId);
+          if (idx !== -1) {
+            state.profile.quotes[idx] = {
+              id: editId,
+              kategori,
+              arab,
+              terjemah,
+              sumber
+            };
+          }
+        } else {
+          state.profile.quotes.unshift({
+            id: 'quote-' + Date.now(),
+            kategori,
+            arab,
+            terjemah,
+            sumber
+          });
+        }
+
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
+          }
+          window.app.toggleQuoteForm(false);
+          renderQuotesManager();
+          renderRandomQuote();
+          showToast(editId ? "Kutipan berhasil diperbarui!" : "Kutipan baru berhasil ditambahkan!", "success");
+        } catch (err) {
+          console.error("Error saving quote:", err);
+          showToast("Gagal menyimpan ke server: " + err.message + " (tersimpan lokal)", "error");
+        }
+      },
+
+      editQuote: (id) => {
+        const quotes = (state.profile.quotes && state.profile.quotes.length > 0)
+          ? state.profile.quotes
+          : DEFAULT_QUOTES;
+        const item = quotes.find(q => q.id === id);
+        if (!item) return;
+
+        window.app.toggleQuoteForm(true, true);
+        document.getElementById('quote-edit-id').value = item.id;
+        document.getElementById('quote-form-title').innerHTML = `
+          <i class="fa-solid fa-pen-to-square text-blue-600"></i>
+          <span>Edit Hadits / Ayat</span>
+        `;
+        document.getElementById('quote-btn-submit-label').innerText = 'Perbarui Kutipan';
+        document.getElementById('quote-input-kategori').value = item.kategori || 'sedekah';
+        document.getElementById('quote-input-arab').value = item.arab || '';
+        document.getElementById('quote-input-terjemah').value = item.terjemah || '';
+        document.getElementById('quote-input-sumber').value = item.sumber || '';
+      },
+
+      deleteQuote: async (id) => {
+        if (!confirm("Hapus kutipan ini dari daftar koleksi?")) {
+          return;
+        }
+
+        if (!state.profile.quotes || state.profile.quotes.length === 0) {
+          state.profile.quotes = [...DEFAULT_QUOTES];
+        }
+        state.profile.quotes = state.profile.quotes.filter(q => q.id !== id);
+
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
+          }
+          renderQuotesManager();
+          renderRandomQuote();
+          showToast("Kutipan berhasil dihapus.", "info");
+        } catch (err) {
+          console.error("Error deleting quote:", err);
+          showToast("Gagal menghapus di server: " + err.message + " (terhapus lokal)", "error");
+        }
+      },
+
+      resetDefaultQuotes: async () => {
+        if (!confirm("Kembalikan daftar kutipan ke 60 database hadits & ayat shahih bawaan (30 sedekah, 30 sholat berjamaah)?")) {
+          return;
+        }
+
+        state.profile.quotes = [...DEFAULT_QUOTES];
+        state.profile.quotesIntervalHours = 3;
+
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
+          }
+          renderQuotesManager();
+          renderRandomQuote();
+          showToast("Database kutipan berhasil di-reset ke 60 hadits bawaan!", "success");
+        } catch (err) {
+          console.error("Error resetting quotes:", err);
+          showToast("Gagal reset di server: " + err.message + " (di-reset lokal)", "error");
+        }
       }
+
     };
 
     /* ==========================================================================
@@ -4727,6 +5114,9 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         document.getElementById('btn-header-install')?.classList.add('hidden');
         showToast("Aplikasi Kas Mushola berhasil dipasang di layar utama!", "success");
       });
+
+      // Render initial quotes immediately
+      renderRandomQuote();
 
       // Init Firebase or Local Demo
       initFirebase();
