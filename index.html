@@ -482,15 +482,49 @@
               </div>
             </div>
 
-            <!-- 3. INFO JADWAL / ADAB MUSHOLA PASAR -->
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-2">
-              <div class="flex items-center gap-2 text-slate-700 font-bold text-xs">
-                <i class="fa-solid fa-clock text-mosque-600"></i>
-                <span>Waktu Shalat Berjamaah di Pasar</span>
+            <!-- 3. MUTIARA HADITS & AYAT AL-QUR'AN BERKALA -->
+            <div id="beranda-quotes-card" class="bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-amber-50/40 rounded-2xl p-4 md:p-5 shadow-sm border border-emerald-200/80 space-y-3 relative overflow-hidden transition-all duration-300">
+              <div class="flex items-center justify-between pb-2 border-b border-emerald-200/60">
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs shadow-xs flex-shrink-0">
+                    <i class="fa-solid fa-book-quran"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 truncate">Mutiara Qur'an & Hadits</h4>
+                    <span id="quote-category-badge" class="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full inline-block mt-0.5">Fadilah Sedekah</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                  <button type="button" onclick="window.app.nextRandomQuote()" title="Ganti Kutipan Lainnya (Acak)" class="p-1.5 rounded-lg bg-white/90 hover:bg-white text-emerald-700 hover:text-emerald-900 border border-emerald-200/80 shadow-2xs active:scale-90 transition text-xs flex items-center gap-1 font-semibold">
+                    <i class="fa-solid fa-shuffle text-[10px]"></i>
+                    <span class="text-[10px] hidden sm:inline">Acak</span>
+                  </button>
+                  <button type="button" onclick="window.app.shareQuoteWA()" title="Bagikan ke WhatsApp" class="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs active:scale-90 transition text-xs">
+                    <i class="fa-brands fa-whatsapp text-xs"></i>
+                  </button>
+                </div>
               </div>
-              <p class="text-[11px] text-slate-500 leading-relaxed">
-                Mushola pasar melayani shalat berjamaah Zhuhur, Ashar, dan Maghrib bagi para pedagang dan pengunjung pasar. Mari ramaikan shalat berjamaah tepat waktu.
-              </p>
+
+              <!-- Arab Text -->
+              <div id="quote-arab-display" class="font-arabic text-right text-base sm:text-lg leading-loose text-slate-800 py-1 dir-rtl selection:bg-emerald-100 font-normal">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- Terjemah / Arti Text -->
+              <div class="bg-white/85 backdrop-blur-xs p-3 rounded-xl border border-emerald-100/80 shadow-2xs space-y-2">
+                <p id="quote-terjemah-display" class="text-xs sm:text-[12.5px] text-slate-700 leading-relaxed italic">
+                  <!-- Dynamically populated -->
+                </p>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10.5px] flex-wrap gap-1">
+                  <span id="quote-sumber-display" class="font-bold text-emerald-800 flex items-center gap-1">
+                    <i class="fa-solid fa-bookmark text-emerald-600 text-[9px]"></i>
+                    <span>HR. Bukhari & Muslim</span>
+                  </span>
+                  <span id="quote-timer-info" class="text-[9.5px] text-slate-400 font-medium">
+                    Berganti tiap 3 jam
+                  </span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -662,6 +696,39 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- DEVELOPER FOOTER CARD -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-700/80">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-mosque-500 to-emerald-600 flex items-center justify-center text-white text-xl shadow-md flex-shrink-0">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm font-extrabold text-white">Mas Angga</h4>
+                  <span class="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                    Pengembang Sistem
+                  </span>
+                </div>
+                <p class="text-xs text-slate-300 mt-0.5">
+                  Developer aplikasi PWA Kas Mushola Pasar • Digitalisasi & Transparansi Dana Umat
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap pt-1 sm:pt-0">
+              <a href="https://wa.me/6281775700114?text=Halo%20Mas%20Angga%2C%20saya%20menghubungi%20terkait%20aplikasi%20Kas%20Mushola" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold py-2 px-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>081775700114</span>
+              </a>
+              <a href="https://ansor.studio" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-initial bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold py-2 px-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition border border-white/15">
+                <i class="fa-solid fa-globe text-xs"></i>
+                <span>Ansor.studio</span>
+              </a>
+            </div>
+          </div>
         </div>
 
       </section>
@@ -1065,6 +1132,113 @@
                   <span id="settings-agenda-count-badge" class="text-[10px] text-slate-400 font-medium">0 Agenda</span>
                 </div>
                 <div id="settings-agenda-list" class="space-y-2 max-h-72 overflow-y-auto no-scrollbar">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 4. KELOLA MUTIARA QUR'AN & HADITS -->
+            <div id="settings-quotes-manager-card" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-book-quran text-emerald-600 text-sm"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Mutiara Qur'an & Hadits</h3>
+                </div>
+                <button type="button" onclick="window.app.toggleQuoteForm(true)" class="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-xl transition flex items-center gap-1 active:scale-95 shadow-2xs">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Tambah Hadits/Ayat</span>
+                </button>
+              </div>
+
+              <p class="text-[11px] text-slate-500 leading-relaxed">
+                Koleksi ayat Al-Qur'an dan hadits shahih tentang fadilah sedekah & shalat berjamaah yang ditampilkan secara acak di halaman Beranda.
+              </p>
+
+              <!-- PENGATURAN INTERVAL ROTASI -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center justify-between gap-2">
+                <div>
+                  <span class="text-xs font-bold text-slate-700 block">Interval Rotasi Otomatis:</span>
+                  <span class="text-[10px] text-slate-400">Kutipan di beranda akan berganti berkala</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <select id="settings-quote-interval" onchange="window.app.saveQuoteInterval(this.value)" class="bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    <option value="1">Setiap 1 Jam</option>
+                    <option value="3" selected>Setiap 3 Jam (Bawaan)</option>
+                    <option value="6">Setiap 6 Jam</option>
+                    <option value="12">Setiap 12 Jam</option>
+                    <option value="24">Setiap Hari (24 Jam)</option>
+                    <option value="0">Setiap Buka Web (Acak)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- FORM BOX TAMBAH / EDIT HADITS -->
+              <div id="quote-form-box" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200/90 space-y-3 transition-all">
+                <div class="flex items-center justify-between">
+                  <span id="quote-form-title" class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+                    <span>Tambah Hadits / Ayat Baru</span>
+                  </span>
+                  <button type="button" onclick="window.app.toggleQuoteForm(false)" class="text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-solid fa-xmark"></i> Tutup
+                  </button>
+                </div>
+
+                <input type="hidden" id="quote-edit-id" value="">
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Kategori Kutipan</label>
+                  <select id="quote-input-kategori" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    <option value="sedekah">💰 Fadilah Sedekah & Infaq</option>
+                    <option value="sholat">🕌 Fadilah Sholat Berjamaah & Tepat Waktu</option>
+                    <option value="umum">✨ Mutiara Nasehat Umum</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Teks Arab (Opsional / dengan harakat)</label>
+                  <textarea id="quote-input-arab" rows="2" dir="rtl" placeholder="مَثَلُ الَّذِينَ يُنْفِقُونَ أَمْوَالَهُمْ..." class="w-full font-arabic bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-mosque-600 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Terjemahan / Makna Bahasa Indonesia (Wajib)</label>
+                  <textarea id="quote-input-terjemah" rows="3" placeholder="Tuliskan arti dan pesan hadits/ayat..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Sumber Riwayat / Nama Surat & Ayat (Wajib)</label>
+                  <input type="text" id="quote-input-sumber" placeholder="Contoh: HR. Bukhari no. 645 atau QS. Al-Baqarah: 261" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                  <button type="button" onclick="window.app.saveQuoteForm()" class="flex-1 bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <i class="fa-solid fa-floppy-disk text-xs"></i>
+                    <span id="quote-btn-submit-label">Simpan Kutipan</span>
+                  </button>
+                  <button type="button" onclick="window.app.toggleQuoteForm(false)" class="bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-700 font-semibold px-3 py-2 rounded-xl text-xs transition">
+                    Batal
+                  </button>
+                </div>
+              </div>
+
+              <!-- FILTER & DAFTAR KOLEKSI HADITS -->
+              <div class="space-y-2 pt-1">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <div class="flex items-center gap-1">
+                    <button type="button" onclick="window.app.filterQuotesAdmin('semua')" id="quote-filter-semua" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-white transition">Semua</button>
+                    <button type="button" onclick="window.app.filterQuotesAdmin('sedekah')" id="quote-filter-sedekah" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Sedekah</button>
+                    <button type="button" onclick="window.app.filterQuotesAdmin('sholat')" id="quote-filter-sholat" class="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Sholat</button>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span id="settings-quotes-count-badge" class="text-[10px] text-slate-400 font-medium">60 Kutipan</span>
+                    <button type="button" onclick="window.app.resetDefaultQuotes()" class="text-[10px] text-rose-500 hover:text-rose-700 underline font-medium" title="Kembalikan ke koleksi 60 hadits & ayat awal">
+                      Reset Bawaan
+                    </button>
+                  </div>
+                </div>
+
+                <div id="settings-quotes-list" class="space-y-2 max-h-80 overflow-y-auto no-scrollbar pt-1">
                   <!-- Dynamically populated -->
                 </div>
               </div>
@@ -1546,6 +1720,429 @@
       ]
     };
 
+    const DEFAULT_QUOTES = [
+  {
+    "id": "quote-s1",
+    "kategori": "sedekah",
+    "arab": "مَّثَلُ ٱلَّذِينَ يُنفِقُونَ أَمْوَٰلَهُمْ فِى سَبِيلِ ٱللَّهِ كَمَثَلِ حَبَّةٍ أَنۢبَتَتْ سَبْعَ سَنَابِلَ فِى كُلِّ سُنۢبُلَةٍ مِّا۟ئَةُ حَبَّةٍ",
+    "terjemah": "Perumpamaan orang yang menginfakkan hartanya di jalan Allah seperti sebutir biji yang menumbuhkan tujuh tangkai, pada setiap tangkai ada seratus biji. Allah melipatgandakan bagi siapa yang Dia kehendaki.",
+    "sumber": "QS. Al-Baqarah: 261"
+  },
+  {
+    "id": "quote-s2",
+    "kategori": "sedekah",
+    "arab": "مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ",
+    "terjemah": "Sedekah itu tidak akan pernah mengurangi harta sedikit pun.",
+    "sumber": "HR. Muslim no. 2588"
+  },
+  {
+    "id": "quote-s3",
+    "kategori": "sedekah",
+    "arab": "مَا مِنْ يَوْمٍ يُصْبِحُ الْعِبَادُ فِيهِ إِلاَّ مَلَكَانِ يَنْزِلاَنِ فَيَقُولُ أَحَدُهُمَا: اللَّهُمَّ أَعْطِ مُنْفِقًا خَلَفًا",
+    "terjemah": "Tidak ada satu hari pun di pagi hari melainkan dua malaikat turun; salah satunya berdoa: 'Ya Allah, berikanlah ganti (keberkahan) bagi orang yang berinfak'.",
+    "sumber": "HR. Bukhari no. 1442 & Muslim no. 1010"
+  },
+  {
+    "id": "quote-s4",
+    "kategori": "sedekah",
+    "arab": "وَمَا أَنْفَقْتُمْ مِنْ شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ",
+    "terjemah": "Dan apa saja yang kamu infakkan, Allah akan menggantinya dan Dialah pemberi rezeki yang terbaik.",
+    "sumber": "QS. Saba: 39"
+  },
+  {
+    "id": "quote-s5",
+    "kategori": "sedekah",
+    "arab": "إِنَّ الصَّدَقَةَ لَتُطْفِئُ غَضَبَ الرَّبِّ وَتَدْفَعُ مِيتَةَ السُّوءِ",
+    "terjemah": "Sesungguhnya sedekah itu dapat memadamkan murka Allah dan menghindarkan dari kematian yang buruk (su'ul khatimah).",
+    "sumber": "HR. Tirmidzi no. 664"
+  },
+  {
+    "id": "quote-s6",
+    "kategori": "sedekah",
+    "arab": "كُلُّ امْرِئٍ فِي ظِلِّ صَدَقَتِهِ حَتَّى يُفْصَلَ بَيْنَ النَّاسِ",
+    "terjemah": "Setiap orang berada di bawah naungan sedekahnya pada hari kiamat kelak, sampai perkaranya diputuskan di antara manusia.",
+    "sumber": "HR. Ahmad no. 18043 (Shahih)"
+  },
+  {
+    "id": "quote-s7",
+    "kategori": "sedekah",
+    "arab": "اتَّقُوا النَّارَ وَلَوْ بِشِقِّ تَمْرَةٍ",
+    "terjemah": "Jagalah diri kalian dari siksa api neraka walaupun hanya dengan bersedekah separuh butir kurma.",
+    "sumber": "HR. Bukhari no. 1417 & Muslim no. 1016"
+  },
+  {
+    "id": "quote-s8",
+    "kategori": "sedekah",
+    "arab": "إِذَا مَاتَ الْإِنْسَانُ انْقَطَعَ عَنْهُ عَمَلُهُ إِلَّا مِنْ ثَلَاثَةٍ: إِلَّا مِنْ صَدَقَةٍ جَارِيَةٍ...",
+    "terjemah": "Jika seseorang meninggal dunia, terputuslah semua amalnya kecuali tiga perkara: sedekah jariyah, ilmu yang bermanfaat, dan anak saleh yang mendoakannya.",
+    "sumber": "HR. Muslim no. 1631"
+  },
+  {
+    "id": "quote-s9",
+    "kategori": "sedekah",
+    "arab": "لَنْ تَنَالُوا الْبِرَّ حَتَّىٰ تُنْفِقُوا مِمَّا تُحِبُّونَ",
+    "terjemah": "Kamu sekali-kali tidak akan memperoleh kebajikan yang sempurna, sebelum kamu menginfakkan sebagian harta yang paling kamu cintai.",
+    "sumber": "QS. Ali 'Imran: 92"
+  },
+  {
+    "id": "quote-s10",
+    "kategori": "sedekah",
+    "arab": "وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ",
+    "terjemah": "Dan sedekah itu dapat menghapuskan dosa dan kesalahan sebagaimana air memadamkan kobaran api.",
+    "sumber": "HR. Tirmidzi no. 614"
+  },
+  {
+    "id": "quote-s11",
+    "kategori": "sedekah",
+    "arab": "الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى",
+    "terjemah": "Tangan yang di atas (pemberi sedekah) jauh lebih mulia daripada tangan yang di bawah (peminta-minta).",
+    "sumber": "HR. Bukhari no. 1429 & Muslim no. 1033"
+  },
+  {
+    "id": "quote-s12",
+    "kategori": "sedekah",
+    "arab": "مَنْ ذَا الَّذِي يُقْرِضُ اللَّهَ قَرْضًا حَسَنًا فَيُضَاعِفَهُ لَهُ أَضْعَافًا كَثِيرَةً",
+    "terjemah": "Siapakah yang mau memberi pinjaman kepada Allah pinjaman yang baik, maka Allah akan melipatgandakan balasan kepadanya dengan lipat ganda yang banyak.",
+    "sumber": "QS. Al-Baqarah: 245"
+  },
+  {
+    "id": "quote-s13",
+    "kategori": "sedekah",
+    "arab": "إِنَّ الْمُصَّدِّقِينَ وَالْمُصَّدِّقَاتِ وَأَقْرَضُوا اللَّهَ قَرْضًا حَسَنًا يُضَاعَفُ لَهُمْ وَلَهُمْ أَجْرٌ كَرِيمٌ",
+    "terjemah": "Sesungguhnya orang-orang yang bersedekah baik laki-laki maupun perempuan dan meminjamkan kepada Allah pinjaman yang baik, akan dilipatgandakan balasannya dan bagi mereka pahala yang mulia.",
+    "sumber": "QS. Al-Hadid: 18"
+  },
+  {
+    "id": "quote-s14",
+    "kategori": "sedekah",
+    "arab": "وَأَنْفِقُوا مِنْ مَا رَزَقْنَاكُمْ مِنْ قَبْلِ أَنْ يَأْتِيَ أَحَدَكُمُ الْمَوْتُ فَيَقُولَ رَبِّ لَوْلَا أَخَّرْتَنِي إِلَىٰ أَجَلٍ قَرِيبٍ فَأَصَّدَّقَ",
+    "terjemah": "Dan infakkanlah sebagian rezeki sebelum kematian datang, lalu berkata: 'Ya Tuhanku, sekiranya Engkau menundaku sejenak agar aku dapat bersedekah dan menjadi orang saleh.'",
+    "sumber": "QS. Al-Munafiqun: 10"
+  },
+  {
+    "id": "quote-s15",
+    "kategori": "sedekah",
+    "arab": "مَنْ تَصَدَّقَ بِعَدْلِ تَمْرَةٍ مِنْ كَسْبٍ طَيِّبٍ... يَرْبِيهَا لَهُ كَمَا يُرَبِّي أَحَدُكُمْ فَلُوَّهُ حَتَّى تَكُونَ مِثْلَ الْجَبَلِ",
+    "terjemah": "Siapa yang bersedekah sebutir kurma dari hasil usaha halal, Allah akan memelihara sedekah itu sebagaimana kalian memelihara anak kuda, hingga pahalanya sebesar gunung.",
+    "sumber": "HR. Bukhari no. 1421 & Muslim no. 1014"
+  },
+  {
+    "id": "quote-s16",
+    "kategori": "sedekah",
+    "arab": "وَرَجُلٌ تَصَدَّقَ بِصَدَقَةٍ فَأَخْفَاهَا حَتَّى لاَ تَعْلَمَ شِمَالُهُ مَا تُنْفِقُ يَمِينُهُ",
+    "terjemah": "Termasuk tujuh golongan yang dinaungi Allah di hari kiamat: seseorang yang bersedekah secara tersembunyi hingga tangan kirinya tidak mengetahui apa yang diinfakkan tangan kanannya.",
+    "sumber": "HR. Bukhari no. 6533 & Muslim no. 1031"
+  },
+  {
+    "id": "quote-s17",
+    "kategori": "sedekah",
+    "arab": "تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ",
+    "terjemah": "Senyum manismu di hadapan saudaramu adalah bernilai sedekah bagimu.",
+    "sumber": "HR. Tirmidzi no. 1956 (Shahih)"
+  },
+  {
+    "id": "quote-s18",
+    "kategori": "sedekah",
+    "arab": "إِنْ تُبْدُوا الصَّدَقَاتِ فَنِعِمَّا هِيَ ۖ وَإِنْ تُخْفُوهَا وَتُؤْتُوهَا الْفُقَرَاءَ فَهُوَ خَيْرٌ لَكُمْ",
+    "terjemah": "Jika kamu menampakkan sedekahmu, maka itu adalah baik. Dan jika kamu menyembunyikannya dan memberikannya kepada orang-orang fakir, maka itu lebih baik bagimu.",
+    "sumber": "QS. Al-Baqarah: 271"
+  },
+  {
+    "id": "quote-s19",
+    "kategori": "sedekah",
+    "arab": "الَّذِينَ يُنْفِقُونَ أَمْوَالَهُمْ بِاللَّيْلِ وَالنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِنْدَ رَبِّهِمْ",
+    "terjemah": "Orang-orang yang menafkahkan hartanya di malam dan siang hari secara sembunyi maupun terang-terangan, mereka mendapat pahala di sisi Tuhannya, tidak ada rasa takut dan tidak bersedih hati.",
+    "sumber": "QS. Al-Baqarah: 274"
+  },
+  {
+    "id": "quote-s20",
+    "kategori": "sedekah",
+    "arab": "وَالصَّدَقَةُ بُرْهَانٌ",
+    "terjemah": "Dan sedekah itu adalah bukti nyata (akan keimanan seorang hamba kepada Allah).",
+    "sumber": "HR. Muslim no. 223"
+  },
+  {
+    "id": "quote-s21",
+    "kategori": "sedekah",
+    "arab": "إِنَّ الَّذِينَ يَتْلُونَ كِتَابَ اللَّهِ وَأَقَامُوا الصَّلَاةَ وَأَنْفَقُوا مِمَّا رَزَقْنَاهُمْ سِرًّا وَعَلَانِيَةً يَرْجُونَ تِجَارَةً لَنْ تَبُورَ",
+    "terjemah": "Sesungguhnya orang-orang yang membaca Kitab Allah, mendirikan shalat, dan menginfakkan rezeki yang Kami anugerahkan, mereka mengharapkan perniagaan yang tidak akan pernah merugi.",
+    "sumber": "QS. Fathir: 29"
+  },
+  {
+    "id": "quote-s22",
+    "kategori": "sedekah",
+    "arab": "صَدَقَةُ السِّرِّ تُطْفِئُ غَضَبَ الرَّبِّ",
+    "terjemah": "Sedekah yang dilakukan secara rahasia dapat memadamkan murka Allah Tuhan Yang Maha Kuasa.",
+    "sumber": "HR. Thabrani (Shahih At-Targhib no. 888)"
+  },
+  {
+    "id": "quote-s23",
+    "kategori": "sedekah",
+    "arab": "حَصِّنُوا أَمْوَالَكُمْ بِالزَّكَاةِ وَدَاوُوا مَرْضَاكُمْ بِالصَّدَقَةِ",
+    "terjemah": "Bentengilah harta kekayaan kalian dengan zakat, dan obatilah orang-orang sakit di antara kalian dengan memperbanyak sedekah.",
+    "sumber": "HR. Baihaqi (Shahih Al-Jami' no. 3358)"
+  },
+  {
+    "id": "quote-s24",
+    "kategori": "sedekah",
+    "arab": "لِيُنْفِقْ ذُو سَعَةٍ مِنْ سَعَتِهِ ۖ وَمَنْ قُدِرَ عَلَيْهِ رِزْقُهُ فَلْيُنْفِقْ مِمَّا آتَاهُ اللَّهُ",
+    "terjemah": "Hendaklah orang yang mempunyai keluasan memberi nafkah menurut kemampuannya, dan orang yang terbatas rezekinya hendaklah memberi nafkah dari apa yang diberikan Allah kepadanya.",
+    "sumber": "QS. At-Talaq: 7"
+  },
+  {
+    "id": "quote-s25",
+    "kategori": "sedekah",
+    "arab": "يَقُولُ ابْنُ آدَمَ مَالِي مَالِي... وَهَلْ لَكَ مِنْ مَالِكَ إِلَّا مَا تَصَدَّقْتَ فَأَمْضَيْتَ",
+    "terjemah": "Anak Adam berkata: 'Hartaku, hartaku!' Padahal tidak ada dari hartamu yang abadi melainkan apa yang telah engkau sedekahkan di jalan Allah.",
+    "sumber": "HR. Muslim no. 2958"
+  },
+  {
+    "id": "quote-s26",
+    "kategori": "sedekah",
+    "arab": "فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ وَصَدَّقَ بِالْحُسْنَىٰ فَسَنُيَسِّرُهُ لِلْيُسْرَىٰ",
+    "terjemah": "Adapun orang yang memberikan hartanya di jalan Allah dan bertakwa, serta membenarkan adanya pahala terbaik, maka Kami akan memudahkan baginya jalan kemudahan.",
+    "sumber": "QS. Al-Lail: 5-7"
+  },
+  {
+    "id": "quote-s27",
+    "kategori": "sedekah",
+    "arab": "مَنْ اسْتَطَاعَ مِنْكُمْ أَنْ يَسْتَتِرَ مِنْ النَّارِ وَلَوْ بِشِقِّ تَمْرَةٍ فَلْيَفْعَلْ",
+    "terjemah": "Barangsiapa di antara kalian yang mampu membentengi dirinya dari siksa api neraka walaupun hanya dengan sebutir kurma, maka lakukanlah.",
+    "sumber": "HR. Bukhari no. 1423 & Muslim no. 1016"
+  },
+  {
+    "id": "quote-s28",
+    "kategori": "sedekah",
+    "arab": "ثَلاَثَةٌ أُقْسِمُ عَلَيْهِنَّ: مَا نَقَصَ مَالُ عَبْدٍ مِنْ صَدَقَةٍ",
+    "terjemah": "Ada tiga perkara yang aku bersumpah atasnya: tidak akan pernah berkurang harta seorang hamba karena dikeluarkan untuk sedekah.",
+    "sumber": "HR. Tirmidzi no. 2325 (Shahih)"
+  },
+  {
+    "id": "quote-s29",
+    "kategori": "sedekah",
+    "arab": "السَّاعِي عَلَى الأَرْمَلَةِ وَالْمِسْكِينِ كَالْمُجَاهِدِ فِي سَبِيلِ اللَّهِ",
+    "terjemah": "Orang yang berusaha mencukupi kebutuhan janda miskin dan kaum dhuafa pahalanya seperti orang yang berjihad di jalan Allah atau shalat malam tanpa lelah.",
+    "sumber": "HR. Bukhari no. 6006 & Muslim no. 2982"
+  },
+  {
+    "id": "quote-s30",
+    "kategori": "sedekah",
+    "arab": "وَيُطْعِمُونَ الطَّعَامَ عَلَىٰ حُبِّهِ مِسْكِينًا وَيَتِيمًا وَأَسِيرًا إِنَّمَا نُطْعِمُكُمْ لِوَجْهِ اللَّهِ لَا نُرِيدُ مِنْكُمْ جَزَاءً وَلَا شُكُورًا",
+    "terjemah": "Dan mereka memberikan makanan yang disukainya kepada orang miskin, anak yatim, dan tawanan seraya berkata: 'Sesungguhnya kami memberi makan kepadamu hanyalah karena mengharap ridha Allah.'",
+    "sumber": "QS. Al-Insan: 8-9"
+  },
+  {
+    "id": "quote-b1",
+    "kategori": "sholat",
+    "arab": "صَلاَةُ الْجَمَاعَةِ تَفْضُلُ صَلاَةَ الْفَذِّ بِسَبْعٍ وَعِشْرِينَ دَرَجَةً",
+    "terjemah": "Sholat berjamaah melampaui keutamaan sholat sendirian sebanyak dua puluh tujuh derajat kemuliaan.",
+    "sumber": "HR. Bukhari no. 645 & Muslim no. 650"
+  },
+  {
+    "id": "quote-b2",
+    "kategori": "sholat",
+    "arab": "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ",
+    "terjemah": "Dan dirikanlah sholat, tunaikanlah zakat, dan ruku'lah beserta orang-orang yang ruku' (tunaikanlah sholat berjamaah).",
+    "sumber": "QS. Al-Baqarah: 43"
+  },
+  {
+    "id": "quote-b3",
+    "kategori": "sholat",
+    "arab": "مَنْ صَلَّى الْعِشَاءَ فِي جَمَاعَةٍ فَكَأَنَّمَا قَامَ نِصْفَ اللَّيْلِ وَمَنْ صَلَّى الصُّبْحَ فِي جَمَاعَةٍ فَكَأَنَّمَا صَلَّى اللَّيْلَ كُلَّهُ",
+    "terjemah": "Barangsiapa sholat Isya berjamaah, maka seakan-akan ia sholat separuh malam. Dan barangsiapa sholat Subuh berjamaah, maka seakan-akan ia sholat sepanjang malam suntuk.",
+    "sumber": "HR. Muslim no. 654"
+  },
+  {
+    "id": "quote-b4",
+    "kategori": "sholat",
+    "arab": "مَنْ تَطَهَّرَ فِي بَيْتِهِ ثُمَّ مَشَى إِلَى بَيْتٍ مِنْ بُيُوتِ اللَّهِ... كَانَتْ خَطْوَتَاهُ إِحْدَاهُمَا تَحُطُّ خَطِيئَةً وَالأُخْرَى تَرْفَعُ دَرَجَةً",
+    "terjemah": "Barangsiapa bersuci di rumahnya lalu melangkah ke rumah Allah untuk menunaikan sholat fardhu, satu langkahnya menghapus dosa dan langkah lainnya mengangkat derajat.",
+    "sumber": "HR. Muslim no. 657"
+  },
+  {
+    "id": "quote-b5",
+    "kategori": "sholat",
+    "arab": "بَشِّرِ الْمَشَّائِينَ فِي الظُّلَمِ إِلَى الْمَسَاجِدِ بِالنُّورِ التَّامِّ يَوْمَ الْقِيَامَةِ",
+    "terjemah": "Berilah kabar gembira kepada orang-orang yang berjalan dalam kegelapan malam menuju masjid, dengan cahaya yang sempurna terang-benderang pada hari kiamat.",
+    "sumber": "HR. Abu Dawud no. 561 & Tirmidzi no. 223"
+  },
+  {
+    "id": "quote-b6",
+    "kategori": "sholat",
+    "arab": "مَنْ غَدَا إِلَى الْمَسْجِدِ أَوْ رَاحَ أَعَدَّ اللَّهُ لَهُ فِي الْجَنَّةِ نُزُلاً كُلَّمَا غَدَا أَوْ رَاحَ",
+    "terjemah": "Barangsiapa pergi ke masjid di waktu pagi atau petang hari, Allah menyiapkan baginya hidangan kehormatan di surga setiap kali ia pergi di waktu pagi atau petang.",
+    "sumber": "HR. Bukhari no. 662 & Muslim no. 662"
+  },
+  {
+    "id": "quote-b7",
+    "kategori": "sholat",
+    "arab": "مَنْ صَلَّى لِلَّهِ أَرْبَعِينَ يَوْمًا فِي جَمَاعَةٍ يُدْرِكُ التَّكْبِيرَةَ الأُولَى كُتِبَتْ لَهُ بَرَاءَتَانِ: بَرَاءَةٌ مِنَ النَّارِ وَبَرَاءَةٌ مِنَ النِّفَاقِ",
+    "terjemah": "Siapa yang sholat karena Allah 40 hari berjamaah mendapati takbiratul ihram pertama, dicatat baginya dua pembebasan: bebas dari siksa api neraka dan bebas dari kemunafikan.",
+    "sumber": "HR. Tirmidzi no. 241"
+  },
+  {
+    "id": "quote-b8",
+    "kategori": "sholat",
+    "arab": "صَلاَةُ الرَّجُلِ مَعَ الرَّجُلِ أَزْكَى مِنْ صَلاَتِهِ وَحْدَهُ وَصَلاَتُهُ مَعَ الرَّجُلَيْنِ أَزْكَى مِنْ صَلاَتِهِ مَعَ الرَّجُلِ",
+    "terjemah": "Sholat dua orang berjamaah lebih suci dibanding sholat sendirian, dan sholat bertiga lebih utama dari berdua, dan semakin banyak jamaahnya maka semakin dicintai oleh Allah.",
+    "sumber": "HR. Abu Dawud no. 554 & An-Nasa'i no. 843"
+  },
+  {
+    "id": "quote-b9",
+    "kategori": "sholat",
+    "arab": "مَا مِنْ ثَلاَثَةٍ فِي قَرْيَةٍ وَلاَ بَدْوٍ لاَ تُقَامُ فِيهِمُ الصَّلاَةُ إِلاَّ قَدِ اسْتَحْوَذَ عَلَيْهِمُ الشَّيْطَانُ فَعَلَيْكُمْ بِالْجَمَاعَةِ",
+    "terjemah": "Tidaklah ada tiga orang di suatu tempat tanpa ditegakkan sholat berjamaah di antara mereka, melainkan setan telah menguasai mereka. Maka wajib atas kalian untuk berjamaah.",
+    "sumber": "HR. Abu Dawud no. 547 & An-Nasa'i no. 847"
+  },
+  {
+    "id": "quote-b10",
+    "kategori": "sholat",
+    "arab": "سَأَلْتُ النَّبِيَّ ﷺ: أَيُّ الْعَمَلِ أَحَبُّ إِلَى اللَّهِ؟ قَالَ: الصَّلاَةُ عَلَى وَقْتِهَا",
+    "terjemah": "Aku bertanya kepada Nabi ﷺ: 'Amalan apakah yang paling dicintai oleh Allah?' Rasulullah menjawab: 'Sholat tepat pada waktunya.'",
+    "sumber": "HR. Bukhari no. 527 & Muslim no. 85"
+  },
+  {
+    "id": "quote-b11",
+    "kategori": "sholat",
+    "arab": "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا",
+    "terjemah": "Sesungguhnya sholat itu adalah kewajiban yang telah ditentukan waktu-waktunya atas orang-orang yang beriman.",
+    "sumber": "QS. An-Nisa: 103"
+  },
+  {
+    "id": "quote-b12",
+    "kategori": "sholat",
+    "arab": "أَلَا أَدُلُّكُمْ عَلَى مَا يَمْحُو اللَّهُ بِهِ الْخَطَايَا وَيَرْفَعُ بِهِ الدَّرَجَاتِ؟ كَثْرَةُ الْخُطَا إِلَى الْمَسَاجِدِ وَانْتِظَارُ الصَّلَاةِ بَعْدَ الصَّلَاةِ",
+    "terjemah": "Maukah kalian aku tunjukkan amalan yang menghapuskan dosa dan meninggikan derajat? Menyempurnakan wudhu, melangkahkan kaki ke masjid, dan menanti sholat berikutnya setelah sholat.",
+    "sumber": "HR. Muslim no. 660"
+  },
+  {
+    "id": "quote-b13",
+    "kategori": "sholat",
+    "arab": "لَوْ يَعْلَمُ النَّاسُ مَا فِي النِّدَاءِ وَالصَّفِّ الأَوَّلِ ثُمَّ لَمْ يَجِدُوا إِلاَّ أَنْ يَسْتَهِمُوا عَلَيْهِ لاَسْتَهَمُوا",
+    "terjemah": "Seandainya manusia mengetahui pahala panggilan azan dan shaf pertama, lalu mereka tidak bisa mendapatkannya kecuali dengan mengundi, niscaya mereka pasti akan mengundinya.",
+    "sumber": "HR. Bukhari no. 615 & Muslim no. 437"
+  },
+  {
+    "id": "quote-b14",
+    "kategori": "sholat",
+    "arab": "خَيْرُ صُفُوفِ الرِّجَالِ أَوَّلُهَا وَشَرُّهَا آخِرُهَا",
+    "terjemah": "Sebaik-baik shaf bagi kaum laki-laki dalam sholat adalah shaf yang pertama (paling depan), dan yang paling sedikit keutamaannya adalah yang paling belakang.",
+    "sumber": "HR. Muslim no. 432"
+  },
+  {
+    "id": "quote-b15",
+    "kategori": "sholat",
+    "arab": "أَقِيمُوا صُفُوفَكُمْ وَتَرَاصُّوا فَإِنِّي أَرَاكُمْ مِنْ وَرَاءِ ظَهْرِي",
+    "terjemah": "Luruskanlah shaf-shaf kalian dan rapatkanlah barisan, karena sesungguhnya aku dapat melihat kalian dari balik punggungku.",
+    "sumber": "HR. Bukhari no. 723 & Muslim no. 433"
+  },
+  {
+    "id": "quote-b16",
+    "kategori": "sholat",
+    "arab": "رُصُّوا صُفُوفَكُمْ وَقَارِبُوا بَيْنَهَا وَحَاذُوا بِالأَعْنَاقِ",
+    "terjemah": "Rapatkanlah shaf-shaf sholat kalian, dekatkan jarak antar barisan, dan sejajarkan leher serta pundak kalian.",
+    "sumber": "HR. Abu Dawud no. 666 (Shahih)"
+  },
+  {
+    "id": "quote-b17",
+    "kategori": "sholat",
+    "arab": "صَلاَةُ الرَّجُلِ فِي الْجَمَاعَةِ تُضَعَّفُ عَلَى صَلاَتِهِ فِي بَيْتِهِ وَفِي سُوقِهِ خَمْسًا وَعِشْرِينَ ضِعْفًا",
+    "terjemah": "Sholat seseorang secara berjamaah dilipatgandakan pahalanya dibanding sholat sendirian di rumahnya atau di kios pasarnya sebanyak dua puluh lima kali lipat.",
+    "sumber": "HR. Abu Dawud no. 556 & Bukhari no. 647"
+  },
+  {
+    "id": "quote-b18",
+    "kategori": "sholat",
+    "arab": "إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى الصَّفِّ الْأَوَّلِ",
+    "terjemah": "Sesungguhnya Allah melimpahkan rahmat-Nya dan para malaikat-Nya mendoakan kebaikan bagi orang-orang yang berada di shaf pertama sholat berjamaah.",
+    "sumber": "HR. Abu Dawud no. 664 & Ahmad no. 18512"
+  },
+  {
+    "id": "quote-b19",
+    "kategori": "sholat",
+    "arab": "قَدْ أَفْلَحَ الْمُؤْمِنُونَ الَّذِينَ هُمْ فِي صَلَاتِهِمْ خَاشِعُونَ",
+    "terjemah": "Sungguh beruntung orang-orang yang beriman, yaitu orang-orang yang khusyuk dalam menunaikan shalatnya.",
+    "sumber": "QS. Al-Mu'minun: 1-2"
+  },
+  {
+    "id": "quote-b20",
+    "kategori": "sholat",
+    "arab": "مَنْ صَلَّى الصُّبْحَ فَهُوَ فِي ذِمَّةِ اللَّهِ فَلَا يَطْلُبَنَّكُمُ اللَّهُ مِنْ ذِمَّتِهِ بِشَيْءٍ",
+    "terjemah": "Barangsiapa sholat Subuh berjamaah, maka ia berada dalam jaminan perlindungan Allah sepanjang hari.",
+    "sumber": "HR. Muslim no. 656"
+  },
+  {
+    "id": "quote-b21",
+    "kategori": "sholat",
+    "arab": "مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ",
+    "terjemah": "Barangsiapa mendirikan sholat pada dua waktu yang sejuk (Subuh dan Ashar), ia pasti masuk surga.",
+    "sumber": "HR. Bukhari no. 574 & Muslim no. 635"
+  },
+  {
+    "id": "quote-b22",
+    "kategori": "sholat",
+    "arab": "إِذَا سَمِعْتَ النِّدَاءَ فَأَجِبْ دَاعِيَ اللَّهِ",
+    "terjemah": "Jika engkau mendengar seruan adzan, maka sambutlah dan penuhilah panggilan penyeru Allah menuju masjid.",
+    "sumber": "HR. Muslim no. 649"
+  },
+  {
+    "id": "quote-b23",
+    "kategori": "sholat",
+    "arab": "الْعَهْدُ الَّذِي بَيْنَنَا وَبَيْنَهُمُ الصَّلاَةُ فَمَنْ تَرَكَهَا فَقَدْ كَفَرَ",
+    "terjemah": "Perjanjian pembeda antara kita dengan mereka adalah sholat, barangsiapa yang meninggalkannya maka sungguh ia telah kufur.",
+    "sumber": "HR. Tirmidzi no. 2621 & Ahmad"
+  },
+  {
+    "id": "quote-b24",
+    "kategori": "sholat",
+    "arab": "اتْلُ مَا أُوحِيَ إِلَيْكَ مِنَ الْكِتَابِ وَأَقِمِ الصَّلَاةَ ۖ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ",
+    "terjemah": "Dan dirikanlah shalat. Sesungguhnya shalat itu mencegah dari perbuatan keji dan kemungkaran.",
+    "sumber": "QS. Al-Ankabut: 45"
+  },
+  {
+    "id": "quote-b25",
+    "kategori": "sholat",
+    "arab": "أَرَأَيْتُمْ لَوْ أَنَّ نَهْرًا بِبَابِ أَحَدِكُمْ يَغْتَسِلُ فِيهِ كُلَّ يَوْمٍ خَمْسًا... فَذَلِكَ مَثَلُ الصَّلَوَاتِ الْخَمْسِ يَمْحُو اللَّهُ بِهَا الْخَطَايَا",
+    "terjemah": "Perumpamaan sholat lima waktu seperti sungai mengalir jernih di depan pintu rumah kalian yang dipakai mandi lima kali sehari; dengannya Allah menghapuskan dosa-dosa.",
+    "sumber": "HR. Bukhari no. 528 & Muslim no. 667"
+  },
+  {
+    "id": "quote-b26",
+    "kategori": "sholat",
+    "arab": "إِنَّ أَعْظَمَ النَّاسِ أَجْرًا فِي الصَّلاَةِ أَبْعَدُهُمْ إِلَيْهَا مَمْشًى فَأَبْعَدُهُمْ",
+    "terjemah": "Sesungguhnya orang yang paling agung pahalanya dalam sholat adalah orang yang paling jauh jarak langkah kakinya menuju ke masjid.",
+    "sumber": "HR. Muslim no. 658"
+  },
+  {
+    "id": "quote-b27",
+    "kategori": "sholat",
+    "arab": "وَأْمُرْ أَهْلَكَ بِالصَّلَاةِ وَاصْطَبِرْ عَلَيْهَا ۖ لَا نَسْأَلُكَ رِزْقًا ۖ نَحْنُ نَرْزُقُكَ",
+    "terjemah": "Dan perintahkanlah keluargamu mendirikan shalat dan bersabarlah kamu dalam mengerjakannya. Kami tidak meminta rezeki kepadamu, Kamilah yang memberi rezeki kepadamu.",
+    "sumber": "QS. Thaha: 132"
+  },
+  {
+    "id": "quote-b28",
+    "kategori": "sholat",
+    "arab": "يَتَعَاقَبُونَ فِيكُمْ مَلائِكَةٌ بِاللَّيْلِ وَمَلائِكَةٌ بِالنَّهَارِ وَيَجْتَمِعُونَ فِي صَلاةِ الْفَجْرِ وَصَلاةِ الْعَصْرِ",
+    "terjemah": "Para malaikat malam dan malaikat siang berkumpul pada waktu sholat Subuh dan sholat Ashar, lalu bersaksi di hadapan Allah atas sholat hamba-Nya.",
+    "sumber": "HR. Bukhari no. 555 & Muslim no. 632"
+  },
+  {
+    "id": "quote-b29",
+    "kategori": "sholat",
+    "arab": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِنْ يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ",
+    "terjemah": "Wahai orang-orang yang beriman, apabila telah diseru untuk menunaikan shalat pada hari Jum'at, maka segeralah mengingat Allah dan tinggalkanlah jual beli.",
+    "sumber": "QS. Al-Jumu'ah: 9"
+  },
+  {
+    "id": "quote-b30",
+    "kategori": "sholat",
+    "arab": "الصَّلَوَاتُ الْخَمْسُ وَالْجُمُعَةُ إِلَى الْجُمُعَةِ كَفَّارَاتٌ لِمَا بَيْنَهُنَّ مَا لَمْ تُغْشَ الْكَبَائِرُ",
+    "terjemah": "Sholat lima waktu dan sholat Jum'at ke Jum'at berikutnya adalah penggugur dosa-dosa kecil di antara keduanya, selama dosa-dosa besar dijauhi.",
+    "sumber": "HR. Muslim no. 233"
+  }
+];
+
     const DEFAULT_PROFILE = {
       nama: "Mushola Al-Barokah Pasar Besar",
       alamat: "Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional",
@@ -1571,7 +2168,9 @@
           addedAt: "2026-10-03T00:00:00.000Z"
         }
       ],
-      agendas: []
+      agendas: [],
+      quotesIntervalHours: 3,
+      quotes: [...DEFAULT_QUOTES]
     };
 
     const DEFAULT_TRANSACTIONS = [
@@ -1649,7 +2248,9 @@
       activeReplacePengurusId: null,
       deferredPwaPrompt: null,
       db: null,
-      auth: null
+      auth: null,
+      currentQuoteIndex: 0,
+      adminQuotesFilter: "semua"
     };
 
     /* ==========================================================================

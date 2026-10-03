@@ -223,4 +223,39 @@ Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu m
 - Terdapat tombol **Template Cepat 1-Klik** (*📢 Pengumuman*, *📅 Undangan Acara*, *🏗️ Rencana Pembangunan*) agar pengurus tidak perlu mengetik dari awal.
 - Pengurus dapat mengedit, menghapus, atau mengaktifkan/menonaktifkan agenda (*toggle status*) kapan saja dengan sinkronisasi real-time cloud Firestore.
 
+---
+
+## 📖 Fitur Inspirasi Islami: Mutiara Hadits Shahih & Ayat Al-Qur'an (Rotasi Dinamis)
+
+### 1. Kolom Indah di Beranda
+- **Kutipan Otentik Berganti Otomatis**: Menampilkan ayat Al-Qur'an dan hadits shahih secara dinamis berdasarkan interval waktu rotasi (default per 3 jam, atau opsi 1 jam, 6 jam, 12 jam, 24 jam, maupun acak setiap reload).
+- **Tipografi Indah**: Menggunakan kaligrafi Arab dengan font *Amiri*, teks terjemahan bahasa Indonesia yang jelas, badge tema (*Fadilah Sedekah & Infaq* / *Sholat Berjamaah & Tepat Waktu*), serta sumber perawi/surat yang shahih dan terverifikasi.
+- **Interaktif**:
+  - Tombol **"Acak Lainnya" (Shuffle)**: Menampilkan kutipan acak baru seketika.
+  - Tombol **"Bagikan Hadits/Ayat ke WhatsApp"**: Memformat teks Arab, terjemahan, sumber riwayat, dan link mushola untuk syiar digital ke grup pedagang & jamaah.
+
+### 2. Database Bawaan & Pengelolaan di Pengaturan
+- **60 Database Awal Terverifikasi**:
+  - 30 Kutipan otentik mengenai **Fadilah Sedekah & Infaq**.
+  - 30 Kutipan otentik mengenai **Fadilah Sholat Berjamaah & Tepat Waktu**.
+- **Pengaturan Lengkap Pengurus**:
+  - Atur **Interval Rotasi Waktu** sesuai kebutuhan.
+  - Tambah hadits/ayat baru kapan saja dengan form input lengkap (Tema, Jenis, Teks Arab, Terjemahan, Sumber Riwayat).
+  - Filter pencarian dan penyaringan tema kutipan.
+  - Edit & hapus kutipan.
+  - Tombol **"Reset ke 60 Kutipan Bawaan"** jika ingin mengembalikan database original.
+
+---
+
+## 👨‍💻 Developer & Pengembang Aplikasi
+
+Aplikasi Kas Mushola Pasar ini dikembangkan dengan dedikasi untuk transparansi & kemudahan tata kelola kemakmuran mushola:
+
+- **Pengembang:** Mas Angga
+- **WhatsApp:** [081775700114](https://wa.me/6281775700114?text=Halo%20Mas%20Angga%20pengembang%20aplikasi%20Kas%20Mushola)
+- **Situs Web Resmi:** [Ansor.studio](https://ansor.studio)
+
+*Kontak dan kartu profil pengembang juga dapat diakses langsung oleh pengurus dan jamaah di bagian bawah tab **Profil** aplikasi.*
+
+
 
