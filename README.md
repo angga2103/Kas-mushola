@@ -161,15 +161,30 @@ Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu m
 
 ---
 
-## 🌐 Deploy Otomatis ke Cloudflare Pages (Gratis Selamanya)
-1. Unggah seluruh isi folder repository ini ke GitHub:  
-   **[https://github.com/angga2103/Kas-mushola.git](https://github.com/angga2103/Kas-mushola.git)**
-2. Buka **[Cloudflare Dashboard](https://dash.cloudflare.com/)** > **Workers & Pages**.
-3. Klik **Create application** > tab **Pages** > **Connect to Git**.
-4. Pilih repository `Kas-mushola`.
-5. Klik **Begin setup**:
-   - Framework preset: `None`
-   - Build command: *(Kosongkan)*
-   - Output directory: *(Kosongkan)*
-6. Klik **Save and Deploy**.
-7. Website Kas Mushola Anda langsung online di seluruh dunia dengan domain gratis `https://kas-mushola.pages.dev` dan otomatis dilengkapi SSL/HTTPS!
+## 🌐 Deploy Otomatis ke Cloudflare Pages & Custom Domain `mushola.my.id`
+
+### 1. Menghubungkan GitHub ke Cloudflare Pages:
+1. Buka dashboard Cloudflare: **[https://dash.cloudflare.com/](https://dash.cloudflare.com/)**.
+2. Masuk ke **Compute (Workers & Pages)** ➔ tab **Pages** ➔ klik **Create application** (Connect to Git).
+3. Pilih repository GitHub: **`Kas-mushola`** (`angga2103/Kas-mushola`).
+4. Pengaturan build:
+   - **Framework preset:** `None`
+   - **Build command:** *(Kosongkan)*
+   - **Output directory:** *(Kosongkan / default `.`)*
+5. Klik **Save and Deploy**. Website Anda langsung aktif di `https://kas-mushola.pages.dev`!
+
+### 2. Memasang Domain `mushola.my.id`:
+1. Di halaman project Cloudflare Pages Anda, buka tab **Custom domains**.
+2. Klik tombol **Set up a custom domain**.
+3. Masukkan domain Anda: **`mushola.my.id`**.
+4. Ikuti instruksi verifikasi DNS/Nameserver Cloudflare.
+5. Selesai! Domain Anda otomatis berstatus SSL/HTTPS aman.
+
+### 3. Mendaftarkan Authorized Domain di Firebase (Wajib):
+1. Buka **Firebase Console** ➔ Project `kas-mushola`.
+2. Masuk ke menu **Build ➔ Authentication** ➔ tab **Settings** ➔ **Authorized domains**.
+3. Klik **Add domain** dan tambahkan:
+   - `mushola.my.id`
+   - `kas-mushola.pages.dev`
+4. Klik **Add**. Sekarang login pengurus di domain resmi Anda siap digunakan 100%!
+

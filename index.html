@@ -1251,9 +1251,19 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     /* ==========================================================================
-       1. DEFAULT CATEGORIES & PROFILE & SUPER ADMIN
+       1. FIREBASE PRODUCTION CONFIG & SUPER ADMIN
        ========================================================================== */
     const SUPER_ADMIN_EMAIL = "rayyan.kontak@gmail.com";
+
+    // Konfigurasi Resmi Firebase Cloud Kas Mushola
+    const PRODUCTION_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyA-zMHfiXxQLTfSaZ2G3mN_sIcVSoJ2Hb8",
+      authDomain: "kas-mushola.firebaseapp.com",
+      projectId: "kas-mushola",
+      storageBucket: "kas-mushola.firebasestorage.app",
+      messagingSenderId: "312544487348",
+      appId: "1:312544487348:web:bb7ceecbabe8f050c2b4e1"
+    };
 
     const DEFAULT_CATEGORIES = {
       masuk: [
@@ -1359,6 +1369,7 @@
       adminRole: null, // 'super_admin' or 'admin'
       adminProfileInfo: null, // matched pengurus / admin info
       currentSharedAdmin: null,
+      currentFirebaseConfig: { ...PRODUCTION_FIREBASE_CONFIG },
       authMode: 'login',
       isFirebaseReady: false,
       transactions: [],
@@ -1499,15 +1510,20 @@
        ========================================================================== */
     const initFirebase = async () => {
       const storedConfig = localStorage.getItem('kas_masjid_firebase_config');
-      let fbConfig = null;
+      let fbConfig = PRODUCTION_FIREBASE_CONFIG;
 
       if (storedConfig) {
         try {
-          fbConfig = JSON.parse(storedConfig);
+          const parsed = JSON.parse(storedConfig);
+          if (parsed && parsed.apiKey && !parsed.apiKey.includes('REPLACE_WITH')) {
+            fbConfig = parsed;
+          }
         } catch (e) {
           console.error("Config parse error", e);
         }
       }
+
+      state.currentFirebaseConfig = fbConfig;
 
       if (!fbConfig || !fbConfig.apiKey || fbConfig.apiKey.includes('REPLACE_WITH')) {
         setupLocalDemoMode();
@@ -1527,7 +1543,7 @@
         document.getElementById('connection-banner').classList.remove('bg-amber-500', 'text-amber-950');
         document.getElementById('connection-banner').classList.add('bg-emerald-600', 'text-white');
         document.getElementById('connection-status-text').innerText = "Terhubung ke Firebase Cloud Firestore & Auth.";
-        document.getElementById('connection-banner').classList.remove('hidden');
+        document.getElementById('connection-banner').classList.add('hidden'); // Sembunyikan banner di mode produksi
         document.getElementById('firebase-active-badge').innerText = "Firebase Cloud Online";
         document.getElementById('firebase-active-badge').className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800";
         document.getElementById('auth-demo-notice').classList.add('hidden');
@@ -2476,9 +2492,8 @@
         try {
           if (state.isFirebaseReady) {
             // Secondary Firebase App pattern to create user in Auth without logging out Super Admin
-            const storedConfig = localStorage.getItem('kas_masjid_firebase_config');
-            if (storedConfig) {
-              const fbConfig = JSON.parse(storedConfig);
+            const fbConfig = state.currentFirebaseConfig || PRODUCTION_FIREBASE_CONFIG;
+            if (fbConfig && fbConfig.apiKey) {
               const secondaryAppName = 'SecondaryAuth_' + Date.now();
               const secondaryApp = initializeApp(fbConfig, secondaryAppName);
               const secondaryAuth = getAuth(secondaryApp);
@@ -3105,17 +3120,19 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       },
 
       openFirebaseConfigModal: () => {
+        let conf = state.currentFirebaseConfig || PRODUCTION_FIREBASE_CONFIG;
         const stored = localStorage.getItem('kas_masjid_firebase_config');
         if (stored) {
           try {
-            const conf = JSON.parse(stored);
-            document.getElementById('fb-apiKey').value = conf.apiKey || '';
-            document.getElementById('fb-authDomain').value = conf.authDomain || '';
-            document.getElementById('fb-projectId').value = conf.projectId || '';
-            document.getElementById('fb-storageBucket').value = conf.storageBucket || '';
-            document.getElementById('fb-appId').value = conf.appId || '';
+            const parsed = JSON.parse(stored);
+            if (parsed && parsed.apiKey) conf = parsed;
           } catch(e) {}
         }
+        document.getElementById('fb-apiKey').value = conf.apiKey || '';
+        document.getElementById('fb-authDomain').value = conf.authDomain || '';
+        document.getElementById('fb-projectId').value = conf.projectId || '';
+        document.getElementById('fb-storageBucket').value = conf.storageBucket || '';
+        document.getElementById('fb-appId').value = conf.appId || '';
         window.app.openModal('modal-firebase');
       },
 
@@ -3142,7 +3159,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       resetFirebaseConfig: () => {
         localStorage.removeItem('kas_masjid_firebase_config');
         window.app.closeModal('modal-firebase');
-        showToast("Konfigurasi di-reset ke mode Demo.", "info");
+        showToast("Konfigurasi di-reset ke Firebase Bawaan.", "info");
         setTimeout(() => location.reload(), 600);
       }
     };
