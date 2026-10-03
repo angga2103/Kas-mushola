@@ -153,7 +153,7 @@
     <button onclick="window.app.openFirebaseConfigModal()" class="underline font-bold hover:text-white transition ml-1">Setup Firebase</button>
   </div>
 
-  <!-- ==================== RESPONSIVE MAIN CONTAINER (MOBILE, TABLET, DESKTOP) ==================== -->
+  <!-- ==================== RESPONSIVE MAIN CONTAINER ==================== -->
   <div id="main-container" class="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-screen bg-slate-50 md:my-3 md:rounded-3xl shadow-2xl relative overflow-hidden">
 
     <!-- ==================== APP HEADER ==================== -->
@@ -197,7 +197,7 @@
 
         <!-- Action Buttons (Admin & Catat Transaksi) -->
         <div class="flex items-center gap-2">
-          <!-- Install Icon Button (jika tersedia prompt) -->
+          <!-- Install Icon Button -->
           <button id="btn-header-install" onclick="window.app.installPwa()" title="Install Aplikasi Kas" class="hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gold-400 text-xs active:scale-95 transition">
             <i class="fa-solid fa-download"></i>
           </button>
@@ -208,19 +208,23 @@
             <span>Catat Kas</span>
           </button>
 
-          <!-- State 1: Mode Publik (Akses Pengurus) -->
-          <button id="btn-admin-login" onclick="window.app.openPinModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 border border-white/20 active:scale-95 transition-all duration-200 text-emerald-100">
-            <i class="fa-solid fa-lock text-gold-400"></i>
-            <span>Pengurus</span>
+          <!-- State 1: Mode Publik (Tombol Login Pengurus) -->
+          <button id="btn-admin-login" onclick="window.app.openLoginModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 border border-white/20 active:scale-95 transition-all duration-200 text-emerald-100">
+            <i class="fa-solid fa-user-lock text-gold-400"></i>
+            <span>Login Pengurus</span>
           </button>
 
-          <!-- State 2: Mode Admin Aktif -->
+          <!-- State 2: Mode Admin Aktif (Firebase Auth / Demo) -->
           <div id="admin-badge-container" class="hidden flex items-center gap-2">
+            <div class="flex flex-col items-end leading-none hidden sm:flex">
+              <span class="text-[10px] text-amber-200 font-medium">Pengurus Aktif</span>
+              <span id="admin-user-display" class="text-xs font-bold text-white max-w-[130px] truncate">Admin</span>
+            </div>
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-400 text-amber-950 shadow-sm animate-pulse">
               <i class="fa-solid fa-user-shield"></i>
-              Admin
+              <span class="sm:hidden">Admin</span>
             </span>
-            <button onclick="window.app.adminLogout()" title="Keluar dari Mode Pengurus" class="w-8 h-8 rounded-full bg-red-500/80 hover:bg-red-600 text-white flex items-center justify-center active:scale-95 transition text-xs shadow-sm">
+            <button onclick="window.app.adminLogout()" title="Keluar dari Akun Pengurus" class="w-8 h-8 rounded-full bg-red-500/80 hover:bg-red-600 text-white flex items-center justify-center active:scale-95 transition text-xs shadow-sm">
               <i class="fa-solid fa-right-from-bracket"></i>
             </button>
           </div>
@@ -239,7 +243,7 @@
     <main class="flex-1 p-4 md:p-6 overflow-y-auto">
 
       <!-- ============================================================ -->
-      <!-- TAB 1: BERANDA / DASHBOARD (RESPONSIVE GRID)                  -->
+      <!-- TAB 1: BERANDA / DASHBOARD                                    -->
       <!-- ============================================================ -->
       <section id="view-beranda" class="space-y-5">
 
@@ -479,7 +483,7 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 3: PROFIL MUSHOLA & SUSUNAN PENGURUS (DENGAN FOTO)        -->
+      <!-- TAB 3: PROFIL MUSHOLA & SUSUNAN PENGURUS                     -->
       <!-- ============================================================ -->
       <section id="view-profil" class="hidden space-y-5">
 
@@ -555,23 +559,26 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- TAB 4: PENGATURAN (KHUSUS ADMIN / UPLOAD FOTO PENGURUS)      -->
+      <!-- TAB 4: PENGATURAN (KHUSUS ADMIN / AKUN PENGURUS FIREBASE)    -->
       <!-- ============================================================ -->
       <section id="view-pengaturan" class="hidden space-y-5">
         
-        <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div>
             <h2 class="text-base md:text-lg font-bold text-slate-800">Pengaturan DKM Mushola</h2>
             <p class="text-xs text-slate-500">Kelola identitas, upload foto pengurus, dan kategori dinamis.</p>
           </div>
-          <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
-            Mode Pengurus
-          </span>
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved text-amber-600"></i>
+              <span id="settings-admin-badge">Admin Terotentikasi</span>
+            </span>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
           
-          <!-- LEFT COL: Profil Mushola & Keamanan PIN & Firebase -->
+          <!-- LEFT COL: Profil Mushola & Akun Pengurus & Firebase -->
           <div class="space-y-5">
             
             <!-- 1. Form Edit Profil Mushola -->
@@ -607,27 +614,34 @@
               </button>
             </div>
 
-            <!-- 2. Pengaturan Keamanan PIN -->
+            <!-- 2. Akun Pengurus Aktif & Info Login -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
-              <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
-                <i class="fa-solid fa-key text-mosque-600 text-sm"></i>
-                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">PIN Pengurus</h3>
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-user-shield text-mosque-600 text-sm"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Akun Pengurus Aktif</h3>
+                </div>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">Email & Password Auth</span>
               </div>
 
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">PIN Baru (4-6 Angka)</label>
-                  <input type="password" id="settings-new-pin" maxlength="6" placeholder="Misal: 123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-center font-mono focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Email Terotentikasi:</span>
+                  <span id="settings-active-email" class="font-bold text-slate-800">admin@musholapasar.com</span>
                 </div>
-                <div>
-                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">Konfirmasi PIN</label>
-                  <input type="password" id="settings-confirm-pin" maxlength="6" placeholder="Ketik ulang" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-center font-mono focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Status Keamanan:</span>
+                  <span class="font-semibold text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-check"></i> Hak Akses Pengurus</span>
                 </div>
               </div>
 
-              <button onclick="window.app.updatePin()" class="w-full bg-amber-600 hover:bg-amber-700 active:scale-95 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
-                <i class="fa-solid fa-lock"></i>
-                <span>Perbarui PIN Pengurus</span>
+              <p class="text-[11px] text-slate-500 leading-relaxed">
+                Pengurus memiliki wewenang untuk mencatat transaksi baru, menghapus transaksi, dan mengedit susunan profil mushola pasar.
+              </p>
+
+              <button onclick="window.app.adminLogout()" class="w-full bg-rose-50 hover:bg-rose-100 active:scale-95 text-rose-700 font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition border border-rose-200">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Keluar dari Akun Pengurus</span>
               </button>
             </div>
 
@@ -654,7 +668,7 @@
           <!-- RIGHT COL: Upload Foto Pengurus & Kategori Dinamis -->
           <div class="space-y-5">
             
-            <!-- 1. MANAJEMEN SUSUNAN PENGURUS & UPLOAD FOTO (DENGAN AUTO-KOMPRESI) -->
+            <!-- 1. MANAJEMEN SUSUNAN PENGURUS & UPLOAD FOTO -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2">
@@ -706,7 +720,6 @@
                 </div>
               </div>
 
-              <!-- Hidden input for replacing photo of existing pengurus -->
               <input type="file" id="replace-pengurus-foto-input" accept="image/*" onchange="window.app.handleReplacePengurusPhoto(this)" class="hidden">
             </div>
 
@@ -760,7 +773,7 @@
       <i class="fa-solid fa-plus"></i>
     </button>
 
-    <!-- ==================== BOTTOM NAVIGATION BAR (MOBILE ONLY: md:hidden) ==================== -->
+    <!-- ==================== BOTTOM NAVIGATION BAR (MOBILE ONLY) ==================== -->
     <nav class="md:hidden no-print bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-30 shadow-lg">
       <div class="max-w-lg mx-auto flex items-center justify-around py-2 px-3">
         
@@ -790,31 +803,74 @@
   </div>
 
   <!-- ============================================================ -->
-  <!-- MODAL 1: LOGIN PIN PENGURUS                                   -->
+  <!-- MODAL 1: LOGIN AUTH FIREBASE (EMAIL & PASSWORD PENGURUS)     -->
   <!-- ============================================================ -->
-  <div id="modal-pin" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 custom-modal-backdrop hidden">
-    <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl transform transition-all duration-300 scale-95 opacity-0 text-center" id="modal-pin-content">
-      <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
-        <i class="fa-solid fa-shield-halved"></i>
+  <div id="modal-login" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 custom-modal-backdrop hidden">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="modal-login-content">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-lg shadow-inner">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">Login Pengurus DKM</h3>
+            <p class="text-[10px] text-slate-400">Firebase Authentication</p>
+          </div>
+        </div>
+        <button onclick="window.app.closeModal('modal-login')" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <h3 class="text-base font-bold text-slate-800">Akses Pengurus Mushola</h3>
-      <p class="text-xs text-slate-500 mt-1 mb-4">Masukkan 6-digit PIN keamanan pengurus.</p>
 
-      <form onsubmit="event.preventDefault(); window.app.submitPin();" class="space-y-4">
+      <!-- Tab Switcher: Masuk vs Daftar Pengurus Pertama -->
+      <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold mb-4">
+        <button type="button" id="auth-tab-btn-login" onclick="window.app.switchAuthTab('login')" class="flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center">
+          Masuk
+        </button>
+        <button type="button" id="auth-tab-btn-register" onclick="window.app.switchAuthTab('register')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center">
+          Daftar Admin Baru
+        </button>
+      </div>
+
+      <!-- Form Login / Register -->
+      <form onsubmit="event.preventDefault(); window.app.submitAuth();" class="space-y-3.5">
         <div>
-          <input type="password" id="input-pin-auth" maxlength="6" inputmode="numeric" placeholder="••••••" class="w-full text-center text-2xl font-mono tracking-widest py-3 bg-slate-50 border-2 border-slate-200 focus:border-mosque-600 rounded-2xl focus:outline-none transition">
-          <span class="text-[10px] text-slate-400 block mt-1.5">Default PIN awal: <strong class="text-slate-600">123456</strong></span>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Email Pengurus</label>
+          <div class="relative">
+            <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input type="email" id="input-auth-email" placeholder="admin@musholapasar.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+          </div>
         </div>
 
-        <div class="flex gap-2">
-          <button type="button" onclick="window.app.closeModal('modal-pin')" class="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input type="password" id="input-auth-password" placeholder="••••••••" required minlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-10 py-2.5 text-xs font-mono focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+            <button type="button" onclick="window.app.togglePasswordVisibility('input-auth-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs p-1">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <span id="auth-hint-text" class="text-[10px] text-slate-400 block mt-1">Minimal 6 karakter password.</span>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="window.app.closeModal('modal-login')" class="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
             Batal
           </button>
-          <button type="submit" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-mosque-700 hover:bg-mosque-800 text-white shadow-md transition">
-            Masuk
+          <button type="submit" id="btn-submit-auth" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white shadow-md transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span id="btn-submit-auth-label">Masuk Pengurus</span>
           </button>
         </div>
       </form>
+
+      <!-- Demo Info Notice -->
+      <div id="auth-demo-notice" class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 text-center leading-relaxed">
+        <span class="text-amber-800 font-medium block">ℹ️ Mode Demo Lokal:</span>
+        Ketik email sembarang (misal: <code>admin@pasar.com</code>) & password <code>123456</code>.
+      </div>
     </div>
   </div>
 
@@ -1050,13 +1106,17 @@
 
 
   <!-- ============================================================ -->
-  <!-- JAVASCRIPT LOGIC (ES MODULES & APP CORE)                      -->
+  <!-- JAVASCRIPT LOGIC (FIREBASE AUTH & APP CORE)                   -->
   <!-- ============================================================ -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { 
       getAuth, 
-      signInAnonymously 
+      signInAnonymously,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { 
       getFirestore, 
@@ -1096,7 +1156,6 @@
       alamat: "Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional",
       rekening: "BSI: 7123456789 a.n Kas Mushola Pasar",
       qrisUrl: "",
-      pin: "123456",
       categories: { ...DEFAULT_CATEGORIES },
       pengurus: [
         { id: "1", nama: "H. Subur Hartanto", jabatan: "Ketua DKM Mushola Pasar", foto: null },
@@ -1161,6 +1220,8 @@
     const state = {
       activeTab: 'beranda',
       isAdmin: false,
+      adminEmail: null,
+      authMode: 'login', // 'login' or 'register'
       isFirebaseReady: false,
       transactions: [],
       profile: { ...DEFAULT_PROFILE },
@@ -1199,7 +1260,6 @@
             const width = img.width;
             const height = img.height;
 
-            // Square crop from center for avatar
             const minSide = Math.min(width, height);
             const sx = (width - minSide) / 2;
             const sy = (height - minSide) / 2;
@@ -1222,7 +1282,7 @@
     };
 
     /* ==========================================================================
-       4. HELPER FUNCTIONS
+       4. HELPER FUNCTIONS & ERROR TRANSLATIONS
        ========================================================================== */
     const formatRupiah = (number) => {
       const num = Number(number) || 0;
@@ -1244,6 +1304,29 @@
         month: 'short',
         year: 'numeric'
       }).format(date);
+    };
+
+    const translateAuthError = (errCode) => {
+      switch (errCode) {
+        case 'auth/invalid-credential':
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          return "Email atau password salah. Silakan periksa kembali.";
+        case 'auth/invalid-email':
+          return "Format email tidak valid.";
+        case 'auth/email-already-in-use':
+          return "Email ini sudah terdaftar. Silakan pilih tab 'Masuk'.";
+        case 'auth/weak-password':
+          return "Password terlalu pendek. Minimal harus 6 karakter.";
+        case 'auth/network-request-failed':
+          return "Koneksi internet bermasalah. Silakan periksa jaringan Anda.";
+        case 'auth/too-many-requests':
+          return "Terlalu banyak percobaan login gagal. Coba lagi dalam beberapa saat.";
+        case 'auth/operation-not-allowed':
+          return "Metode Email/Password belum diaktifkan di Firebase Console Authentication.";
+        default:
+          return "Terjadi kendala autentikasi: " + (errCode || 'Silakan coba lagi');
+      }
     };
 
     const showToast = (message, type = 'success') => {
@@ -1274,7 +1357,7 @@
     };
 
     /* ==========================================================================
-       5. FIREBASE OR LOCAL STORAGE INITIALIZATION
+       5. FIREBASE INITIALIZATION & AUTH STATE LISTENER
        ========================================================================== */
     const initFirebase = async () => {
       const storedConfig = localStorage.getItem('kas_masjid_firebase_config');
@@ -1298,18 +1381,43 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        await signInAnonymously(auth);
-
         state.db = db;
         state.auth = auth;
         state.isFirebaseReady = true;
 
+        // UI Banner & Badge
         document.getElementById('connection-banner').classList.remove('bg-amber-500', 'text-amber-950');
         document.getElementById('connection-banner').classList.add('bg-emerald-600', 'text-white');
-        document.getElementById('connection-status-text').innerText = "Terhubung ke Firebase Cloud Firestore (Real-time).";
+        document.getElementById('connection-status-text').innerText = "Terhubung ke Firebase Cloud Firestore & Auth.";
         document.getElementById('connection-banner').classList.remove('hidden');
         document.getElementById('firebase-active-badge').innerText = "Firebase Cloud Online";
         document.getElementById('firebase-active-badge').className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800";
+        document.getElementById('auth-demo-notice').classList.add('hidden');
+
+        // Firebase Auth State Listener
+        onAuthStateChanged(auth, async (user) => {
+          if (user && !user.isAnonymous) {
+            // Logged in as Admin via Email & Password
+            state.isAdmin = true;
+            state.adminEmail = user.email;
+            document.getElementById('admin-user-display').innerText = user.email;
+            document.getElementById('settings-active-email').innerText = user.email;
+            document.getElementById('settings-admin-badge').innerText = "Admin: " + user.email;
+            window.app.applyAdminState();
+          } else if (user && user.isAnonymous) {
+            // Anonymous Public Viewer
+            state.isAdmin = false;
+            state.adminEmail = null;
+            window.app.applyAdminState();
+          } else {
+            // No user signed in: sign in anonymously so public reads work
+            try {
+              await signInAnonymously(auth);
+            } catch (err) {
+              console.warn("Anonymous sign in error:", err);
+            }
+          }
+        });
 
         // Real-time listener on profile/info
         const profileDocRef = doc(db, 'profile', 'info');
@@ -1354,6 +1462,15 @@
       state.isFirebaseReady = false;
       document.getElementById('connection-banner').classList.remove('hidden');
       document.getElementById('firebase-active-badge').innerText = "Local/Demo Mode";
+      document.getElementById('auth-demo-notice').classList.remove('hidden');
+
+      // Check local persistent session
+      if (localStorage.getItem('kas_masjid_admin_session') === 'true') {
+        state.isAdmin = true;
+        state.adminEmail = localStorage.getItem('kas_masjid_admin_email') || 'admin@musholapasar.com';
+        document.getElementById('admin-user-display').innerText = state.adminEmail;
+        document.getElementById('settings-active-email').innerText = state.adminEmail;
+      }
 
       const localTrx = localStorage.getItem('kas_masjid_local_transactions');
       if (localTrx) {
@@ -1384,6 +1501,7 @@
         localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
       }
 
+      window.app.applyAdminState();
       renderAll();
     };
 
@@ -1634,7 +1752,6 @@
         if (pengurusCardsContainer) pengurusCardsContainer.innerHTML = `<p class="text-xs text-slate-400 py-3 text-center col-span-2">Belum ada susunan pengurus.</p>`;
         if (settingsPengurusList) settingsPengurusList.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">Belum ada pengurus.</p>`;
       } else {
-        // Tampilan Menarik di Tab Profil
         if (pengurusCardsContainer) {
           pengurusCardsContainer.innerHTML = pengurusList.map((item, idx) => {
             const hasPhoto = item.foto && item.foto.startsWith('data:image');
@@ -1658,7 +1775,6 @@
           }).join('');
         }
 
-        // Tampilan di Tab Pengaturan (dengan opsi ganti foto & hapus foto)
         if (settingsPengurusList) {
           settingsPengurusList.innerHTML = pengurusList.map((item) => {
             const hasPhoto = item.foto && item.foto.startsWith('data:image');
@@ -1716,7 +1832,7 @@
     };
 
     /* ==========================================================================
-       8. DYNAMIC CATEGORIES MANAGEMENT (CUSTOM CATEGORIES)
+       8. DYNAMIC CATEGORIES MANAGEMENT
        ========================================================================== */
     const getCategories = (type) => {
       const cats = state.profile.categories || DEFAULT_CATEGORIES;
@@ -1791,7 +1907,7 @@
        9. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
        ========================================================================== */
     window.app = {
-      // PWA Installation Prompt
+      // PWA Installation
       installPwa: async () => {
         if (state.deferredPwaPrompt) {
           state.deferredPwaPrompt.prompt();
@@ -1895,40 +2011,124 @@
         }, 200);
       },
 
-      // Admin PIN Handling
-      openPinModal: () => {
-        const input = document.getElementById('input-pin-auth');
-        if (input) input.value = '';
-        window.app.openModal('modal-pin');
-        setTimeout(() => input?.focus(), 250);
+      // FIREBASE AUTH (EMAIL & PASSWORD)
+      openLoginModal: () => {
+        window.app.switchAuthTab('login');
+        document.getElementById('input-auth-email').value = state.adminEmail || '';
+        document.getElementById('input-auth-password').value = '';
+        window.app.openModal('modal-login');
+        setTimeout(() => document.getElementById('input-auth-email')?.focus(), 250);
       },
 
-      submitPin: () => {
-        const pinInput = document.getElementById('input-pin-auth').value.trim();
-        const correctPin = state.profile.pin || '123456';
+      switchAuthTab: (mode) => {
+        state.authMode = mode;
+        const btnLogin = document.getElementById('auth-tab-btn-login');
+        const btnRegister = document.getElementById('auth-tab-btn-register');
+        const submitLabel = document.getElementById('btn-submit-auth-label');
+        const hintText = document.getElementById('auth-hint-text');
 
-        if (pinInput === correctPin) {
-          state.isAdmin = true;
-          localStorage.setItem('kas_masjid_admin_session', 'true');
-          window.app.applyAdminState();
-          window.app.closeModal('modal-pin');
-          showToast("Akses Pengurus berhasil dibuka!", "success");
+        if (mode === 'login') {
+          btnLogin.className = "flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center";
+          btnRegister.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center";
+          submitLabel.innerText = "Masuk Pengurus";
+          hintText.innerText = "Masukkan email dan password pengurus.";
         } else {
-          showToast("PIN salah! Silakan coba lagi.", "error");
-          const input = document.getElementById('input-pin-auth');
-          input.value = '';
-          input.focus();
+          btnRegister.className = "flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center";
+          btnLogin.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center";
+          submitLabel.innerText = "Daftarkan Pengurus Baru";
+          hintText.innerText = "Password minimal 6 karakter. Pastikan email aktif.";
         }
       },
 
-      adminLogout: () => {
-        state.isAdmin = false;
-        localStorage.removeItem('kas_masjid_admin_session');
-        window.app.applyAdminState();
-        if (state.activeTab === 'pengaturan') {
-          window.app.switchTab('beranda');
+      togglePasswordVisibility: (inputId, btn) => {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.innerHTML = `<i class="fa-solid fa-eye-slash"></i>`;
+        } else {
+          input.type = 'password';
+          btn.innerHTML = `<i class="fa-solid fa-eye"></i>`;
         }
-        showToast("Keluar dari Mode Pengurus.", "info");
+      },
+
+      submitAuth: async () => {
+        const email = document.getElementById('input-auth-email').value.trim();
+        const password = document.getElementById('input-auth-password').value;
+        const submitBtn = document.getElementById('btn-submit-auth');
+
+        if (!email || !password) {
+          showToast("Email dan password wajib diisi!", "error");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses...`;
+
+        try {
+          if (state.isFirebaseReady && state.auth) {
+            if (state.authMode === 'login') {
+              // Sign in with Firebase Email & Password
+              const userCredential = await signInWithEmailAndPassword(state.auth, email, password);
+              state.isAdmin = true;
+              state.adminEmail = userCredential.user.email;
+              showToast("Login Pengurus berhasil!", "success");
+            } else {
+              // Create user with Firebase Email & Password
+              const userCredential = await createUserWithEmailAndPassword(state.auth, email, password);
+              state.isAdmin = true;
+              state.adminEmail = userCredential.user.email;
+              showToast("Akun pengurus berhasil didaftarkan & masuk!", "success");
+            }
+          } else {
+            // Local Demo Mode Auth Fallback
+            if (password.length < 4) {
+              throw { code: 'auth/weak-password' };
+            }
+            state.isAdmin = true;
+            state.adminEmail = email;
+            localStorage.setItem('kas_masjid_admin_session', 'true');
+            localStorage.setItem('kas_masjid_admin_email', email);
+            showToast("Login mode demo berhasil!", "success");
+          }
+
+          window.app.applyAdminState();
+          window.app.closeModal('modal-login');
+
+        } catch (err) {
+          console.error("Auth error:", err);
+          const errorMsg = translateAuthError(err.code);
+          showToast(errorMsg, "error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span id="btn-submit-auth-label">${state.authMode === 'login' ? 'Masuk Pengurus' : 'Daftarkan Pengurus Baru'}</span>`;
+        }
+      },
+
+      adminLogout: async () => {
+        try {
+          if (state.isFirebaseReady && state.auth) {
+            await signOut(state.auth);
+            // Sign in anonymously so public views continue working seamlessly
+            await signInAnonymously(state.auth);
+          } else {
+            localStorage.removeItem('kas_masjid_admin_session');
+            localStorage.removeItem('kas_masjid_admin_email');
+          }
+
+          state.isAdmin = false;
+          state.adminEmail = null;
+          window.app.applyAdminState();
+
+          if (state.activeTab === 'pengaturan') {
+            window.app.switchTab('beranda');
+          }
+
+          showToast("Berhasil keluar dari akun pengurus.", "info");
+        } catch (err) {
+          console.error("Logout error:", err);
+          showToast("Gagal logout: " + err.message, "error");
+        }
       },
 
       applyAdminState: () => {
@@ -1948,6 +2148,11 @@
           if (desktopAddBtn) {
             desktopAddBtn.classList.remove('hidden');
             desktopAddBtn.classList.add('md:inline-flex');
+          }
+          if (state.adminEmail) {
+            document.getElementById('admin-user-display').innerText = state.adminEmail;
+            document.getElementById('settings-active-email').innerText = state.adminEmail;
+            document.getElementById('settings-admin-badge').innerText = "Admin: " + state.adminEmail;
           }
         } else {
           btnLogin.classList.remove('hidden');
@@ -2423,35 +2628,6 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         }
       },
 
-      updatePin: async () => {
-        const pin1 = document.getElementById('settings-new-pin').value.trim();
-        const pin2 = document.getElementById('settings-confirm-pin').value.trim();
-
-        if (pin1.length < 4 || pin1.length > 6) {
-          showToast("PIN harus terdiri dari 4 - 6 angka!", "error");
-          return;
-        }
-
-        if (pin1 !== pin2) {
-          showToast("Konfirmasi PIN tidak cocok!", "error");
-          return;
-        }
-
-        state.profile.pin = pin1;
-        try {
-          if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
-          }
-          document.getElementById('settings-new-pin').value = '';
-          document.getElementById('settings-confirm-pin').value = '';
-          showToast("PIN Pengurus berhasil diperbarui!", "success");
-        } catch (err) {
-          showToast("Gagal memperbarui PIN: " + err.message, "error");
-        }
-      },
-
       openFirebaseConfigModal: () => {
         const stored = localStorage.getItem('kas_masjid_firebase_config');
         if (stored) {
@@ -2496,7 +2672,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
     };
 
     /* ==========================================================================
-       10. DOM CONTENT LOADED & RUNTIME BOOTSTRAP (PWA & SERVICE WORKER)
+       10. DOM CONTENT LOADED & RUNTIME BOOTSTRAP
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       // Indonesian Date Header
@@ -2509,12 +2685,6 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       }).format(now);
       document.getElementById('current-date-text').innerText = dateText;
       document.getElementById('print-tanggal').innerText = `Dicetak pada: ${dateText}`;
-
-      // Persistent Admin Session
-      if (localStorage.getItem('kas_masjid_admin_session') === 'true') {
-        state.isAdmin = true;
-      }
-      window.app.applyAdminState();
 
       // Register PWA Service Worker
       if ('serviceWorker' in navigator) {

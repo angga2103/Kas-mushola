@@ -1,94 +1,174 @@
-# 🕌 Sistem Kas Mushola Pasar - Real-time & Transparan (PWA)
+# 🕌 Panduan Lengkap Setup Firebase & Aplikasi Kas Mushola Pasar (PWA)
 
-Aplikasi web **Progressive Web App (PWA)** modern, ringan, dan **responsif penuh (Mobile, Tablet, dan Desktop)** untuk pencatatan dan transparansi keuangan kas **Mushola Pasar**. Didesain khusus untuk kebutuhan pedagang, pembeli, dan pengurus DKM mushola pasar.
-
-Aplikasi ini dapat di-install langsung ke layar utama smartphone (Android/iOS) atau desktop seperti aplikasi native dengan icon kubah masjid bernuansa islami modern.
+Aplikasi web **Progressive Web App (PWA)** real-time & transparan untuk pencatatan kas mushola pasar. Dilengkapi sistem **Firebase Authentication (Email & Password)** untuk pengurus DKM, serta akses publik aman untuk jamaah.
 
 🔗 **Repository GitHub:** [https://github.com/angga2103/Kas-mushola.git](https://github.com/angga2103/Kas-mushola.git)
 
 ---
 
-## 🌟 Fitur Unggulan Terbaru
-
-### 1. 📱 Progressive Web App (PWA) & Offline Ready
-- **Bisa Di-install (Add to Home Screen):** Mendukung instalasi langsung pada Android (Chrome) dan iOS (Safari) tanpa perlu download dari PlayStore.
-- **Icon Kubah Masjid "Kas Mushola":** Ikon vektor resolusi tinggi (`icons/icon.svg`) dan PNG (`192x192`, `512x512`, `apple-touch-icon`) dengan gambar kubah masjid hijau emerald, aksen bulan sabit emas (*hilal*), dan emblem bertuliskan "KAS MUSHOLA".
-- **Service Worker (`sw.js`):** Caching otomatis untuk app shell agar aplikasi tetap terbuka seketika bahkan saat koneksi pasar terganggu/offline.
-
-### 2. 📸 Upload Foto Pengurus & Auto-Kompresi Canvas (~25 KB)
-- **Kompresi Otomatis di Sisi Klien:** Foto asli dari kamera HP (biasanya 3-8 MB) langsung dikompres oleh browser menjadi gambar persegi berdimensi 320x320 px (~20-30 KB) sebelum disimpan.
-- **Web Tetap Super Cepat:** Tidak membebani memori, hemat kuota internet, dan tidak memerlukan biaya penyimpanan cloud storage tambahan.
-- **Tampilan Menarik di Tab Profil:** Foto pengurus ditampilkan dalam bentuk kartu avatar modern dengan bingkai cincin emerald, bayangan lembut, dan badge jabatan yang rapi.
-- **Kelola Foto di Pengaturan:** Pengurus dapat menambah foto saat mendaftarkan pengurus baru, mengganti foto yang ada, atau menghapus foto kapan saja.
-
-### 3. 🖥️ Desain Responsif Multi-Perangkat
-- **Smartphone (Mobile):** Dilengkapi *Bottom Navigation Bar* ergonomis yang nyaman dioperasikan dengan satu jempol.
-- **Tablet & Desktop:** Layout melebar otomatis (`max-w-6xl`) dengan *Top Navigation Bar* di header dan dashboard multi-kolom (sisi kiri ringkasan kas & riwayat transaksi, sisi kanan grafik donat & widget QRIS infaq cepat).
-
-### 4. 🏪 Kategori Khusus Mushola Pasar & Istilah Bisaroh
-- Disesuaikan khusus untuk aktivitas mushola di pasar (tanpa shalat Jumat & tanpa shalat Tarawih).
-- **Pemasukan:** Kotak Amal Harian Mushola, Infaq Pedagang & Kios Pasar, Infaq Shalat Berjamaah, Donatur & Pengunjung Pasar, Kotak Wudhu & Sarana, dll.
-- **Pengeluaran:** Menggunakan istilah **Bisaroh** (Imam & Petugas Mushola), Listrik & Token Air Pasar, Kebersihan & Sanitasi Mushola, Operasional, dsb.
-
-### 5. 🏷️ Kategori Dinamis & Kustom
-- Pengurus DKM dapat menambah atau menghapus kategori pengeluaran dan pemasukan secara fleksibel melalui tab **Pengaturan** > **Kategori Transaksi Dinamis**.
-- Kategori baru otomatis muncul pada formulir pencatatan kas baru dan pilihan cepat (*quick chips*).
+## 📖 DAFTAR ISI PANDUAN FIREBASE LENGKAP
+1. [Langkah 1: Membuat Project Firebase Baru](#langkah-1-membuat-project-firebase-baru)
+2. [Langkah 2: Mengaktifkan Firebase Authentication (Email & Password)](#langkah-2-mengaktifkan-firebase-authentication-email--password)
+3. [Langkah 3: Mendaftarkan Akun Email Pengurus (Admin Pertama)](#langkah-3-mendaftarkan-akun-email-pengurus-admin-pertama)
+4. [Langkah 4: Mengaktifkan Cloud Firestore Database (Real-time)](#langkah-4-mengaktifkan-cloud-firestore-database-real-time)
+5. [Langkah 5: Memasang Aturan Keamanan (Security Rules) Firestore](#langkah-5-memasang-aturan-keamanan-security-rules-firestore)
+6. [Langkah 6: Mengambil Kunci Konfigurasi Web (firebaseConfig)](#langkah-6-mengambil-kunci-konfigurasi-web-firebaseconfig)
+7. [Langkah 7: Menghubungkan Firebase ke Aplikasi Web](#langkah-7-menghubungkan-firebase-ke-aplikasi-web)
+8. [Uji Coba & Verifikasi Login Pengurus](#uji-coba--verifikasi-login-pengurus)
 
 ---
 
-## 🚀 Panduan Setup Firebase Firestore
+### Langkah 1: Membuat Project Firebase Baru
+1. Buka peramban (browser) dan kunjungi: **[https://console.firebase.google.com/](https://console.firebase.google.com/)**.
+2. Login menggunakan akun Google Anda (Gmail).
+3. Klik tombol **"Add project"** (atau **"Tambah project"**).
+4. Masukkan nama project Anda, misalnya: `kas-mushola-pasar`.
+5. Klik **Continue**.
+6. Pada bagian *Google Analytics*, Anda bisa **menonaktifkannya** (Turn OFF) agar setup lebih ringkas dan cepat, lalu klik **Create project**.
+7. Tunggu sekitar 15-30 detik hingga muncul pesan *"Your new project is ready"*, lalu klik **Continue**.
 
-Aplikasi ini menggunakan **Google Firebase Firestore** untuk sinkronisasi data secara *real-time* dan **Firebase Anonymous Authentication** untuk akses publik yang aman.
+---
 
-### Langkah 1: Buat Project Firebase
-1. Buka [Firebase Console](https://console.firebase.google.com/).
-2. Buat project baru (misal: `kas-mushola-pasar`).
+### Langkah 2: Mengaktifkan Firebase Authentication (Email & Password)
+Sistem ini menggunakan 2 metode autentikasi:
+- **Email/Password:** Digunakan oleh Pengurus DKM untuk mencatat kas, menghapus, dan mengatur data.
+- **Anonymous (Anonim):** Digunakan otomatis di latar belakang oleh Jamaah/Publik agar bisa melihat saldo dan laporan tanpa perlu login.
 
-### Langkah 2: Aktifkan Anonymous Authentication
-1. Pilih menu **Build** > **Authentication** > tab **Sign-in method**.
-2. Aktifkan **Anonymous**, lalu klik **Save**.
+**Cara mengaktifkannya:**
+1. Di menu bilah kiri (sidebar), klik **Build** > **Authentication**.
+2. Klik tombol **Get started**.
+3. Di tab **Sign-in method**, pilih penyedia **Email/Password**:
+   - Aktifkan tombol toggle **Enable** pada baris pertama (*Email/Password*).
+   - Biarkan opsi *Email link (passwordless)* nonaktif.
+   - Klik **Save**.
+4. Di halaman yang sama, klik tombol **Add new provider**:
+   - Pilih **Anonymous** (paling bawah).
+   - Aktifkan toggle **Enable**.
+   - Klik **Save**.
+5. Pastikan pada daftar *Sign-in providers* kini status **Email/Password** dan **Anonymous** sudah berstatus **Enabled**.
 
-### Langkah 3: Aktifkan Cloud Firestore Database
-1. Pilih menu **Build** > **Firestore Database** > **Create database**.
-2. Pilih lokasi server terdekat (misal: `asia-southeast2` untuk Jakarta).
+---
 
-### Langkah 4: Atur Security Rules Firestore
-Masuk ke tab **Rules** pada Firestore Database, ganti dengan aturan berikut:
+### Langkah 3: Mendaftarkan Akun Email Pengurus (Admin Pertama)
+Anda bisa mendaftarkan email admin langsung dari Firebase Console atau lewat aplikasi web:
+
+**Cara dari Firebase Console:**
+1. Masih di menu **Authentication**, klik tab **Users** (di sebelah tab *Sign-in method*).
+2. Klik tombol **Add user**.
+3. Masukkan:
+   - **Email:** Contoh `admin@musholapasar.com` atau email pribadi bendahara/ketua DKM.
+   - **Password:** Minimal 6 karakter (misal: `mushola123456`).
+4. Klik **Add user**.
+5. Akun email pengurus Anda sudah berhasil dibuat!
+
+*(Catatan: Anda juga dapat mendaftar langsung dari aplikasi web menggunakan tab "Daftar Admin Baru" pada modal login).*
+
+---
+
+### Langkah 4: Mengaktifkan Cloud Firestore Database (Real-time)
+Firestore berfungsi menyimpan data riwayat transaksi kas, profil mushola, susunan pengurus, dan kategori dinamis secara *real-time*.
+
+1. Di menu bilah kiri, klik **Build** > **Firestore Database**.
+2. Klik tombol **Create database**.
+3. **Database location:** Pilih server terdekat dengan Indonesia, sangat disarankan memilih:
+   - **`asia-southeast2` (Jakarta)** atau `asia-southeast1` (Singapura).
+4. Klik **Next**.
+5. Pada pilihan *Secure rules*, pilih **Start in test mode** untuk sementara, lalu klik **Enable** (atau **Create**).
+6. Tunggu proses pembuatan database selesai hingga muncul halaman tabel Firestore.
+
+---
+
+### Langkah 5: Memasang Aturan Keamanan (Security Rules) Firestore
+Langkah ini sangat **PENTING** demi keamanan kas mushola. Aturan ini memastikan:
+- **Publik / Jamaah:** Hanya diizinkan **MEMBACA** (*read-only*), tidak bisa mengutak-atik uang kas.
+- **Pengurus DKM (Email & Password):** Diizinkan **MEMBACA & MENULIS** (*read & write* / input & hapus).
+
+**Cara memasang rules:**
+1. Masuk ke halaman **Firestore Database**, lalu klik tab **Rules** di bagian atas.
+2. Hapus seluruh isi kode yang ada, lalu salin dan tempel (copy-paste) kode aturan resmi berikut:
 
 ```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Koleksi transaksi kas mushola
     match /transactions/{transactionId} {
-      allow read, write: if request.auth != null;
+      // Siapapun yang terhubung (termasuk jamaah publik anonymous) boleh membaca
+      allow read: if request.auth != null;
+      // Hanya akun pengurus yang login dengan Email & Password yang boleh mencatat / menghapus
+      allow write: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'password';
     }
+    
+    // Koleksi profil & susunan pengurus mushola
     match /profile/{docId} {
-      allow read, write: if request.auth != null;
+      // Publik boleh membaca profil mushola
+      allow read: if request.auth != null;
+      // Hanya pengurus terotentikasi email yang boleh mengubah profil & susunan pengurus
+      allow write: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'password';
     }
   }
 }
 ```
-Klik **Publish**.
 
-### Langkah 5: Hubungkan ke Aplikasi
-1. Buka **Project settings** (ikon gerigi) > bagian *Your apps* > klik Web `</>`.
-2. Salin data `firebaseConfig`.
-3. Buka aplikasi `index.html` di browser:
-   - Masuk ke **Mode Pengurus** (PIN: `123456`).
-   - Buka tab **Pengaturan** > **Koneksi Firebase Cloud**.
-   - Masukkan API Key, Project ID, dll., lalu klik **Simpan & Hubungkan**.
-
-> **Catatan:** Jika belum menghubungkan Firebase, aplikasi akan otomatis berjalan dalam **Mode Demo Lokal** menggunakan `localStorage`, sehingga dapat langsung diuji coba seketika tanpa setup awal.
+3. Klik tombol **Publish** (Terbitkan) di pojok kanan atas.
 
 ---
 
-## 🌐 Cara Deploy ke Cloudflare Pages
+### Langkah 6: Mengambil Kunci Konfigurasi Web (firebaseConfig)
+1. Di menu kiri paling atas, klik ikon **Gerigi (Settings)** di samping tulisan *Project Overview*, lalu pilih **Project settings**.
+2. Gulir ke bawah ke bagian **Your apps**.
+3. Klik ikon Web bertanda **`</>`**.
+4. Beri nama aplikasi web Anda, misal: `Web Kas Mushola`.
+5. Jangan centang *Firebase Hosting* (karena kita menggunakan Cloudflare Pages / GitHub Pages).
+6. Klik **Register app**.
+7. Akan muncul blok kode JavaScript berisi `const firebaseConfig = { ... }`.
+8. Salin nilai-nilai yang ada di dalamnya:
+   - `apiKey` (Contoh: `AIzaSyB...`)
+   - `authDomain` (Contoh: `kas-mushola-pasar.firebaseapp.com`)
+   - `projectId` (Contoh: `kas-mushola-pasar`)
+   - `storageBucket` (Contoh: `kas-mushola-pasar.appspot.com`)
+   - `appId` (Contoh: `1:123456789:web:abcdef...`)
 
-1. Masuk ke [Cloudflare Dashboard](https://dash.cloudflare.com/) > **Workers & Pages**.
-2. Klik **Create Application** > tab **Pages** > **Connect to Git**.
-3. Pilih repository `https://github.com/angga2103/Kas-mushola.git`.
-4. Pengaturan build:
-   - **Framework preset:** `None`
-   - **Build command:** *(Kosongkan)*
-   - **Build output directory:** *(Kosongkan)*
-5. Klik **Save and Deploy**. Website kas mushola pasar Anda langsung aktif secara global dengan domain gratis dan HTTPS.
+---
+
+### Langkah 7: Menghubungkan Firebase ke Aplikasi Web
+Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu membuka kodingan:
+
+1. Buka aplikasi `index.html` di browser Anda.
+2. Klik tombol **"Pengurus"** di pojok kanan atas.
+3. Masuk menggunakan mode demo atau klik banner kuning **"Setup Firebase"** di atas.
+4. Buka tab **Pengaturan** > bagian **Koneksi Firebase Cloud** > klik **"Atur Kredensial Firebase"**.
+5. Tempelkan nilai `apiKey`, `authDomain`, `projectId`, `storageBucket`, dan `appId` yang sudah Anda salin tadi.
+6. Klik **"Simpan & Hubungkan"**.
+7. Aplikasi akan memuat ulang secara otomatis. Banner hijau akan muncul bertuliskan:  
+   *`"Terhubung ke Firebase Cloud Firestore & Auth."`*
+
+---
+
+### 🧪 Uji Coba & Verifikasi Login Pengurus
+1. Klik tombol **"Login Pengurus"** di pojok kanan atas.
+2. Masukkan email dan password pengurus yang Anda buat di **Langkah 3**.
+3. Klik **"Masuk Pengurus"**.
+4. Perhatikan:
+   - Muncul notifikasi hijau: *"Login Pengurus berhasil!"*.
+   - Badge header berubah menjadi **Admin: emailanda@domain.com**.
+   - Tombol melayang **(+)** muncul di pojok kanan bawah.
+   - Tombol **Hapus** muncul di riwayat transaksi.
+   - Tab **Pengaturan** aktif.
+5. Coba catat transaksi kas baru, dan cek di Firebase Console Firestore: data akan seketika tersimpan di awan secara real-time!
+
+---
+
+## 🌐 Deploy Otomatis ke Cloudflare Pages (Gratis Selamanya)
+1. Unggah seluruh isi folder repository ini ke GitHub:  
+   **[https://github.com/angga2103/Kas-mushola.git](https://github.com/angga2103/Kas-mushola.git)**
+2. Buka **[Cloudflare Dashboard](https://dash.cloudflare.com/)** > **Workers & Pages**.
+3. Klik **Create application** > tab **Pages** > **Connect to Git**.
+4. Pilih repository `Kas-mushola`.
+5. Klik **Begin setup**:
+   - Framework preset: `None`
+   - Build command: *(Kosongkan)*
+   - Output directory: *(Kosongkan)*
+6. Klik **Save and Deploy**.
+7. Website Kas Mushola Anda langsung online di seluruh dunia dengan domain gratis `https://kas-mushola.pages.dev` dan otomatis dilengkapi SSL/HTTPS!
