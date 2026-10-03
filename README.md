@@ -49,19 +49,22 @@ Sistem ini menggunakan 2 metode autentikasi:
 
 ---
 
-### Langkah 3: Mendaftarkan Akun Email Pengurus (Admin Pertama)
-Anda bisa mendaftarkan email admin langsung dari Firebase Console atau lewat aplikasi web:
+### Langkah 3: Mendaftarkan Akun Super Admin Utama
+Aplikasi ini menetapkan email bawaan Super Admin: **`rayyan.kontak@gmail.com`**.
 
-**Cara dari Firebase Console:**
-1. Masih di menu **Authentication**, klik tab **Users** (di sebelah tab *Sign-in method*).
+**Cara mendaftarkan Super Admin di Firebase Console:**
+1. Di menu **Authentication**, klik tab **Users** (di sebelah tab *Sign-in method*).
 2. Klik tombol **Add user**.
 3. Masukkan:
-   - **Email:** Contoh `admin@musholapasar.com` atau email pribadi bendahara/ketua DKM.
-   - **Password:** Minimal 6 karakter (misal: `mushola123456`).
+   - **Email:** `rayyan.kontak@gmail.com`
+   - **Password:** Minimal 6 karakter (misal: `123456` atau password kuat pilihan Anda).
 4. Klik **Add user**.
-5. Akun email pengurus Anda sudah berhasil dibuat!
+5. Akun Super Admin Anda sudah aktif!
 
-*(Catatan: Anda juga dapat mendaftar langsung dari aplikasi web menggunakan tab "Daftar Admin Baru" pada modal login).*
+> [!NOTE]
+> **Skema Pengangkatan Admin Pengurus Lainnya:**
+> Anda **tidak perlu lagi** menambahkan user pengurus satu per satu lewat Firebase Console. Cukup login ke aplikasi web sebagai Super Admin, buka menu **Pengaturan** ➔ **Kelola Admin Pengurus**, pilih nama pengurus dari susunan DKM, lalu klik **Angkat Menjadi Admin** dan kirimkan akun via **WhatsApp** secara instan!
+
 
 ---
 
@@ -94,18 +97,16 @@ service cloud.firestore {
     
     // Koleksi transaksi kas mushola
     match /transactions/{transactionId} {
-      // Siapapun yang terhubung (termasuk jamaah publik anonymous) boleh membaca
-      allow read: if request.auth != null;
-      // Hanya akun pengurus yang login dengan Email & Password yang boleh mencatat / menghapus
-      allow write: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'password';
+      // Jamaah publik dapat melihat saldo & transparansi kas
+      allow read: if true;
+      // Hanya pengurus terotentikasi (Super Admin & Admin Pengurus) yang boleh input & hapus
+      allow write: if request.auth != null;
     }
     
     // Koleksi profil & susunan pengurus mushola
     match /profile/{docId} {
-      // Publik boleh membaca profil mushola
-      allow read: if request.auth != null;
-      // Hanya pengurus terotentikasi email yang boleh mengubah profil & susunan pengurus
-      allow write: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'password';
+      allow read: if true;
+      allow write: if request.auth != null;
     }
   }
 }

@@ -627,7 +627,7 @@
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
                 <div class="flex justify-between">
                   <span class="text-slate-500">Email Terotentikasi:</span>
-                  <span id="settings-active-email" class="font-bold text-slate-800">admin@musholapasar.com</span>
+                  <span id="settings-active-email" class="font-bold text-slate-800">rayyan.kontak@gmail.com</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-slate-500">Status Keamanan:</span>
@@ -643,6 +643,71 @@
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>Keluar dari Akun Pengurus</span>
               </button>
+            </div>
+
+            <!-- 3. KELOLA HAK AKSES ADMIN PENGURUS -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-crown text-amber-500 text-sm"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Kelola Admin Pengurus</h3>
+                </div>
+                <span class="text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full font-bold border border-amber-200">
+                  Super Admin
+                </span>
+              </div>
+
+              <!-- Form Angkat Pengurus Jadi Admin -->
+              <div id="admin-promotion-form-box" class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2.5 transition-all">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-700 block">Angkat Pengurus Jadi Admin</span>
+                  <span class="text-[10px] text-emerald-700 font-semibold bg-emerald-100/70 px-2 py-0.5 rounded-full">Pilih Terdaftar</span>
+                </div>
+
+                <div id="admin-promo-restricted-msg" class="hidden p-2 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-800 leading-tight">
+                  <i class="fa-solid fa-lock text-amber-600 mr-1"></i> Hanya Super Admin (<code>rayyan.kontak@gmail.com</code>) yang berhak mengangkat atau mencabut admin baru.
+                </div>
+
+                <!-- 1. Dropdown Pengurus Terdaftar -->
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">1. Pilih Pengurus dari Susunan DKM:</label>
+                  <select id="admin-select-pengurus" onchange="window.app.handleSelectPengurusForAdmin(this)" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    <option value="">-- Memuat daftar pengurus... --</option>
+                  </select>
+                </div>
+
+                <!-- 2. Email Login Pengurus -->
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">2. Email Login Pengurus:</label>
+                  <input type="email" id="new-admin-email" placeholder="contoh: siti.bendahara@gmail.com" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                </div>
+
+                <!-- 3. Password Awal -->
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="block text-[11px] font-semibold text-slate-600">3. Password Sementara:</label>
+                    <button type="button" onclick="document.getElementById('new-admin-password').value='mushola' + Math.floor(1000 + Math.random() * 9000)" class="text-[10px] text-mosque-600 hover:underline">
+                      Acak Password
+                    </button>
+                  </div>
+                  <input type="text" id="new-admin-password" value="mushola2026" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  <span class="text-[10px] text-slate-400 block mt-0.5">Password dapat dibagikan langsung via WhatsApp.</span>
+                </div>
+
+                <button id="btn-promote-admin" onclick="window.app.promotePengurusToAdmin()" class="w-full bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm mt-1">
+                  <i class="fa-solid fa-user-plus text-[10px]"></i>
+                  <span>Angkat Menjadi Admin</span>
+                </button>
+              </div>
+
+              <!-- Daftar Admin Aktif -->
+              <div class="pt-1">
+                <span class="text-[11px] font-semibold text-slate-500 block mb-2">Daftar Admin Kas Aktif:</span>
+                <div id="admin-active-list" class="space-y-2 max-h-64 overflow-y-auto no-scrollbar">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
             </div>
 
             <!-- 3. Konfigurasi Firebase Cloud -->
@@ -808,14 +873,14 @@
   <div id="modal-login" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 custom-modal-backdrop hidden">
     <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="modal-login-content">
       
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
         <div class="flex items-center gap-2.5">
           <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-lg shadow-inner">
             <i class="fa-solid fa-user-shield"></i>
           </div>
           <div>
             <h3 class="text-sm font-bold text-slate-800">Login Pengurus DKM</h3>
-            <p class="text-[10px] text-slate-400">Firebase Authentication</p>
+            <p class="text-[10px] text-slate-400">Khusus Pengurus Mushola Terdaftar</p>
           </div>
         </div>
         <button onclick="window.app.closeModal('modal-login')" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
@@ -823,23 +888,19 @@
         </button>
       </div>
 
-      <!-- Tab Switcher: Masuk vs Daftar Pengurus Pertama -->
-      <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold mb-4">
-        <button type="button" id="auth-tab-btn-login" onclick="window.app.switchAuthTab('login')" class="flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center">
-          Masuk
-        </button>
-        <button type="button" id="auth-tab-btn-register" onclick="window.app.switchAuthTab('register')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center">
-          Daftar Admin Baru
-        </button>
+      <!-- Info Akses Khusus -->
+      <div class="p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 mb-3.5 flex items-start gap-2 text-[11px] text-emerald-900 leading-tight">
+        <i class="fa-solid fa-shield-halved text-emerald-600 mt-0.5 text-xs"></i>
+        <span>Halaman login khusus <b>Super Admin</b> & pengurus yang telah diberikan hak akses oleh Super Admin di menu Pengaturan.</span>
       </div>
 
-      <!-- Form Login / Register -->
+      <!-- Form Login Pengurus -->
       <form onsubmit="event.preventDefault(); window.app.submitAuth();" class="space-y-3.5">
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Email Pengurus</label>
           <div class="relative">
             <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input type="email" id="input-auth-email" placeholder="admin@musholapasar.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+            <input type="email" id="input-auth-email" placeholder="rayyan.kontak@gmail.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
           </div>
         </div>
 
@@ -852,7 +913,7 @@
               <i class="fa-solid fa-eye"></i>
             </button>
           </div>
-          <span id="auth-hint-text" class="text-[10px] text-slate-400 block mt-1">Minimal 6 karakter password.</span>
+          <span id="auth-hint-text" class="text-[10px] text-slate-400 block mt-1">Masukkan email & password yang telah didaftarkan.</span>
         </div>
 
         <div class="pt-2 flex gap-2">
@@ -868,11 +929,71 @@
 
       <!-- Demo Info Notice -->
       <div id="auth-demo-notice" class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 text-center leading-relaxed">
-        <span class="text-amber-800 font-medium block">ℹ️ Mode Demo Lokal:</span>
-        Ketik email sembarang (misal: <code>admin@pasar.com</code>) & password <code>123456</code>.
+        <span class="text-amber-800 font-medium block">ℹ️ Akun Super Admin Bawaan:</span>
+        Email: <code>rayyan.kontak@gmail.com</code> (Password: <code>123456</code>).
       </div>
     </div>
   </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL SHARE KREDENSIAL ADMIN VIA WHATSAPP                    -->
+  <!-- ============================================================ -->
+  <div id="modal-share-admin" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 custom-modal-backdrop hidden">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="modal-share-admin-content">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-lg shadow-inner">
+            <i class="fa-solid fa-id-badge"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">Kredensial Akun Pengurus</h3>
+            <p class="text-[10px] text-slate-400">Siap dibagikan ke pengurus</p>
+          </div>
+        </div>
+        <button onclick="window.app.closeModal('modal-share-admin')" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 mb-4">
+        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 text-xs space-y-2">
+          <div>
+            <span class="text-[10px] text-slate-400 block font-semibold">Nama Pengurus:</span>
+            <span id="share-admin-nama" class="font-bold text-slate-800 block text-xs">-</span>
+          </div>
+          <div class="pt-1.5 border-t border-slate-200/60">
+            <span class="text-[10px] text-slate-400 block font-semibold">Email Login:</span>
+            <span id="share-admin-email" class="font-mono font-bold text-emerald-800 text-xs block truncate">-</span>
+          </div>
+          <div class="pt-1.5 border-t border-slate-200/60">
+            <span class="text-[10px] text-slate-400 block font-semibold">Password Sementara:</span>
+            <span id="share-admin-password" class="font-mono font-bold text-slate-800 text-xs bg-slate-200/70 px-2 py-0.5 rounded inline-block mt-0.5">-</span>
+          </div>
+        </div>
+
+        <p class="text-[10.5px] text-slate-500 text-center leading-tight">
+          Kirimkan akun ini langsung ke nomor WhatsApp pengurus yang bersangkutan agar dapat segera mulai mencatat kas mushola.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <button type="button" onclick="window.app.shareAdminViaWhatsApp()" class="w-full py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white shadow-md transition flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span>Kirim Akun via WhatsApp</span>
+        </button>
+        <button type="button" onclick="window.app.copyAdminCredentials()" class="w-full py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition flex items-center justify-center gap-1.5">
+          <i class="fa-regular fa-copy text-xs"></i>
+          <span>Salin Teks Kredensial</span>
+        </button>
+        <button type="button" onclick="window.app.closeModal('modal-share-admin')" class="w-full py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-600 transition">
+          Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 
   <!-- ============================================================ -->
   <!-- MODAL 2: CATAT TRANSAKSI BARU (ADMIN ONLY)                   -->
@@ -1109,14 +1230,15 @@
   <!-- JAVASCRIPT LOGIC (FIREBASE AUTH & APP CORE)                   -->
   <!-- ============================================================ -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { initializeApp, deleteApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { 
       getAuth, 
       signInAnonymously,
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
       signOut,
-      onAuthStateChanged
+      onAuthStateChanged,
+      sendPasswordResetEmail
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { 
       getFirestore, 
@@ -1129,8 +1251,10 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     /* ==========================================================================
-       1. DEFAULT CATEGORIES & PROFILE
+       1. DEFAULT CATEGORIES & PROFILE & SUPER ADMIN
        ========================================================================== */
+    const SUPER_ADMIN_EMAIL = "rayyan.kontak@gmail.com";
+
     const DEFAULT_CATEGORIES = {
       masuk: [
         "Kotak Amal Harian Mushola",
@@ -1163,6 +1287,17 @@
         { id: "3", nama: "Hj. Siti Rohmah", jabatan: "Bendahara Kas", foto: null },
         { id: "4", nama: "Ust. M. Ridho", jabatan: "Imam Rawatib Mushola", foto: null },
         { id: "5", nama: "Kang Dedi", jabatan: "Petugas Kebersihan & Marbot Mushola", foto: null }
+      ],
+      admins: [
+        {
+          id: "super-admin",
+          pengurusId: "super",
+          nama: "Super Admin",
+          jabatan: "Pemilik Akun Utama",
+          email: SUPER_ADMIN_EMAIL,
+          role: "super_admin",
+          addedAt: "2026-10-03T00:00:00.000Z"
+        }
       ]
     };
 
@@ -1221,7 +1356,10 @@
       activeTab: 'beranda',
       isAdmin: false,
       adminEmail: null,
-      authMode: 'login', // 'login' or 'register'
+      adminRole: null, // 'super_admin' or 'admin'
+      adminProfileInfo: null, // matched pengurus / admin info
+      currentSharedAdmin: null,
+      authMode: 'login',
       isFirebaseReady: false,
       transactions: [],
       profile: { ...DEFAULT_PROFILE },
@@ -1400,14 +1538,15 @@
             // Logged in as Admin via Email & Password
             state.isAdmin = true;
             state.adminEmail = user.email;
-            document.getElementById('admin-user-display').innerText = user.email;
-            document.getElementById('settings-active-email').innerText = user.email;
-            document.getElementById('settings-admin-badge').innerText = "Admin: " + user.email;
+            const isSuper = user.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+            state.adminRole = isSuper ? 'super_admin' : 'admin';
+
             window.app.applyAdminState();
           } else if (user && user.isAnonymous) {
             // Anonymous Public Viewer
             state.isAdmin = false;
             state.adminEmail = null;
+            state.adminRole = null;
             window.app.applyAdminState();
           } else {
             // No user signed in: sign in anonymously so public reads work
@@ -1424,16 +1563,23 @@
         onSnapshot(profileDocRef, (docSnap) => {
           if (docSnap.exists()) {
             const data = docSnap.data();
+            const rawAdmins = data.admins || [...DEFAULT_PROFILE.admins];
+            if (!rawAdmins.some(a => a.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase())) {
+              rawAdmins.unshift(DEFAULT_PROFILE.admins[0]);
+            }
             state.profile = { 
               ...DEFAULT_PROFILE, 
               ...data,
-              categories: data.categories || { ...DEFAULT_CATEGORIES }
+              categories: data.categories || { ...DEFAULT_CATEGORIES },
+              pengurus: data.pengurus || [...DEFAULT_PROFILE.pengurus],
+              admins: rawAdmins
             };
           } else {
             setDoc(profileDocRef, DEFAULT_PROFILE);
           }
           renderProfile();
           renderCategoryManager();
+          renderAdminManager();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
         });
@@ -1467,9 +1613,9 @@
       // Check local persistent session
       if (localStorage.getItem('kas_masjid_admin_session') === 'true') {
         state.isAdmin = true;
-        state.adminEmail = localStorage.getItem('kas_masjid_admin_email') || 'admin@musholapasar.com';
-        document.getElementById('admin-user-display').innerText = state.adminEmail;
-        document.getElementById('settings-active-email').innerText = state.adminEmail;
+        state.adminEmail = localStorage.getItem('kas_masjid_admin_email') || SUPER_ADMIN_EMAIL;
+        const isSuper = state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+        state.adminRole = isSuper ? 'super_admin' : 'admin';
       }
 
       const localTrx = localStorage.getItem('kas_masjid_local_transactions');
@@ -1501,8 +1647,16 @@
         localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
       }
 
+      if (!state.profile.admins || state.profile.admins.length === 0) {
+        state.profile.admins = [...DEFAULT_PROFILE.admins];
+      }
+      if (!state.profile.admins.some(a => a.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase())) {
+        state.profile.admins.unshift(DEFAULT_PROFILE.admins[0]);
+      }
+
       window.app.applyAdminState();
       renderAll();
+      renderAdminManager();
     };
 
     const syncLocal = () => {
@@ -1904,6 +2058,113 @@
     };
 
     /* ==========================================================================
+       8B. ADMIN & ROLE MANAGEMENT
+       ========================================================================== */
+    const renderAdminManager = () => {
+      const selectPengurus = document.getElementById('admin-select-pengurus');
+      const activeListContainer = document.getElementById('admin-active-list');
+      const formBox = document.getElementById('admin-promotion-form-box');
+      const restrictedMsg = document.getElementById('admin-promo-restricted-msg');
+      if (!activeListContainer) return;
+
+      const admins = state.profile.admins || [...DEFAULT_PROFILE.admins];
+      const pengurus = state.profile.pengurus || [];
+      const currentEmail = (state.adminEmail || '').toLowerCase();
+      const isSuperAdmin = currentEmail === SUPER_ADMIN_EMAIL.toLowerCase();
+
+      // Hak Akses form pengangkatan (Hanya Super Admin)
+      if (formBox) {
+        if (isSuperAdmin) {
+          formBox.classList.remove('opacity-60', 'pointer-events-none');
+          if (restrictedMsg) restrictedMsg.classList.add('hidden');
+        } else {
+          formBox.classList.add('opacity-60', 'pointer-events-none');
+          if (restrictedMsg) restrictedMsg.classList.remove('hidden');
+        }
+      }
+
+      // Dropdown pengurus: Hanya tampilkan pengurus yang belum jadi admin
+      if (selectPengurus) {
+        const existingPengurusIds = new Set(admins.map(a => a.pengurusId).filter(Boolean));
+        const available = pengurus.filter(p => !existingPengurusIds.has(p.id));
+
+        if (available.length === 0) {
+          selectPengurus.innerHTML = `<option value="">-- Semua pengurus sudah menjadi admin --</option>`;
+        } else {
+          let opts = `<option value="">-- Pilih Pengurus yang Akan Diberi Akses --</option>`;
+          available.forEach(p => {
+            opts += `<option value="${p.id}" data-nama="${escapeHtml(p.nama)}" data-jabatan="${escapeHtml(p.jabatan)}">${escapeHtml(p.nama)} (${escapeHtml(p.jabatan)})</option>`;
+          });
+          selectPengurus.innerHTML = opts;
+        }
+      }
+
+      // Render Daftar Admin Aktif
+      activeListContainer.innerHTML = admins.map(adm => {
+        const isThisSuper = adm.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+        const matchedPengurus = pengurus.find(p => p.id === adm.pengurusId);
+        const photo = matchedPengurus ? matchedPengurus.foto : null;
+        const hasPhoto = photo && photo.startsWith('data:image');
+
+        const avatarHtml = hasPhoto
+          ? `<img src="${photo}" alt="${escapeHtml(adm.nama)}" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500 shadow-sm flex-shrink-0">`
+          : `<div class="w-10 h-10 rounded-full ${isThisSuper ? 'bg-gradient-to-br from-amber-500 to-amber-700' : 'bg-gradient-to-br from-emerald-600 to-teal-800'} text-white font-bold text-xs flex items-center justify-center shadow-sm flex-shrink-0">
+              ${isThisSuper ? '<i class="fa-solid fa-crown text-xs"></i>' : getInitials(adm.nama)}
+            </div>`;
+
+        const badgeHtml = isThisSuper
+          ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+               <i class="fa-solid fa-crown text-[9px] text-amber-600"></i> Super Admin
+             </span>`
+          : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+               <i class="fa-solid fa-shield text-[9px] text-emerald-600"></i> Admin Pengurus
+             </span>`;
+
+        const actionButtons = isThisSuper
+          ? `<span class="text-[10px] text-slate-400 italic px-2">Akun Utama</span>`
+          : `
+            <div class="flex items-center gap-1">
+              <button onclick="window.app.openShareAdminModal('${adm.id}')" title="Kirim Akun via WhatsApp" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 active:scale-90 transition">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+              </button>
+              <button onclick="window.app.sendResetPasswordLink('${escapeHtml(adm.email)}')" title="Kirim Link Reset Password" class="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 active:scale-90 transition">
+                <i class="fa-solid fa-key text-xs"></i>
+              </button>
+              ${isSuperAdmin ? `
+                <button onclick="window.app.revokeAdmin('${adm.id}', '${escapeHtml(adm.nama)}')" title="Cabut Hak Akses Admin" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 active:scale-90 transition">
+                  <i class="fa-solid fa-user-xmark text-xs"></i>
+                </button>
+              ` : ''}
+            </div>
+          `;
+
+        return `
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 hover:border-slate-300 transition flex items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2.5 min-w-0">
+              ${avatarHtml}
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <h4 class="text-xs font-bold text-slate-800 truncate">${escapeHtml(adm.nama)}</h4>
+                  ${badgeHtml}
+                </div>
+                <div class="text-[11px] text-slate-500 truncate flex items-center gap-1 mt-0.5">
+                  <i class="fa-regular fa-envelope text-[10px] text-slate-400"></i>
+                  <span>${escapeHtml(adm.email)}</span>
+                </div>
+                <div class="text-[10px] text-slate-400 truncate">
+                  Jabatan: ${escapeHtml(adm.jabatan)}
+                </div>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              ${actionButtons}
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    /* ==========================================================================
        9. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
        ========================================================================== */
     window.app = {
@@ -1960,6 +2221,7 @@
         if (tabId === 'pengaturan') {
           renderProfile();
           renderCategoryManager();
+          renderAdminManager();
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2013,31 +2275,10 @@
 
       // FIREBASE AUTH (EMAIL & PASSWORD)
       openLoginModal: () => {
-        window.app.switchAuthTab('login');
-        document.getElementById('input-auth-email').value = state.adminEmail || '';
+        document.getElementById('input-auth-email').value = state.adminEmail || SUPER_ADMIN_EMAIL;
         document.getElementById('input-auth-password').value = '';
         window.app.openModal('modal-login');
-        setTimeout(() => document.getElementById('input-auth-email')?.focus(), 250);
-      },
-
-      switchAuthTab: (mode) => {
-        state.authMode = mode;
-        const btnLogin = document.getElementById('auth-tab-btn-login');
-        const btnRegister = document.getElementById('auth-tab-btn-register');
-        const submitLabel = document.getElementById('btn-submit-auth-label');
-        const hintText = document.getElementById('auth-hint-text');
-
-        if (mode === 'login') {
-          btnLogin.className = "flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center";
-          btnRegister.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center";
-          submitLabel.innerText = "Masuk Pengurus";
-          hintText.innerText = "Masukkan email dan password pengurus.";
-        } else {
-          btnRegister.className = "flex-1 py-1.5 rounded-lg bg-white text-mosque-800 shadow-sm transition font-bold text-center";
-          btnLogin.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center";
-          submitLabel.innerText = "Daftarkan Pengurus Baru";
-          hintText.innerText = "Password minimal 6 karakter. Pastikan email aktif.";
-        }
+        setTimeout(() => document.getElementById('input-auth-password')?.focus(), 250);
       },
 
       togglePasswordVisibility: (inputId, btn) => {
@@ -2067,29 +2308,31 @@
 
         try {
           if (state.isFirebaseReady && state.auth) {
-            if (state.authMode === 'login') {
-              // Sign in with Firebase Email & Password
-              const userCredential = await signInWithEmailAndPassword(state.auth, email, password);
-              state.isAdmin = true;
-              state.adminEmail = userCredential.user.email;
-              showToast("Login Pengurus berhasil!", "success");
-            } else {
-              // Create user with Firebase Email & Password
-              const userCredential = await createUserWithEmailAndPassword(state.auth, email, password);
-              state.isAdmin = true;
-              state.adminEmail = userCredential.user.email;
-              showToast("Akun pengurus berhasil didaftarkan & masuk!", "success");
-            }
+            // Sign in with Firebase Email & Password
+            const userCredential = await signInWithEmailAndPassword(state.auth, email, password);
+            state.isAdmin = true;
+            state.adminEmail = userCredential.user.email;
+            const isSuper = userCredential.user.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+            state.adminRole = isSuper ? 'super_admin' : 'admin';
+            showToast(isSuper ? "Selamat datang, Super Admin!" : "Login Pengurus berhasil!", "success");
           } else {
             // Local Demo Mode Auth Fallback
-            if (password.length < 4) {
-              throw { code: 'auth/weak-password' };
+            const isSuper = email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+            const demoPassMap = JSON.parse(localStorage.getItem('kas_masjid_demo_admin_passwords') || '{}');
+            const expectedPass = demoPassMap[email.toLowerCase()] || '123456';
+
+            const isAdminListed = (state.profile.admins || []).some(a => a.email.toLowerCase() === email.toLowerCase());
+
+            if (!isSuper && !isAdminListed && password.length < 4) {
+              throw { code: 'auth/user-not-found' };
             }
+
             state.isAdmin = true;
             state.adminEmail = email;
+            state.adminRole = isSuper ? 'super_admin' : 'admin';
             localStorage.setItem('kas_masjid_admin_session', 'true');
             localStorage.setItem('kas_masjid_admin_email', email);
-            showToast("Login mode demo berhasil!", "success");
+            showToast(isSuper ? "Login Super Admin (Mode Demo) berhasil!" : "Login Pengurus (Mode Demo) berhasil!", "success");
           }
 
           window.app.applyAdminState();
@@ -2097,11 +2340,11 @@
 
         } catch (err) {
           console.error("Auth error:", err);
-          const errorMsg = translateAuthError(err.code);
+          const errorMsg = translateAuthError(err.code || err.message);
           showToast(errorMsg, "error");
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span id="btn-submit-auth-label">${state.authMode === 'login' ? 'Masuk Pengurus' : 'Daftarkan Pengurus Baru'}</span>`;
+          submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span id="btn-submit-auth-label">Masuk Pengurus</span>`;
         }
       },
 
@@ -2118,6 +2361,7 @@
 
           state.isAdmin = false;
           state.adminEmail = null;
+          state.adminRole = null;
           window.app.applyAdminState();
 
           if (state.activeTab === 'pengaturan') {
@@ -2149,11 +2393,20 @@
             desktopAddBtn.classList.remove('hidden');
             desktopAddBtn.classList.add('md:inline-flex');
           }
-          if (state.adminEmail) {
-            document.getElementById('admin-user-display').innerText = state.adminEmail;
-            document.getElementById('settings-active-email').innerText = state.adminEmail;
-            document.getElementById('settings-admin-badge').innerText = "Admin: " + state.adminEmail;
+
+          const isSuper = state.adminEmail && state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+          const adminInfo = (state.profile.admins || []).find(a => a.email.toLowerCase() === (state.adminEmail || '').toLowerCase());
+
+          let labelText = state.adminEmail;
+          if (isSuper) {
+            labelText = `Super Admin (${state.adminEmail})`;
+          } else if (adminInfo) {
+            labelText = `${adminInfo.nama} (${adminInfo.jabatan})`;
           }
+
+          document.getElementById('admin-user-display').innerText = labelText;
+          document.getElementById('settings-active-email').innerText = state.adminEmail;
+          document.getElementById('settings-admin-badge').innerText = isSuper ? "👑 Super Admin" : "Hak Akses Pengurus";
         } else {
           btnLogin.classList.remove('hidden');
           badgeAdmin.classList.add('hidden');
@@ -2167,6 +2420,227 @@
         }
 
         renderLaporan();
+        renderAdminManager();
+      },
+
+      // PENGURUS ADMIN ACCESS MANAGEMENT
+      handleSelectPengurusForAdmin: (selectEl) => {
+        const opt = selectEl.options[selectEl.selectedIndex];
+        if (!opt || !opt.value) return;
+        const nama = opt.getAttribute('data-nama') || '';
+        const emailInput = document.getElementById('new-admin-email');
+        if (emailInput && !emailInput.value) {
+          const slug = nama.toLowerCase().trim().replace(/[^a-z0-9]/g, '.');
+          emailInput.value = `${slug}@gmail.com`;
+        }
+      },
+
+      promotePengurusToAdmin: async () => {
+        const selectPengurus = document.getElementById('admin-select-pengurus');
+        const pengurusId = selectPengurus.value;
+        const email = document.getElementById('new-admin-email').value.trim();
+        const password = document.getElementById('new-admin-password').value;
+        const btnSubmit = document.getElementById('btn-promote-admin');
+
+        if (!pengurusId) {
+          showToast("Silakan pilih pengurus yang akan diangkat!", "error");
+          return;
+        }
+        if (!email || !email.includes('@')) {
+          showToast("Masukkan alamat email pengurus yang valid!", "error");
+          return;
+        }
+        if (!password || password.length < 6) {
+          showToast("Password minimal 6 karakter!", "error");
+          return;
+        }
+
+        const selectedOpt = selectPengurus.options[selectPengurus.selectedIndex];
+        const nama = selectedOpt.getAttribute('data-nama');
+        const jabatan = selectedOpt.getAttribute('data-jabatan');
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses...`;
+
+        const newAdminObj = {
+          id: 'admin-' + Date.now(),
+          pengurusId: pengurusId,
+          nama: nama,
+          jabatan: jabatan,
+          email: email,
+          role: 'admin',
+          addedAt: new Date().toISOString(),
+          addedBy: state.adminEmail || SUPER_ADMIN_EMAIL
+        };
+
+        try {
+          if (state.isFirebaseReady) {
+            // Secondary Firebase App pattern to create user in Auth without logging out Super Admin
+            const storedConfig = localStorage.getItem('kas_masjid_firebase_config');
+            if (storedConfig) {
+              const fbConfig = JSON.parse(storedConfig);
+              const secondaryAppName = 'SecondaryAuth_' + Date.now();
+              const secondaryApp = initializeApp(fbConfig, secondaryAppName);
+              const secondaryAuth = getAuth(secondaryApp);
+              
+              try {
+                await createUserWithEmailAndPassword(secondaryAuth, email, password);
+                await signOut(secondaryAuth);
+              } catch (authErr) {
+                if (authErr.code === 'auth/email-already-in-use') {
+                  console.info("Email already exists in Firebase Auth, linking role.");
+                } else {
+                  throw authErr;
+                }
+              } finally {
+                await deleteApp(secondaryApp);
+              }
+            }
+
+            // Save to Firestore
+            if (!state.profile.admins) state.profile.admins = [...DEFAULT_PROFILE.admins];
+            state.profile.admins.push(newAdminObj);
+            
+            const profileDocRef = doc(state.db, 'profile', 'info');
+            await setDoc(profileDocRef, { ...state.profile }, { merge: true });
+
+          } else {
+            // Local Demo Mode
+            if (!state.profile.admins) state.profile.admins = [...DEFAULT_PROFILE.admins];
+            state.profile.admins.push(newAdminObj);
+            
+            // Store demo credentials so demo login works
+            const demoPassMap = JSON.parse(localStorage.getItem('kas_masjid_demo_admin_passwords') || '{}');
+            demoPassMap[email.toLowerCase()] = password;
+            localStorage.setItem('kas_masjid_demo_admin_passwords', JSON.stringify(demoPassMap));
+
+            localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
+          }
+
+          // Reset inputs
+          document.getElementById('new-admin-email').value = '';
+          document.getElementById('new-admin-password').value = 'mushola2026';
+          
+          renderAdminManager();
+          showToast(`Akun admin untuk ${nama} berhasil dibuat!`, "success");
+
+          // Open credentials share modal
+          window.app.openShareAdminModal(newAdminObj.id, password);
+
+        } catch (err) {
+          console.error("Promote admin error:", err);
+          showToast("Gagal mengangkat admin: " + translateAuthError(err.code || err.message), "error");
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<i class="fa-solid fa-user-plus text-[10px]"></i> <span>Angkat Menjadi Admin</span>`;
+        }
+      },
+
+      revokeAdmin: async (adminId, nama) => {
+        const adminToRevoke = (state.profile.admins || []).find(a => a.id === adminId);
+        if (!adminToRevoke) return;
+
+        if (adminToRevoke.email.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase()) {
+          showToast("Super Admin utama tidak dapat dicabut hak aksesnya!", "error");
+          return;
+        }
+
+        if (!confirm(`Cabut hak akses admin dari ${nama || adminToRevoke.nama}? Pengurus ini tidak akan bisa login lagi ke sistem kas.`)) {
+          return;
+        }
+
+        state.profile.admins = (state.profile.admins || []).filter(a => a.id !== adminId);
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            const profileDocRef = doc(state.db, 'profile', 'info');
+            await setDoc(profileDocRef, { ...state.profile }, { merge: true });
+          } else {
+            localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
+          }
+
+          renderAdminManager();
+          showToast(`Hak akses admin ${nama} berhasil dicabut.`, "info");
+        } catch (err) {
+          console.error("Revoke error:", err);
+          showToast("Gagal mencabut hak akses: " + err.message, "error");
+        }
+      },
+
+      sendResetPasswordLink: async (email) => {
+        if (!state.isFirebaseReady || !state.auth) {
+          showToast("Fitur reset password via email aktif saat terhubung ke Firebase Cloud.", "info");
+          return;
+        }
+
+        try {
+          await sendPasswordResetEmail(state.auth, email);
+          showToast(`Link reset password berhasil dikirim ke ${email}. Silakan cek kotak masuk/spam email.`, "success");
+        } catch (err) {
+          console.error("Password reset error:", err);
+          showToast("Gagal mengirim link reset: " + translateAuthError(err.code || err.message), "error");
+        }
+      },
+
+      openShareAdminModal: (adminId, rawPassword = null) => {
+        const adminObj = (state.profile.admins || []).find(a => a.id === adminId);
+        if (!adminObj) return;
+
+        const pass = rawPassword || 'mushola2026';
+        state.currentSharedAdmin = { ...adminObj, rawPassword: pass };
+
+        document.getElementById('share-admin-nama').innerText = `${adminObj.nama} (${adminObj.jabatan})`;
+        document.getElementById('share-admin-email').innerText = adminObj.email;
+        document.getElementById('share-admin-password').innerText = pass;
+
+        window.app.openModal('modal-share-admin');
+      },
+
+      shareAdminViaWhatsApp: () => {
+        const adm = state.currentSharedAdmin;
+        if (!adm) return;
+
+        const namaMasjid = state.profile.nama || DEFAULT_PROFILE.nama;
+        const webUrl = window.location.href.split('#')[0];
+        const msg = `*Assalamu'alaikum Warahmatullahi Wabarakatuh,*
+
+Yth. Bpk/Ibu *${adm.nama}* (${adm.jabatan}),
+
+Alhamdulillah, Anda telah diberikan amanah hak akses sebagai *Admin Pengurus Kas ${namaMasjid}*.
+
+Berikut detail akun login Anda:
+🌐 *Website:* ${webUrl}
+✉️ *Email Login:* ${adm.email}
+🔑 *Password Sementara:* ${adm.rawPassword}
+
+*Petunjuk Masuk:*
+1. Buka link website di atas melalui browser HP Anda.
+2. Klik tombol *Login Pengurus* di pojok kanan atas.
+3. Masukkan email & password di atas, lalu klik *Masuk Pengurus*.
+4. Mohon jaga kerahasiaan password dan gunakan sistem ini dengan amanah demi transparansi dana umat.
+
+Jazakumullahu Khairan Katsiran.
+_Pengurus DKM Mushola Pasar_`;
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+      },
+
+      copyAdminCredentials: () => {
+        const adm = state.currentSharedAdmin;
+        if (!adm) return;
+
+        const webUrl = window.location.href.split('#')[0];
+        const text = `Akun Admin Kas Mushola:
+Nama: ${adm.nama} (${adm.jabatan})
+Link Web: ${webUrl}
+Email: ${adm.email}
+Password: ${adm.rawPassword}`;
+
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Kredensial login berhasil disalin ke clipboard!", "success");
+        }).catch(() => {
+          showToast("Gagal menyalin kredensial.", "error");
+        });
       },
 
       // Add Transaction Form
@@ -2515,6 +2989,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderProfile();
+          renderAdminManager();
           showToast("Pengurus baru berhasil ditambahkan!", "success");
         } catch (err) {
           showToast("Gagal menambah pengurus: " + err.message, "error");
@@ -2530,6 +3005,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             syncLocal();
           }
           renderProfile();
+          renderAdminManager();
           showToast("Pengurus berhasil dihapus.", "info");
         } catch (err) {
           showToast("Gagal menghapus pengurus: " + err.message, "error");
