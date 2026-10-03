@@ -203,3 +203,24 @@ Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu m
 - Kategori Pemasukan (Kotak Amal, Infaq Pedagang, dll) dan Pengeluaran (Bisaroh, Listrik, Kebersihan, dll) kini sepenuhnya dinamis.
 - Pengurus dapat menambah kategori baru dari menu **Pengaturan**, atau menambahkan langsung secara instan (*+ Tambah Kategori Baru*) saat mengisi form transaksi tanpa harus berpindah halaman.
 
+---
+
+## 📢 Fitur Universal: Agenda, Pengumuman & Rencana Pembangunan
+
+### 1. Kolom Cantik Dinamis di Beranda
+- **Kondisional Cerdas**: Hanya tampil ketika ada agenda berstatus **Aktif**. Jika kosong atau dinonaktifkan, halaman Beranda tetap bersih dan rapi tanpa kolom kosong.
+- **Tampilan Khusus per Kategori**:
+  - 📢 **Pengumuman Resmi** (Aksen Biru/Sky): Untuk info sholat tarawih, qurban, jadwal imsakiyah, pengumuman DKM.
+  - 📅 **Undangan Acara & Kajian** (Aksen Emas/Amber): Untuk kajian rutin pedagang, peringatan hari besar, rapat DKM.
+  - 🏗️ **Rencana Pembangunan & Renovasi** (Aksen Hijau/Emerald): Untuk perbaikan wudhu, kanopi, renovasi kubah, dilengkapi info target dana.
+  - 🤝 **Kegiatan Sosial**: Santunan anak yatim pasar, bantuan pedagang.
+- **Interaksi Instan**:
+  - Tombol **"Bagikan ke WA"**: Membuat pesan WhatsApp formal dan islami dengan 1 klik untuk di-blast ke grup jamaah pasar.
+  - Tombol **"Infaq Digital QRIS"**: Membuka popup QRIS langsung agar jamaah bisa berinfaq saat membaca rencana pembangunan atau acara.
+
+### 2. Pengelolaan di Menu Pengaturan
+- Masuk ke tab **Pengaturan** ➔ **Agenda, Acara & Pembangunan**.
+- Terdapat tombol **Template Cepat 1-Klik** (*📢 Pengumuman*, *📅 Undangan Acara*, *🏗️ Rencana Pembangunan*) agar pengurus tidak perlu mengetik dari awal.
+- Pengurus dapat mengedit, menghapus, atau mengaktifkan/menonaktifkan agenda (*toggle status*) kapan saja dengan sinkronisasi real-time cloud Firestore.
+
+

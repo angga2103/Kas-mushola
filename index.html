@@ -377,6 +377,29 @@
               </div>
             </div>
 
+            <!-- 2.5. KOLOM CANTIK AGENDA, PENGUMUMAN & RENCANA MUSHOLA -->
+            <div id="beranda-agenda-container" class="hidden space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-bullhorn text-emerald-600"></i>
+                    <span>Agenda & Informasi DKM</span>
+                  </h3>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="beranda-agenda-counter" class="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                    0 Agenda Aktif
+                  </span>
+                </div>
+              </div>
+
+              <!-- List Kartu Agenda Cantik -->
+              <div id="beranda-agenda-list" class="space-y-3">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
             <!-- 3. RIWAYAT TRANSAKSI TERAKHIR -->
             <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-slate-200/80">
               <div class="flex items-center justify-between mb-3.5">
@@ -927,6 +950,127 @@
               </div>
             </div>
 
+            <!-- 3. KELOLA AGENDA & INFORMASI MUSHOLA -->
+            <div id="settings-agenda-manager-card" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-calendar-check text-mosque-600 text-sm"></i>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Agenda, Acara & Pembangunan</h3>
+                </div>
+                <button type="button" onclick="window.app.toggleAgendaForm(true)" class="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-xl transition flex items-center gap-1 active:scale-95">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Buat Agenda</span>
+                </button>
+              </div>
+
+              <p class="text-[11px] text-slate-500 leading-relaxed">
+                Tulis pengumuman, undangan acara (kajian/rapat/peringatan), atau rencana pembangunan. Agenda yang <strong>aktif</strong> akan otomatis muncul di kolom cantik Beranda.
+              </p>
+
+              <!-- FORM BOX (Bisa Tambah / Edit) -->
+              <div id="agenda-form-box" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200/90 space-y-3 transition-all">
+                <div class="flex items-center justify-between">
+                  <span id="agenda-form-title" class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+                    <span>Tambah Agenda Baru</span>
+                  </span>
+                  <button type="button" onclick="window.app.toggleAgendaForm(false)" class="text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-solid fa-xmark"></i> Tutup
+                  </button>
+                </div>
+
+                <!-- Template Cepat Buttons -->
+                <div>
+                  <span class="text-[10px] text-slate-500 font-semibold block mb-1">Gunakan Template Cepat:</span>
+                  <div class="flex flex-wrap gap-1.5">
+                    <button type="button" onclick="window.app.fillAgendaTemplate('pengumuman')" class="text-[10px] bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 px-2 py-1 rounded-lg transition font-medium flex items-center gap-1 active:scale-95">
+                      <i class="fa-solid fa-bullhorn text-[9px] text-sky-600"></i> 📢 Pengumuman
+                    </button>
+                    <button type="button" onclick="window.app.fillAgendaTemplate('acara')" class="text-[10px] bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-2 py-1 rounded-lg transition font-medium flex items-center gap-1 active:scale-95">
+                      <i class="fa-solid fa-calendar-check text-[9px] text-amber-600"></i> 📅 Undangan Acara
+                    </button>
+                    <button type="button" onclick="window.app.fillAgendaTemplate('pembangunan')" class="text-[10px] bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-1 rounded-lg transition font-medium flex items-center gap-1 active:scale-95">
+                      <i class="fa-solid fa-trowel-bricks text-[9px] text-emerald-600"></i> 🏗️ Rencana Pembangunan
+                    </button>
+                  </div>
+                </div>
+
+                <input type="hidden" id="agenda-edit-id" value="">
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Kategori / Sifat Agenda</label>
+                  <select id="agenda-input-kategori" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    <option value="pengumuman">📢 Pengumuman Resmi</option>
+                    <option value="acara">📅 Undangan Acara / Kajian</option>
+                    <option value="pembangunan">🏗️ Rencana Pembangunan / Renovasi</option>
+                    <option value="sosial">🤝 Kegiatan Sosial & Santunan</option>
+                    <option value="umum">📌 Informasi Umum</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Judul Agenda / Pengumuman</label>
+                  <input type="text" id="agenda-input-judul" placeholder="Contoh: Kajian Akbar Pedagang / Renovasi Tempat Wudhu" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Waktu / Tanggal Pelaksanaan</label>
+                    <input type="text" id="agenda-input-tanggal" placeholder="Contoh: Ahad, 18 Okt 2026 • 09:00 WIB" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Lokasi / Tempat</label>
+                    <input type="text" id="agenda-input-lokasi" placeholder="Contoh: Lantai 2 Mushola Pasar" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Target Dana / Biaya (Opsional)</label>
+                    <input type="text" id="agenda-input-target" placeholder="Contoh: Target Rp 10.000.000" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Kontak / Narasumber / PIC (Opsional)</label>
+                    <input type="text" id="agenda-input-kontak" placeholder="Contoh: Ust. M. Ridho / Kang Dedi (0812-xxx)" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-semibold text-slate-700 mb-1">Isi Lengkap / Keterangan Agenda</label>
+                  <textarea id="agenda-input-deskripsi" rows="3" placeholder="Tuliskan detail pengumuman, susunan acara, ajakan donasi, atau informasi penting lainnya..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none"></textarea>
+                </div>
+
+                <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200">
+                  <input type="checkbox" id="agenda-input-aktif" checked class="w-4 h-4 text-mosque-600 rounded focus:ring-mosque-500">
+                  <label for="agenda-input-aktif" class="text-xs font-semibold text-slate-700 cursor-pointer">
+                    Aktifkan & Tampilkan di Halaman Beranda
+                  </label>
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                  <button type="button" onclick="window.app.saveAgendaForm()" class="flex-1 bg-mosque-700 hover:bg-mosque-800 active:scale-95 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <i class="fa-solid fa-floppy-disk text-xs"></i>
+                    <span id="agenda-btn-submit-label">Simpan Agenda</span>
+                  </button>
+                  <button type="button" onclick="window.app.toggleAgendaForm(false)" class="bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-700 font-semibold px-3 py-2 rounded-xl text-xs transition">
+                    Batal
+                  </button>
+                </div>
+              </div>
+
+              <!-- DAFTAR AGENDA YANG TELAH DIBUAT -->
+              <div class="space-y-2 pt-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-semibold text-slate-500 block">Daftar Agenda Terdaftar:</span>
+                  <span id="settings-agenda-count-badge" class="text-[10px] text-slate-400 font-medium">0 Agenda</span>
+                </div>
+                <div id="settings-agenda-list" class="space-y-2 max-h-72 overflow-y-auto no-scrollbar">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+            </div>
+
           </div>
 
         </div>
@@ -1426,7 +1570,8 @@
           role: "super_admin",
           addedAt: "2026-10-03T00:00:00.000Z"
         }
-      ]
+      ],
+      agendas: []
     };
 
     const DEFAULT_TRANSACTIONS = [
@@ -1706,7 +1851,8 @@
               ...data,
               categories: data.categories || { ...DEFAULT_CATEGORIES },
               pengurus: data.pengurus || [...DEFAULT_PROFILE.pengurus],
-              admins: rawAdmins
+              admins: rawAdmins,
+              agendas: data.agendas || []
             };
           } else {
             setDoc(profileDocRef, DEFAULT_PROFILE);
@@ -1714,6 +1860,8 @@
           renderProfile();
           renderCategoryManager();
           renderAdminManager();
+          renderAgendaManager();
+          renderAgendaSection();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
         });
@@ -1771,7 +1919,8 @@
           state.profile = {
             ...DEFAULT_PROFILE,
             ...parsed,
-            categories: parsed.categories || { ...DEFAULT_CATEGORIES }
+            categories: parsed.categories || { ...DEFAULT_CATEGORIES },
+            agendas: parsed.agendas || []
           };
         } catch (e) {
           state.profile = { ...DEFAULT_PROFILE };
@@ -1791,6 +1940,8 @@
       window.app.applyAdminState();
       renderAll();
       renderAdminManager();
+      renderAgendaManager();
+      renderAgendaSection();
     };
 
     const syncLocal = () => {
@@ -1866,6 +2017,8 @@
       renderLaporan();
       renderProfile();
       renderCategoryManager();
+      renderAgendaSection();
+      renderAgendaManager();
       updateMonthSelectOptions();
     };
 
@@ -2405,6 +2558,206 @@
     };
 
     /* ==========================================================================
+       8. AGENDA & PENGUMUMAN RENDERING LOGIC
+       ========================================================================== */
+    const renderAgendaSection = () => {
+      const container = document.getElementById('beranda-agenda-container');
+      const listEl = document.getElementById('beranda-agenda-list');
+      const counterEl = document.getElementById('beranda-agenda-counter');
+      if (!container || !listEl) return;
+
+      const agendas = state.profile.agendas || [];
+      const activeAgendas = agendas.filter(a => a.aktif !== false);
+
+      if (activeAgendas.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      if (counterEl) {
+        counterEl.innerText = `${activeAgendas.length} Agenda Aktif`;
+      }
+
+      listEl.innerHTML = activeAgendas.map(item => {
+        let tagLabel = 'Pengumuman Resmi';
+        let iconClass = 'fa-solid fa-bullhorn text-sky-600';
+        let pillClass = 'bg-sky-50 border border-sky-300 text-sky-800';
+        let accentBorder = 'border-l-4 border-l-sky-500';
+
+        if (item.kategori === 'acara') {
+          tagLabel = 'Undangan Acara';
+          iconClass = 'fa-solid fa-calendar-check text-amber-600';
+          pillClass = 'bg-amber-50 border border-amber-300 text-amber-900';
+          accentBorder = 'border-l-4 border-l-amber-500';
+        } else if (item.kategori === 'pembangunan') {
+          tagLabel = 'Rencana Pembangunan';
+          iconClass = 'fa-solid fa-trowel-bricks text-emerald-600';
+          pillClass = 'bg-emerald-50 border border-emerald-300 text-emerald-900';
+          accentBorder = 'border-l-4 border-l-emerald-500';
+        } else if (item.kategori === 'sosial') {
+          tagLabel = 'Kegiatan Sosial';
+          iconClass = 'fa-solid fa-hand-holding-heart text-purple-600';
+          pillClass = 'bg-purple-50 border border-purple-300 text-purple-900';
+          accentBorder = 'border-l-4 border-l-purple-500';
+        } else if (item.kategori === 'umum') {
+          tagLabel = 'Informasi DKM';
+          iconClass = 'fa-solid fa-circle-info text-teal-600';
+          pillClass = 'bg-teal-50 border border-teal-300 text-teal-900';
+          accentBorder = 'border-l-4 border-l-teal-500';
+        }
+
+        return `
+          <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/90 hover:border-slate-300 transition duration-150 ${accentBorder} space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${pillClass}">
+                <i class="${iconClass}"></i>
+                <span>${tagLabel}</span>
+              </span>
+              ${item.tanggal ? `
+                <span class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 px-2.5 py-0.5 rounded-full">
+                  <i class="fa-regular fa-clock text-slate-400"></i>
+                  <span>${escapeHtml(item.tanggal)}</span>
+                </span>
+              ` : ''}
+            </div>
+
+            <div>
+              <h4 class="text-sm sm:text-base font-extrabold text-slate-800 leading-snug">
+                ${escapeHtml(item.judul)}
+              </h4>
+            </div>
+
+            ${(item.lokasi || item.target || item.kontak) ? `
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                ${item.lokasi ? `
+                  <span class="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">
+                    <i class="fa-solid fa-location-dot text-slate-400"></i>
+                    <span>${escapeHtml(item.lokasi)}</span>
+                  </span>
+                ` : ''}
+                ${item.target ? `
+                  <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg">
+                    <i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i>
+                    <span>${escapeHtml(item.target)}</span>
+                  </span>
+                ` : ''}
+                ${item.kontak ? `
+                  <span class="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">
+                    <i class="fa-solid fa-user-tie text-slate-400"></i>
+                    <span>${escapeHtml(item.kontak)}</span>
+                  </span>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            ${item.deskripsi ? `
+              <div class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50/80 p-3.5 rounded-xl border border-slate-100 whitespace-pre-wrap">
+                ${escapeHtml(item.deskripsi)}
+              </div>
+            ` : ''}
+
+            <div class="pt-1 flex items-center justify-between flex-wrap gap-2 border-t border-slate-100/90">
+              <div class="flex items-center gap-2">
+                <button onclick="window.app.shareAgendaWA('${item.id}')" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-1.5 px-3 rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition">
+                  <i class="fa-brands fa-whatsapp text-sm"></i>
+                  <span>Bagikan ke WA</span>
+                </button>
+                ${(item.kategori === 'pembangunan' || item.kategori === 'acara') ? `
+                  <button onclick="window.app.openQrisModal()" class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-amber-950 font-bold py-1.5 px-3 rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition">
+                    <i class="fa-solid fa-qrcode text-xs"></i>
+                    <span>Infaq Digital</span>
+                  </button>
+                ` : ''}
+              </div>
+
+              ${state.isAdmin ? `
+                <button onclick="window.app.editAgenda('${item.id}')" class="text-[11px] font-bold text-mosque-700 hover:text-mosque-800 flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200 transition">
+                  <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                  <span>Edit Agenda</span>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    const renderAgendaManager = () => {
+      const listEl = document.getElementById('settings-agenda-list');
+      const countBadge = document.getElementById('settings-agenda-count-badge');
+      if (!listEl) return;
+
+      const agendas = state.profile.agendas || [];
+      if (countBadge) countBadge.innerText = `${agendas.length} Agenda`;
+
+      if (agendas.length === 0) {
+        listEl.innerHTML = `
+          <div class="text-center py-6 text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            <i class="fa-solid fa-calendar-xmark text-2xl mb-1 text-slate-300"></i>
+            <p class="font-medium">Belum ada agenda atau pengumuman yang dibuat.</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">Klik tombol <strong>+ Buat Agenda</strong> di atas untuk membuat pengumuman baru.</p>
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = agendas.map(item => {
+        const isAktif = item.aktif !== false;
+        let katLabel = 'Pengumuman';
+        let katBadge = 'bg-sky-50 text-sky-700 border-sky-200';
+        if (item.kategori === 'acara') {
+          katLabel = 'Acara';
+          katBadge = 'bg-amber-50 text-amber-700 border-amber-200';
+        } else if (item.kategori === 'pembangunan') {
+          katLabel = 'Pembangunan';
+          katBadge = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        } else if (item.kategori === 'sosial') {
+          katLabel = 'Sosial';
+          katBadge = 'bg-purple-50 text-purple-700 border-purple-200';
+        } else if (item.kategori === 'umum') {
+          katLabel = 'Umum';
+          katBadge = 'bg-teal-50 text-teal-700 border-teal-200';
+        }
+
+        return `
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/90 hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${katBadge}">
+                  ${katLabel}
+                </span>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${isAktif ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'}">
+                  ${isAktif ? '<i class="fa-solid fa-eye text-[9px] mr-1"></i>Tampil di Beranda' : '<i class="fa-solid fa-eye-slash text-[9px] mr-1"></i>Nonaktif (Disembunyikan)'}
+                </span>
+              </div>
+              <h4 class="text-xs font-bold text-slate-800 mt-1 truncate">${escapeHtml(item.judul)}</h4>
+              <div class="text-[10px] text-slate-400 mt-0.5 flex flex-wrap gap-x-2">
+                ${item.tanggal ? `<span><i class="fa-regular fa-clock mr-0.5"></i>${escapeHtml(item.tanggal)}</span>` : ''}
+                ${item.lokasi ? `<span><i class="fa-solid fa-location-dot mr-0.5"></i>${escapeHtml(item.lokasi)}</span>` : ''}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 flex-shrink-0 self-end sm:self-center">
+              <button onclick="window.app.toggleAgendaActive('${item.id}')" title="${isAktif ? 'Sembunyikan dari Beranda' : 'Tampilkan di Beranda'}" class="p-1.5 rounded-lg ${isAktif ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200' : 'bg-slate-200 text-slate-600 hover:bg-slate-300'} text-xs active:scale-90 transition">
+                <i class="fa-solid ${isAktif ? 'fa-toggle-on text-sm' : 'fa-toggle-off text-sm'}"></i>
+              </button>
+              <button onclick="window.app.shareAgendaWA('${item.id}')" title="Bagikan ke WhatsApp" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs active:scale-90 transition">
+                <i class="fa-brands fa-whatsapp"></i>
+              </button>
+              <button onclick="window.app.editAgenda('${item.id}')" title="Edit Agenda" class="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs active:scale-90 transition">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button onclick="window.app.deleteAgenda('${item.id}')" title="Hapus Agenda" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs active:scale-90 transition">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    /* ==========================================================================
        9. GLOBAL APP CONTROLLER (EXPOSED TO WINDOW.APP)
        ========================================================================== */
     window.app = {
@@ -2661,6 +3014,8 @@
 
         renderLaporan();
         renderAdminManager();
+        renderAgendaManager();
+        renderAgendaSection();
       },
 
       // PENGURUS ADMIN ACCESS MANAGEMENT
@@ -3475,6 +3830,258 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         window.app.closeModal('modal-firebase');
         showToast("Konfigurasi di-reset ke Firebase Bawaan.", "info");
         setTimeout(() => location.reload(), 600);
+      },
+
+      // ==================== KELOLA AGENDA & INFORMASI DKM ====================
+      toggleAgendaForm: (show, isEdit = false) => {
+        const box = document.getElementById('agenda-form-box');
+        if (!box) return;
+        if (show) {
+          box.classList.remove('hidden');
+          if (!isEdit) {
+            document.getElementById('agenda-edit-id').value = '';
+            document.getElementById('agenda-form-title').innerHTML = `
+              <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+              <span>Tambah Agenda Baru</span>
+            `;
+            document.getElementById('agenda-btn-submit-label').innerText = 'Simpan Agenda';
+            document.getElementById('agenda-input-kategori').value = 'pengumuman';
+            document.getElementById('agenda-input-judul').value = '';
+            document.getElementById('agenda-input-tanggal').value = '';
+            document.getElementById('agenda-input-lokasi').value = '';
+            document.getElementById('agenda-input-target').value = '';
+            document.getElementById('agenda-input-kontak').value = '';
+            document.getElementById('agenda-input-deskripsi').value = '';
+            document.getElementById('agenda-input-aktif').checked = true;
+          }
+          setTimeout(() => {
+            document.getElementById('agenda-input-judul')?.focus();
+          }, 50);
+        } else {
+          box.classList.add('hidden');
+          document.getElementById('agenda-edit-id').value = '';
+        }
+      },
+
+      fillAgendaTemplate: (type) => {
+        window.app.toggleAgendaForm(true, true);
+        const formTitle = document.getElementById('agenda-form-title');
+        const submitLabel = document.getElementById('agenda-btn-submit-label');
+        if (formTitle) {
+          formTitle.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> <span>Gunakan Template ${type.toUpperCase()}</span>`;
+        }
+        if (submitLabel) submitLabel.innerText = 'Simpan Agenda';
+
+        if (type === 'pengumuman') {
+          document.getElementById('agenda-input-kategori').value = 'pengumuman';
+          document.getElementById('agenda-input-judul').value = 'Pengumuman Jadwal Sholat Tarawih & Tadarus Pasar';
+          document.getElementById('agenda-input-tanggal').value = 'Mulai Malam 1 Ramadhan • 19:30 WIB';
+          document.getElementById('agenda-input-lokasi').value = 'Mushola Pasar Lantai 2 Blok B';
+          document.getElementById('agenda-input-target').value = '';
+          document.getElementById('agenda-input-kontak').value = 'Ust. M. Ridho (Imam Rawatib)';
+          document.getElementById('agenda-input-deskripsi').value = 'Diberitahukan kepada seluruh pedagang dan jamaah pasar bahwa sholat isya dan tarawih berjamaah diadakan setiap malam. Bagi pedagang yang ingin menyumbang takjil buka puasa dapat menghubungi pengurus marbot.';
+        } else if (type === 'acara') {
+          document.getElementById('agenda-input-kategori').value = 'acara';
+          document.getElementById('agenda-input-judul').value = 'Kajian Rutin Pedagang: Meraih Keberkahan Perniagaan';
+          document.getElementById('agenda-input-tanggal').value = 'Ahad Pagi • Pukul 08:30 - 10:00 WIB';
+          document.getElementById('agenda-input-lokasi').value = 'Mushola Utama Lantai 2';
+          document.getElementById('agenda-input-target').value = '';
+          document.getElementById('agenda-input-kontak').value = 'Ust. M. Ridho / Hj. Siti (0812-3456-7890)';
+          document.getElementById('agenda-input-deskripsi').value = 'Hadirilah kajian dhuha khusus pedagang pasar dengan tema "Meraih Berkah Dalam Perniagaan Menurut Sunnah". Disediakan konsumsi sarapan pagi & ramah tamah bersama pengurus DKM.';
+        } else if (type === 'pembangunan') {
+          document.getElementById('agenda-input-kategori').value = 'pembangunan';
+          document.getElementById('agenda-input-judul').value = 'Rencana Renovasi Tempat Wudhu & Saluran Air';
+          document.getElementById('agenda-input-tanggal').value = 'Target Mulai: Bulan Depan';
+          document.getElementById('agenda-input-lokasi').value = 'Area Wudhu Pria & Wanita Mushola Pasar';
+          document.getElementById('agenda-input-target').value = 'Estimasi Biaya: Rp 5.000.000';
+          document.getElementById('agenda-input-kontak').value = 'H. Subur (Ketua DKM) & Kang Dedi';
+          document.getElementById('agenda-input-deskripsi').value = 'Pengurus merencanakan perbaikan kran wudhu anti-bocor, pemasangan keramik anti-licin, dan perbaikan drainase. Jamaah yang ingin berinfaq bahan bangunan atau dana dipersilakan melalui kas mushola.';
+        }
+        document.getElementById('agenda-input-aktif').checked = true;
+      },
+
+      saveAgendaForm: async () => {
+        const editId = document.getElementById('agenda-edit-id')?.value || '';
+        const kategori = document.getElementById('agenda-input-kategori')?.value || 'pengumuman';
+        const judul = (document.getElementById('agenda-input-judul')?.value || '').trim();
+        const tanggal = (document.getElementById('agenda-input-tanggal')?.value || '').trim();
+        const lokasi = (document.getElementById('agenda-input-lokasi')?.value || '').trim();
+        const target = (document.getElementById('agenda-input-target')?.value || '').trim();
+        const kontak = (document.getElementById('agenda-input-kontak')?.value || '').trim();
+        const deskripsi = (document.getElementById('agenda-input-deskripsi')?.value || '').trim();
+        const aktif = document.getElementById('agenda-input-aktif')?.checked ?? true;
+
+        if (!judul) {
+          showToast("Judul agenda wajib diisi!", "error");
+          return;
+        }
+
+        if (!state.profile.agendas) state.profile.agendas = [];
+
+        if (editId) {
+          const idx = state.profile.agendas.findIndex(a => a.id === editId);
+          if (idx !== -1) {
+            state.profile.agendas[idx] = {
+              ...state.profile.agendas[idx],
+              kategori,
+              judul,
+              tanggal,
+              lokasi,
+              target,
+              kontak,
+              deskripsi,
+              aktif,
+              updatedAt: new Date().toISOString()
+            };
+          }
+        } else {
+          const newAgenda = {
+            id: 'agenda-' + Date.now(),
+            kategori,
+            judul,
+            tanggal,
+            lokasi,
+            target,
+            kontak,
+            deskripsi,
+            aktif,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          state.profile.agendas.unshift(newAgenda);
+        }
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+          } else {
+            syncLocal();
+          }
+
+          window.app.toggleAgendaForm(false);
+          renderAgendaManager();
+          renderAgendaSection();
+          showToast(editId ? "Agenda berhasil diperbarui!" : "Agenda baru berhasil disimpan!", "success");
+        } catch (err) {
+          console.error("Save agenda error:", err);
+          showToast("Gagal menyimpan agenda: " + err.message, "error");
+        }
+      },
+
+      editAgenda: (agendaId) => {
+        const agendas = state.profile.agendas || [];
+        const item = agendas.find(a => a.id === agendaId);
+        if (!item) return;
+
+        window.app.switchTab('pengaturan');
+        window.app.toggleAgendaForm(true, true);
+
+        document.getElementById('agenda-edit-id').value = item.id;
+        document.getElementById('agenda-form-title').innerHTML = `
+          <i class="fa-solid fa-pen-to-square text-emerald-600"></i>
+          <span>Edit Agenda: ${escapeHtml(item.judul)}</span>
+        `;
+        document.getElementById('agenda-btn-submit-label').innerText = 'Perbarui Agenda';
+
+        document.getElementById('agenda-input-kategori').value = item.kategori || 'pengumuman';
+        document.getElementById('agenda-input-judul').value = item.judul || '';
+        document.getElementById('agenda-input-tanggal').value = item.tanggal || '';
+        document.getElementById('agenda-input-lokasi').value = item.lokasi || '';
+        document.getElementById('agenda-input-target').value = item.target || '';
+        document.getElementById('agenda-input-kontak').value = item.kontak || '';
+        document.getElementById('agenda-input-deskripsi').value = item.deskripsi || '';
+        document.getElementById('agenda-input-aktif').checked = item.aktif !== false;
+
+        document.getElementById('settings-agenda-manager-card')?.scrollIntoView({ behavior: 'smooth' });
+      },
+
+      toggleAgendaActive: async (agendaId) => {
+        const agendas = state.profile.agendas || [];
+        const item = agendas.find(a => a.id === agendaId);
+        if (!item) return;
+
+        item.aktif = (item.aktif === false) ? true : false;
+        item.updatedAt = new Date().toISOString();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+          } else {
+            syncLocal();
+          }
+
+          renderAgendaManager();
+          renderAgendaSection();
+          showToast(item.aktif ? "Agenda diaktifkan & muncul di Beranda!" : "Agenda dinonaktifkan dari Beranda.", "info");
+        } catch (err) {
+          showToast("Gagal memperbarui status agenda: " + err.message, "error");
+        }
+      },
+
+      deleteAgenda: async (agendaId) => {
+        const agendas = state.profile.agendas || [];
+        const item = agendas.find(a => a.id === agendaId);
+        if (!item) return;
+
+        if (!confirm(`Hapus agenda "${item.judul}"? Tindakan ini tidak dapat dibatalkan.`)) {
+          return;
+        }
+
+        state.profile.agendas = agendas.filter(a => a.id !== agendaId);
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
+          } else {
+            syncLocal();
+          }
+
+          renderAgendaManager();
+          renderAgendaSection();
+          showToast("Agenda berhasil dihapus.", "info");
+        } catch (err) {
+          showToast("Gagal menghapus agenda: " + err.message, "error");
+        }
+      },
+
+      shareAgendaWA: (agendaId) => {
+        const agendas = state.profile.agendas || [];
+        const item = agendas.find(a => a.id === agendaId);
+        if (!item) return;
+
+        const namaMasjid = state.profile.nama || DEFAULT_PROFILE.nama;
+        const webUrl = window.location.href.split('#')[0];
+
+        let katName = "Pengumuman Resmi";
+        if (item.kategori === 'acara') katName = "Undangan Acara / Kajian";
+        else if (item.kategori === 'pembangunan') katName = "Rencana Pembangunan / Renovasi";
+        else if (item.kategori === 'sosial') katName = "Kegiatan Sosial & Santunan";
+        else if (item.kategori === 'umum') katName = "Informasi DKM Mushola";
+
+        let lines = [];
+        lines.push(`*Assalamu'alaikum Warahmatullahi Wabarakatuh,*`);
+        lines.push(``);
+        lines.push(`📢 *[${katName.toUpperCase()} - ${namaMasjid.toUpperCase()}]*`);
+        lines.push(`*${item.judul}*`);
+        lines.push(``);
+        if (item.tanggal) lines.push(`🗓️ *Waktu/Tanggal:* ${item.tanggal}`);
+        if (item.lokasi) lines.push(`📍 *Lokasi:* ${item.lokasi}`);
+        if (item.target) lines.push(`💰 *Target/Kebutuhan:* ${item.target}`);
+        if (item.kontak) lines.push(`👤 *Kontak/PIC:* ${item.kontak}`);
+        if (item.deskripsi) {
+          lines.push(``);
+          lines.push(`📝 *Keterangan:*`);
+          lines.push(item.deskripsi);
+        }
+        lines.push(``);
+        lines.push(`🌐 *Website & Transparansi Kas:*`);
+        lines.push(webUrl);
+        lines.push(``);
+        lines.push(`Mari bersama-sama meramaikan mushola pasar dan menyukseskan agenda ini. Jazakumullahu Khairan Katsiran.`);
+        lines.push(`_Pengurus DKM ${namaMasjid}_`);
+
+        const msg = lines.join('\n');
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
       }
     };
 
