@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kas Mushola Pasar - Real-time & Transparan</title>
-  <meta name="description" content="Sistem Administrasi Kas Mushola Pasar Real-time & Transparan untuk Jamaah, Pedagang, dan Pengurus DKM.">
+  <title>Kas Mushola Al-Kautsar - Pasar Induk Pare (Real-time & Transparan)</title>
+  <meta name="description" content="Sistem Administrasi Kas Mushola Al-Kautsar Pasar Induk Pare Real-time & Transparan untuk Jamaah, Pedagang, dan Pengurus DKM.">
   <meta name="theme-color" content="#047857">
   
   <!-- PWA Meta & Web App Manifest -->
@@ -165,7 +165,7 @@
           <img src="icons/icon.svg" alt="Logo Kas Mushola" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl shadow-md border border-white/20 flex-shrink-0 object-contain bg-emerald-950/40 p-0.5">
           <div>
             <div class="flex items-center gap-2">
-              <h1 id="header-nama-masjid" class="text-base md:text-lg font-extrabold tracking-tight leading-tight line-clamp-1">Mushola Al-Barokah Pasar Besar</h1>
+              <h1 id="header-nama-masjid" class="text-base md:text-lg font-extrabold tracking-tight leading-tight line-clamp-1">Mushola Al-Kautsar</h1>
              
             </div>
             <p id="header-tanggal" class="text-[11px] md:text-xs text-emerald-200/90 font-medium flex items-center gap-1.5 mt-0.5">
@@ -234,8 +234,8 @@
 
     <!-- PRINT HEADER -->
     <div class="print-only p-6 border-b-2 border-slate-800 text-center">
-      <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-BAROKAH PASAR BESAR</h2>
-      <p id="print-alamat-masjid" class="text-sm text-slate-600">Laporan Kas & Transparansi Dana Umat</p>
+      <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-KAUTSAR</h2>
+      <p id="print-alamat-masjid" class="text-sm text-slate-600">Pasar Induk Pare • Laporan Kas Transparan</p>
       <p id="print-tanggal" class="text-xs text-slate-500 mt-1">Dicetak pada: -</p>
       <div class="mt-4 pt-3 border-t border-slate-300 text-xs grid grid-cols-4 gap-2 text-center">
         <div><span class="text-slate-500 block">Saldo Bulan Lalu:</span><strong id="print-prior-saldo">Rp 0</strong></div>
@@ -618,8 +618,8 @@
               <div class="w-20 h-20 rounded-full mx-auto mb-3 p-1 border-4 border-mosque-100 bg-white shadow-inner flex items-center justify-center">
                 <img src="icons/icon.svg" alt="Logo Mushola" class="w-full h-full object-contain rounded-full">
               </div>
-              <h2 id="profil-nama-masjid" class="text-xl font-black text-slate-800 tracking-tight">Mushola Al-Barokah Pasar Besar</h2>
-              <p id="profil-alamat-masjid" class="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional</p>
+              <h2 id="profil-nama-masjid" class="text-xl font-black text-slate-800 tracking-tight">Mushola Al-Kautsar</h2>
+              <p id="profil-alamat-masjid" class="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">Pasar Induk Pare</p>
 
               <div class="mt-5 pt-4 border-t border-slate-100 flex justify-center gap-2">
                 <button onclick="window.app.openQrisModal()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-semibold py-2 px-4 rounded-xl flex items-center gap-2 shadow-sm transition">
@@ -1709,16 +1709,17 @@
         "Infaq Shalat Berjamaah",
         "Donatur & Pengunjung Pasar",
         "Kotak Wudhu & Sarana",
-        "Lain-lain (Masuk)"
+        "Lain-lain (Masuk)",
+        "Total Saldo Bulan Lalu"
       ],
       keluar: [
-        "Bisaroh (Imam & Petugas)",
-        "Listrik & Token Air Pasar",
-        "Kebersihan & Sanitasi Mushola",
-        "Operasional & Perawatan",
-        "Perlengkapan Ibadah (Karpet/Mukena/Sajadah)",
+        "Bisaroh Marbot & Imam",
+        "Operasional & Kebersihan",
+        "Listrik, Air & Wifi Mushola",
         "Konsumsi Kajian Pedagang",
-        "Lain-lain (Keluar)"
+        "Lain-lain (Keluar)",
+        "Perbaikan Fasilitas Mushola",
+        "Pengadaan Fasilitas Mushola"
       ]
     };
 
@@ -2146,19 +2147,25 @@
 ];
 
     const DEFAULT_PROFILE = {
-      nama: "Mushola Al-Barokah Pasar Besar",
-      alamat: "Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional",
-      rekening: "BSI: 7123456789 a.n Kas Mushola Pasar",
+      nama: "Mushola Al-Kautsar",
+      alamat: "Pasar Induk Pare",
+      rekening: "",
       qrisUrl: "",
       statusQrisRekening: "proses",
       saldoAwal: 0,
       categories: { ...DEFAULT_CATEGORIES },
       pengurus: [
-        { id: "1", nama: "H. Subur Hartanto", jabatan: "Ketua DKM Mushola Pasar", foto: null },
-        { id: "2", nama: "Pak Manto (Kios Blok B)", jabatan: "Sekretaris & Humas Pedagang", foto: null },
-        { id: "3", nama: "Hj. Siti Rohmah", jabatan: "Bendahara Kas", foto: null },
-        { id: "4", nama: "Ust. M. Ridho", jabatan: "Imam Rawatib Mushola", foto: null },
-        { id: "5", nama: "Kang Dedi", jabatan: "Petugas Kebersihan & Marbot Mushola", foto: null }
+        { id: "pengurus-1791095959607", nama: "Hj.Sukron", jabatan: "Pelindung", foto: null },
+        { id: "pengurus-1791095987574", nama: "H.Kurniawan/Teko", jabatan: "Ketua", foto: null },
+        { id: "pengurus-1791096075477", nama: "H. Moh. Agus ashari", jabatan: "Wakil  Ketua", foto: null },
+        { id: "pengurus-1791096103665", nama: "HJ. Siti Masithoh", jabatan: "Sekertaris", foto: null },
+        { id: "pengurus-1791096125390", nama: "Sri Widyawati", jabatan: "Bendahara", foto: null },
+        { id: "pengurus-1791096145148", nama: "Salim", jabatan: "Seksi Pembangunan", foto: null },
+        { id: "pengurus-1791096196439", nama: "Nur Timbang dan Azhari", jabatan: "Seksi Kebersihan /  SARPARS", foto: null },
+        { id: "pengurus-1791096260945", nama: "H. Ali Maskur ( Dzuhur )", jabatan: "Imam Rawatib", foto: null },
+        { id: "pengurus-1791096290034", nama: "H.Supriyanto ( Ashar )", jabatan: "Imam Rawatib", foto: null },
+        { id: "pengurus-1791096312171", nama: "Dendik", jabatan: "Seksi Keamanan", foto: null },
+        { id: "pengurus-1791096339694", nama: "H.Suparlan", jabatan: "Penasehat", foto: null }
       ],
       admins: [
         {
@@ -2169,58 +2176,50 @@
           email: SUPER_ADMIN_EMAIL,
           role: "super_admin",
           addedAt: "2026-10-03T00:00:00.000Z"
+        },
+        {
+          id: "admin-1791097188881",
+          pengurusId: "pengurus-1791096196439",
+          nama: "Nur Timbang dan Azhari",
+          jabatan: "Seksi Kebersihan /  SARPARS",
+          email: "nur.timbang.dan.azhari@gmail.com",
+          role: "admin",
+          addedAt: "2026-10-04T06:59:48.881Z",
+          addedBy: "rayyan.kontak@gmail.com"
         }
       ],
       agendas: [],
-      quotesIntervalHours: 3,
+      quotesIntervalHours: 0,
       quotes: [...DEFAULT_QUOTES]
     };
 
     const DEFAULT_TRANSACTIONS = [
       {
-        id: "demo-1",
+        id: "wcYHUKHr2e8EK5jcE7V9",
         jenis: "masuk",
-        kategori: "Kotak Amal Harian Mushola",
-        nominal: 380000,
-        tanggal: new Date(Date.now() - 1 * 24 * 3600 * 1000).toISOString().split('T')[0],
-        keterangan: "Penghitungan kotak amal harian dari jamaah pasar",
-        timestamp: new Date(Date.now() - 1 * 24 * 3600 * 1000).toISOString()
+        kategori: "Total Saldo Bulan Lalu",
+        nominal: 3750000,
+        tanggal: "2026-09-30",
+        keterangan: "Saldo bulan September",
+        timestamp: "2026-10-04T06:51:57.515Z"
       },
       {
-        id: "demo-2",
-        jenis: "masuk",
-        kategori: "Infaq Pedagang & Kios Pasar",
-        nominal: 850000,
-        tanggal: new Date(Date.now() - 3 * 24 * 3600 * 1000).toISOString().split('T')[0],
-        keterangan: "Infaq rutin paguyuban pedagang blok sayur & sembako",
-        timestamp: new Date(Date.now() - 3 * 24 * 3600 * 1000).toISOString()
+        id: "V6DQhagvlvDQJAt6y42X",
+        jenis: "keluar",
+        kategori: "Operasional & Perawatan",
+        nominal: 950000,
+        tanggal: "2026-09-26",
+        keterangan: "Pemasangan plat Las dan Tukang",
+        timestamp: "2026-10-04T06:48:44.735Z"
       },
       {
-        id: "demo-3",
+        id: "jLkaJJyXSSSmgCYmv3F5",
         jenis: "keluar",
         kategori: "Bisaroh (Imam & Petugas)",
-        nominal: 600000,
-        tanggal: new Date(Date.now() - 4 * 24 * 3600 * 1000).toISOString().split('T')[0],
-        keterangan: "Bisaroh bulanan marbot kebersihan & imam rawatib",
-        timestamp: new Date(Date.now() - 4 * 24 * 3600 * 1000).toISOString()
-      },
-      {
-        id: "demo-4",
-        jenis: "keluar",
-        kategori: "Listrik & Token Air Pasar",
-        nominal: 250000,
-        tanggal: new Date(Date.now() - 6 * 24 * 3600 * 1000).toISOString().split('T')[0],
-        keterangan: "Pengisian token listrik AC & pompa air tempat wudhu pasar",
-        timestamp: new Date(Date.now() - 6 * 24 * 3600 * 1000).toISOString()
-      },
-      {
-        id: "demo-5",
-        jenis: "keluar",
-        kategori: "Kebersihan & Sanitasi Mushola",
-        nominal: 135000,
-        tanggal: new Date(Date.now() - 8 * 24 * 3600 * 1000).toISOString().split('T')[0],
-        keterangan: "Beli cairan pembersih lantai, sabun cuci tangan, dan plastik tempat sampah",
-        timestamp: new Date(Date.now() - 8 * 24 * 3600 * 1000).toISOString()
+        nominal: 800000,
+        tanggal: "2026-09-05",
+        keterangan: "Bisyaroh",
+        timestamp: "2026-10-04T06:47:56.840Z"
       }
     ];
 
@@ -2454,14 +2453,19 @@
               ...DEFAULT_PROFILE, 
               ...data,
               categories: data.categories || { ...DEFAULT_CATEGORIES },
-              pengurus: data.pengurus || [...DEFAULT_PROFILE.pengurus],
+              pengurus: (data.pengurus && data.pengurus.length > 0) ? data.pengurus : (state.profile.pengurus && state.profile.pengurus.length > 0 ? state.profile.pengurus : [...DEFAULT_PROFILE.pengurus]),
               admins: rawAdmins,
               agendas: data.agendas || [],
-              quotesIntervalHours: data.quotesIntervalHours !== undefined ? Number(data.quotesIntervalHours) : (state.profile.quotesIntervalHours !== undefined ? state.profile.quotesIntervalHours : 3),
+              quotesIntervalHours: data.quotesIntervalHours !== undefined ? Number(data.quotesIntervalHours) : 0,
               quotes: (data.quotes && data.quotes.length > 0) ? data.quotes : (state.profile.quotes && state.profile.quotes.length > 0 ? state.profile.quotes : [...DEFAULT_QUOTES])
             };
+            syncLocal();
           } else {
-            setDoc(profileDocRef, DEFAULT_PROFILE);
+            try {
+              setDoc(profileDocRef, DEFAULT_PROFILE, { merge: true });
+            } catch (err) {
+              console.warn("Auto init profileDocRef error:", err);
+            }
           }
           renderProfile();
           renderCategoryManager();
@@ -2472,6 +2476,13 @@
           renderQuotesManager();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
+          const localProf = localStorage.getItem('kas_masjid_local_profile');
+          if (localProf) {
+            try {
+              state.profile = { ...DEFAULT_PROFILE, ...JSON.parse(localProf) };
+            } catch (e) {}
+          }
+          renderProfile();
         });
 
         // Real-time listener on transactions
@@ -2482,10 +2493,17 @@
             list.push({ id: d.id, ...d.data() });
           });
           state.transactions = list;
+          syncLocal();
           renderAll();
         }, (error) => {
           console.warn("Transactions snapshot error:", error);
-          showToast("Gagal menyinkronkan data cloud.", "error");
+          const localTrx = localStorage.getItem('kas_masjid_local_transactions');
+          if (localTrx) {
+            try {
+              state.transactions = JSON.parse(localTrx);
+            } catch (e) {}
+          }
+          renderAll();
         });
 
       } catch (err) {
@@ -2528,8 +2546,9 @@
             ...DEFAULT_PROFILE,
             ...parsed,
             categories: parsed.categories || { ...DEFAULT_CATEGORIES },
+            pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus],
             agendas: parsed.agendas || [],
-            quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 3,
+            quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 0,
             quotes: (parsed.quotes && parsed.quotes.length > 0) ? parsed.quotes : [...DEFAULT_QUOTES]
           };
         } catch (e) {
@@ -2548,6 +2567,7 @@
       }
 
       window.app.applyAdminState();
+      renderProfile();
       renderAll();
       renderAdminManager();
       renderAgendaManager();
@@ -2557,8 +2577,12 @@
     };
 
     const syncLocal = () => {
-      localStorage.setItem('kas_masjid_local_transactions', JSON.stringify(state.transactions));
-      localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
+      try {
+        localStorage.setItem('kas_masjid_local_transactions', JSON.stringify(state.transactions));
+        localStorage.setItem('kas_masjid_local_profile', JSON.stringify(state.profile));
+      } catch (e) {
+        console.warn("syncLocal warning:", e);
+      }
     };
 
     /* ==========================================================================
@@ -2863,13 +2887,27 @@
 
     const renderProfile = () => {
       const p = state.profile;
-      document.getElementById('header-nama-masjid').innerText = p.nama || DEFAULT_PROFILE.nama;
-      document.getElementById('profil-nama-masjid').innerText = p.nama || DEFAULT_PROFILE.nama;
-      document.getElementById('print-nama-masjid').innerText = p.nama || DEFAULT_PROFILE.nama;
-      document.getElementById('qris-nama-masjid').innerText = p.nama || DEFAULT_PROFILE.nama;
+      const rawNama = p.nama || DEFAULT_PROFILE.nama;
+      const displayNama = rawNama.toLowerCase().startsWith('mushola') ? rawNama : ('Mushola ' + rawNama);
+      const displayAlamat = p.alamat || DEFAULT_PROFILE.alamat;
 
-      document.getElementById('profil-alamat-masjid').innerText = p.alamat || DEFAULT_PROFILE.alamat;
-      document.getElementById('print-alamat-masjid').innerText = p.alamat || DEFAULT_PROFILE.alamat;
+      const headerNamaEl = document.getElementById('header-nama-masjid');
+      if (headerNamaEl) headerNamaEl.innerText = displayNama;
+
+      const profilNamaEl = document.getElementById('profil-nama-masjid');
+      if (profilNamaEl) profilNamaEl.innerText = displayNama;
+
+      const printNamaEl = document.getElementById('print-nama-masjid');
+      if (printNamaEl) printNamaEl.innerText = displayNama;
+
+      const qrisNamaEl = document.getElementById('qris-nama-masjid');
+      if (qrisNamaEl) qrisNamaEl.innerText = displayNama;
+
+      const profilAlamatEl = document.getElementById('profil-alamat-masjid');
+      if (profilAlamatEl) profilAlamatEl.innerText = displayAlamat;
+
+      const printAlamatEl = document.getElementById('print-alamat-masjid');
+      if (printAlamatEl) printAlamatEl.innerText = displayAlamat;
 
       const statusQris = p.statusQrisRekening || 'proses';
 
@@ -4279,11 +4317,10 @@ Password: ${adm.rawPassword}`;
         if (!state.profile.categories[type].includes(val)) {
           state.profile.categories[type].push(val);
 
+          syncLocal();
           try {
             if (state.isFirebaseReady && state.db) {
-              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-            } else {
-              syncLocal();
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
             }
           } catch (err) {
             console.warn("Save quick category error:", err);
@@ -4579,11 +4616,10 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           const target = pList.find(p => p.id === id);
           if (target) {
             target.foto = dataUrl;
+            syncLocal();
 
             if (state.isFirebaseReady && state.db) {
-              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-            } else {
-              syncLocal();
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
             }
 
             renderProfile();
@@ -4602,12 +4638,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         const target = pList.find(p => p.id === pengurusId);
         if (target) {
           target.foto = null;
+          syncLocal();
 
           try {
             if (state.isFirebaseReady && state.db) {
-              await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-            } else {
-              syncLocal();
+              await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
             }
             renderProfile();
             showToast(`Foto ${target.nama} telah dihapus.`, "info");
@@ -4641,11 +4676,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         jabatanInput.value = '';
         window.app.clearNewPengurusPhoto();
 
+        syncLocal();
+
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderProfile();
           renderAdminManager();
@@ -4657,11 +4692,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
       deletePengurus: async (id) => {
         state.profile.pengurus = (state.profile.pengurus || []).filter(p => p.id !== id);
+        syncLocal();
+
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderProfile();
           renderAdminManager();
@@ -4711,12 +4746,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
         state.profile.categories[type].push(val);
         input.value = '';
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderCategoryManager();
           window.app.setFormType(state.formType);
@@ -4731,12 +4765,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         if (!state.profile.categories || !state.profile.categories[type]) return;
 
         state.profile.categories[type] = state.profile.categories[type].filter(c => c !== categoryName);
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderCategoryManager();
           window.app.setFormType(state.formType);
@@ -4751,12 +4784,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           masuk: [...DEFAULT_CATEGORIES.masuk],
           keluar: [...DEFAULT_CATEGORIES.keluar]
         };
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderCategoryManager();
           window.app.setFormType(state.formType);
@@ -4928,12 +4960,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           };
           state.profile.agendas.unshift(newAgenda);
         }
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
 
           window.app.toggleAgendaForm(false);
@@ -4980,12 +5011,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
         item.aktif = (item.aktif === false) ? true : false;
         item.updatedAt = new Date().toISOString();
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
 
           renderAgendaManager();
@@ -5006,12 +5036,11 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         }
 
         state.profile.agendas = agendas.filter(a => a.id !== agendaId);
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
 
           renderAgendaManager();
@@ -5319,7 +5348,39 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         showToast("Aplikasi Kas Mushola berhasil dipasang di layar utama!", "success");
       });
 
-      // Render initial quotes immediately
+      // Check and load cached profile & transactions immediately for instant zero-latency render
+      const cachedProf = localStorage.getItem('kas_masjid_local_profile');
+      if (cachedProf) {
+        try {
+          const parsed = JSON.parse(cachedProf);
+          state.profile = {
+            ...DEFAULT_PROFILE,
+            ...parsed,
+            categories: parsed.categories || { ...DEFAULT_CATEGORIES },
+            pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus]
+          };
+        } catch(e) {}
+      }
+      const cachedTrx = localStorage.getItem('kas_masjid_local_transactions');
+      if (cachedTrx) {
+        try {
+          state.transactions = JSON.parse(cachedTrx);
+        } catch(e) {}
+      }
+
+      // Check persistent admin session
+      if (localStorage.getItem('kas_masjid_admin_session') === 'true') {
+        state.isAdmin = true;
+        state.adminEmail = localStorage.getItem('kas_masjid_admin_email') || SUPER_ADMIN_EMAIL;
+        const isSuper = state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+        state.adminRole = isSuper ? 'super_admin' : 'admin';
+        window.app.applyAdminState();
+      }
+
+      // Render profile, transactions, agenda, and quotes immediately!
+      renderProfile();
+      renderAll();
+      renderAgendaSection();
       renderRandomQuote();
 
       // Init Firebase or Local Demo
