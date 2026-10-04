@@ -247,6 +247,58 @@ Anda dapat memasukkan konfigurasi langsung dari antarmuka aplikasi tanpa perlu m
 
 ---
 
+## 📊 Panduan Lengkap: Skema Perhitungan Saldo & Pencatatan Kas Berjalan
+
+### 1. Apakah "Saldo Kas Awal Sebelum Sistem" Harus Diisi Ulang Setiap Bulan?
+> **Jawabannya: TIDAK PERLU! Saldo Kas Awal cukup diisi HANYA 1 KALI SEUMUR HIDUP saat pertama kali aplikasi mulai digunakan.**
+
+- **Contoh Nyata:**
+  Jika aplikasi mulai digunakan pada bulan **Oktober 2026**, dan sisa kas fisik di mushola saat itu adalah **Rp 5.000.000**, maka Super Admin cukup mengisi `Rp 5.000.000` di menu **Pengaturan** ➔ *Saldo Kas Awal Sebelum Sistem*.
+
+- **Bagaimana di Bulan-Bulan Berikutnya (November, Desember, dst.)?**
+  Sistem ini menerapkan rumus pembukuan akuntansi otomatis:
+  $$\text{Saldo Bulan Lalu (Otomatis)} = \text{Saldo Awal Mula} + \text{Total Semua Pemasukan Bulan-Bulan Lalu} - \text{Total Semua Pengeluaran Bulan-Bulan Lalu}$$
+
+  - Saat kalender berganti ke **1 November 2026**, sisa saldo akhir bulan Oktober **langsung otomatis menjadi "Saldo Bulan Lalu"** untuk bulan November!
+  - Saat kalender berganti ke **1 Desember 2026**, akumulasi saldo akhir November otomatis menjadi "Saldo Bulan Lalu" untuk bulan Desember.
+  - **Kesimpulan:** Pengurus **TIDAK PERLU** repot-repot menghitung manual atau mengubah angka saldo awal setiap awal bulan!
+
+### 2. Cara Mudah Input Pencatatan Saldo Keluar & Masuk
+1. Klik tombol **"+ Catat Kas"** (tombol hijau melayang di HP atau di header desktop).
+2. Pilih jenis transaksi:
+   - **Pemasukan:** Masukkan tanggal, nominal, pilih kategori (*Kotak Amal Harian*, *Infaq Jumat*, dll), dan tulis keterangan.
+   - **Pengeluaran:** Masukkan tanggal, nominal, pilih kategori (*Bisaroh Marbot*, *Listrik & Air*, *Kebersihan*, dll), dan tulis keterangan.
+3. Klik **Simpan Transaksi**. Saldo total, grafik, dan laporan bulanan otomatis terakumulasi secara instan.
+
+---
+
+## 💳 Status Publikasi QRIS & Rekening Bank (Dalam Proses Pengajuan)
+
+- **Mode Dalam Proses Pengajuan:**
+  Karena barcode QRIS dan rekening bank syariah resmi mushola memerlukan proses validasi perbankan, aplikasi menyediakan status publikasi yang ramah dan elegan:
+  - Tampilan Beranda & Modal: Menampilkan kartu modern dengan badge emas `⏳ Dalam Proses Pengajuan Perbankan`, menginformasikan bahwa pendaftaran sedang diverifikasi bank dan mengarahkan jamaah berinfaq tunai lewat Kotak Amal Mushola.
+- **Opsi Pengaturan Super Admin:**
+  Super Admin dapat memilih status publikasi di menu Pengaturan:
+  1. `⏳ Dalam Proses Pengajuan` *(Default)*
+  2. `✅ Aktif & Terverifikasi` *(Menampilkan barcode QRIS resmi & tombol salin rekening)*
+  3. `🚫 Sembunyikan dari Publik` *(Menonaktifkan kolom infaq digital dari beranda)*
+
+---
+
+## 👥 Hierarki Peran: Super Admin vs Admin Kas (Kelola Saldo)
+
+1. **Super Admin (`rayyan.kontak@gmail.com`):**
+   - Hak akses penuh: mencatat kas, edit/hapus transaksi, mengakses tab **Pengaturan**, mengatur identitas mushola, saldo awal, susunan pengurus, mengangkat/mencabut admin, kategori kas, agenda, dan hadits.
+2. **Admin Kas Biasa:**
+   - **Khusus Operasional Saldo:** Hanya bisa mencatat pemasukan/pengeluaran kas, mengedit transaksi, menghapus transaksi, dan mencetak laporan / PDF.
+   - Tab **Pengaturan** disembunyikan dari menu navigasi untuk mencegah perubahan data institusi yang tidak disengaja.
+3. **Pembuatan Admin di Luar Pengurus DKM:**
+   - Super Admin dapat membuat akun admin untuk orang di luar susunan pengurus (misal: *Relawan Kasir Toko*, *Admin Donatur*, dll) dengan menginput Nama, Jabatan kustom, Email, dan Password langsung di menu Pengaturan.
+4. **Form Login Bersih:**
+   - Input email dan password kini selalu kosong dan bersih secara default saat modal login dibuka untuk kemudahan login berbagai akun.
+
+---
+
 ## 👨‍💻 Developer & Pengembang Aplikasi
 
 Aplikasi Kas Mushola Pasar ini dikembangkan dengan dedikasi untuk transparansi & kemudahan tata kelola kemakmuran mushola:
@@ -256,6 +308,3 @@ Aplikasi Kas Mushola Pasar ini dikembangkan dengan dedikasi untuk transparansi &
 - **Situs Web Resmi:** [Ansor.studio](https://ansor.studio)
 
 *Kontak dan kartu profil pengembang juga dapat diakses langsung oleh pengurus dan jamaah di bagian bawah tab **Profil** aplikasi.*
-
-
-

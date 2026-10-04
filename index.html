@@ -455,32 +455,12 @@
             </div>
 
             <!-- 2. QRIS QUICK CARD -->
-            <div class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white rounded-2xl p-4 md:p-5 shadow-sm space-y-3 relative overflow-hidden">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <i class="fa-solid fa-qrcode text-gold-400 text-base"></i>
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-100">Infaq Digital Pedagang</h4>
-                </div>
-                <span class="text-[9px] bg-white/20 px-2 py-0.5 rounded-full font-semibold">QRIS Resmi</span>
-              </div>
-
-              <div class="bg-white p-3 rounded-xl flex items-center justify-center shadow-inner">
-                <img id="sidebar-qris-image" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=INFAQ%20MUSHOLA%20PASAR" alt="QRIS Mushola" class="w-36 h-36 object-contain rounded-lg">
-              </div>
-
-              <p class="text-[11px] text-emerald-100/90 text-center leading-relaxed">
-                Scan QRIS di atas untuk infaq harian pedagang atau pengunjung pasar tanpa uang tunai.
-              </p>
-
-              <div class="pt-1 flex gap-2">
-                <button onclick="window.app.openQrisModal()" class="flex-1 bg-gold-500 hover:bg-gold-600 text-amber-950 font-bold py-2 rounded-xl text-xs text-center transition">
-                  Perbesar QRIS
-                </button>
-                <button onclick="window.app.copyRekening()" class="flex-1 bg-white/15 hover:bg-white/25 text-white font-semibold py-2 rounded-xl text-xs text-center transition">
-                  Salin Rekening
-                </button>
+            <div id="sidebar-qris-card" class="bg-gradient-to-br from-emerald-950 via-teal-950 to-slate-900 text-white rounded-2xl p-4 md:p-5 shadow-sm space-y-3 relative overflow-hidden border border-emerald-500/30">
+              <div id="sidebar-qris-card-content" class="space-y-3">
+                <!-- Dynamically rendered via renderProfile() based on statusQrisRekening -->
               </div>
             </div>
+
 
             <!-- 3. MUTIARA HADITS & AYAT AL-QUR'AN BERKALA -->
             <div id="beranda-quotes-card" class="bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-amber-50/40 rounded-2xl p-4 md:p-5 shadow-sm border border-emerald-200/80 space-y-3 relative overflow-hidden transition-all duration-300">
@@ -784,6 +764,17 @@
               </div>
 
               <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Status Publikasi Infaq Digital (QRIS & Bank)</label>
+                <select id="settings-status-qris-rekening" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+                  <option value="proses">⏳ Dalam Proses Pengajuan (Tampilkan Keterangan Menarik & Edukatif)</option>
+                  <option value="aktif">✅ Aktif & Terverifikasi (Tampilkan Barcode QRIS & No. Rekening)</option>
+                  <option value="sembunyi">🚫 Sembunyikan dari Publik (Nonaktifkan Kolom Infaq Digital)</option>
+                </select>
+                <span class="text-[10px] text-slate-400 block mt-1">Pilih "Dalam Proses Pengajuan" jika QRIS/rekening bank masih dalam tahap verifikasi bank.</span>
+              </div>
+
+
+              <div>
                 <div class="flex items-center justify-between mb-1">
                   <label class="block text-xs font-semibold text-slate-700">Saldo Kas Awal / Berjalan (Sebelum Sistem)</label>
                   <span class="text-[10px] text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full font-bold">Saldo Berjalan</span>
@@ -857,13 +848,41 @@
                   <i class="fa-solid fa-lock text-amber-600 mr-1"></i> Hanya Super Admin (<code>rayyan.kontak@gmail.com</code>) yang berhak mengangkat atau mencabut admin baru.
                 </div>
 
-                <!-- 1. Dropdown Pengurus Terdaftar -->
+                <!-- 1. Pilihan Asal Admin -->
                 <div>
-                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">1. Pilih Pengurus dari Susunan DKM:</label>
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">1. Asal Akun Admin:</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <label class="flex items-center gap-1.5 p-2 bg-white border border-slate-200 rounded-xl cursor-pointer text-xs font-semibold text-slate-700 hover:border-emerald-400 transition">
+                      <input type="radio" name="admin-source-type" value="pengurus" checked onchange="window.app.toggleAdminSourceType('pengurus')">
+                      <span>Dari Pengurus</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 p-2 bg-white border border-slate-200 rounded-xl cursor-pointer text-xs font-semibold text-slate-700 hover:border-emerald-400 transition">
+                      <input type="radio" name="admin-source-type" value="bebas" onchange="window.app.toggleAdminSourceType('bebas')">
+                      <span>Luar Pengurus / Relawan</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- 1A. Dropdown Pengurus Terdaftar -->
+                <div id="box-admin-select-pengurus">
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">Pilih Pengurus dari Susunan DKM:</label>
                   <select id="admin-select-pengurus" onchange="window.app.handleSelectPengurusForAdmin(this)" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
                     <option value="">-- Memuat daftar pengurus... --</option>
                   </select>
                 </div>
+
+                <!-- 1B. Input Bebas / Luar Pengurus -->
+                <div id="box-admin-custom-input" class="hidden space-y-2">
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Nama Lengkap Admin Baru:</label>
+                    <input type="text" id="new-admin-custom-nama" placeholder="Contoh: Ahmad Kasir / Relawan Blok B" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Jabatan / Keterangan (Opsional):</label>
+                    <input type="text" id="new-admin-custom-jabatan" placeholder="Contoh: Relawan Kasir Pasar / Admin Pembantu" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  </div>
+                </div>
+
 
                 <!-- 2. Email Login Pengurus -->
                 <div>
@@ -1320,7 +1339,7 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Email Pengurus</label>
           <div class="relative">
             <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input type="email" id="input-auth-email" placeholder="rayyan.kontak@gmail.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
+            <input type="email" id="input-auth-email" placeholder="nama@email.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:ring-2 focus:ring-mosque-600 focus:outline-none">
           </div>
         </div>
 
@@ -1558,27 +1577,10 @@
         </button>
       </div>
 
-      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-3 flex flex-col items-center">
-        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 inline-block">
-          <img id="qris-image-display" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=INFAQ%20MUSHOLA%20PASAR%20BESAR" alt="QRIS Mushola" class="w-48 h-48 object-contain rounded-lg">
-        </div>
-        <span class="text-[10px] text-slate-500 font-medium mt-2">NMID: ID1020304050607</span>
-        <span class="text-[11px] font-bold text-slate-800" id="qris-nama-masjid">Mushola Al-Barokah Pasar Besar</span>
+      <div id="modal-qris-body" class="space-y-3">
+        <!-- Dynamically rendered via renderProfile() based on statusQrisRekening -->
       </div>
 
-      <p class="text-[11px] text-slate-500 mb-4 leading-relaxed">
-        Pindai kode QRIS menggunakan mobile banking atau dompet digital (GoPay, OVO, Dana, ShopeePay, dll).
-      </p>
-
-      <div class="flex gap-2">
-        <button onclick="window.app.copyRekening()" class="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-copy"></i>
-          <span>Salin Rekening</span>
-        </button>
-        <button onclick="window.app.closeModal('modal-qris')" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-mosque-700 text-white hover:bg-mosque-800 transition">
-          Tutup
-        </button>
-      </div>
     </div>
   </div>
 
@@ -2148,6 +2150,7 @@
       alamat: "Lantai 2 Blok B (Area Sentral), Pasar Besar Tradisional",
       rekening: "BSI: 7123456789 a.n Kas Mushola Pasar",
       qrisUrl: "",
+      statusQrisRekening: "proses",
       saldoAwal: 0,
       categories: { ...DEFAULT_CATEGORIES },
       pengurus: [
@@ -2868,16 +2871,148 @@
       document.getElementById('profil-alamat-masjid').innerText = p.alamat || DEFAULT_PROFILE.alamat;
       document.getElementById('print-alamat-masjid').innerText = p.alamat || DEFAULT_PROFILE.alamat;
 
-      document.getElementById('profil-rekening-display').innerText = p.rekening || DEFAULT_PROFILE.rekening;
+      const statusQris = p.statusQrisRekening || 'proses';
 
-      const qrisImg = document.getElementById('qris-image-display');
-      const sideQrisImg = document.getElementById('sidebar-qris-image');
-      const qrisSrc = (p.qrisUrl && p.qrisUrl.trim() !== '') 
-        ? p.qrisUrl 
-        : `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent('INFAQ KAS ' + (p.nama || 'MUSHOLA PASAR'))}`;
-      
-      if (qrisImg) qrisImg.src = qrisSrc;
-      if (sideQrisImg) sideQrisImg.src = qrisSrc;
+      // Update dropdown status di Pengaturan
+      const statusSelect = document.getElementById('settings-status-qris-rekening');
+      if (statusSelect) {
+        statusSelect.value = statusQris;
+      }
+
+      // Update Tampilan Baris Rekening di Profil
+      const profilRekeningDisplay = document.getElementById('profil-rekening-display');
+      if (profilRekeningDisplay) {
+        if (statusQris === 'proses') {
+          profilRekeningDisplay.innerHTML = '<span class="text-amber-300 font-sans text-xs">⏳ Sedang Dalam Proses Pengajuan Bank</span>';
+        } else if (statusQris === 'sembunyi') {
+          profilRekeningDisplay.innerHTML = '<span class="text-slate-300 font-sans text-xs">Infaq langsung di Kotak Amal Mushola</span>';
+        } else {
+          profilRekeningDisplay.innerText = p.rekening || DEFAULT_PROFILE.rekening;
+        }
+      }
+
+      // Update Tampilan Sidebar QRIS di Beranda
+      const sidebarQrisCard = document.getElementById('sidebar-qris-card');
+      const sidebarQrisContent = document.getElementById('sidebar-qris-card-content');
+      if (sidebarQrisCard && sidebarQrisContent) {
+        if (statusQris === 'sembunyi') {
+          sidebarQrisCard.classList.add('hidden');
+        } else {
+          sidebarQrisCard.classList.remove('hidden');
+          if (statusQris === 'proses') {
+            sidebarQrisContent.innerHTML = 
+              '<div class="flex items-center justify-between">' +
+                '<div class="flex items-center gap-2">' +
+                  '<div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs border border-emerald-500/30">' +
+                    '<i class="fa-solid fa-building-columns"></i>' +
+                  '</div>' +
+                  '<h4 class="text-xs font-bold uppercase tracking-wider text-emerald-200">Infaq Digital & Bank</h4>' +
+                '</div>' +
+                '<span class="text-[9px] bg-amber-400/20 border border-amber-400/30 text-amber-300 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">' +
+                  '<i class="fa-solid fa-clock text-[8px] animate-pulse"></i>' +
+                  '<span>Proses Pengajuan</span>' +
+                '</span>' +
+              '</div>' +
+              '<div class="bg-white/10 backdrop-blur-xs p-3.5 rounded-xl border border-white/10 text-center space-y-2">' +
+                '<div class="w-11 h-11 mx-auto rounded-2xl bg-gradient-to-tr from-amber-400/20 to-emerald-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 text-lg shadow-inner">' +
+                  '<i class="fa-solid fa-clock-rotate-left"></i>' +
+                '</div>' +
+                '<h5 class="text-xs font-bold text-white">QRIS & Rekening Sedang Diproses</h5>' +
+                '<p class="text-[11px] text-emerald-100/80 leading-relaxed">' +
+                  'Pengajuan barcode QRIS dan rekening bank syariah resmi DKM Mushola saat ini sedang dalam proses verifikasi pihak bank.' +
+                '</p>' +
+              '</div>' +
+              '<div class="p-2.5 rounded-xl bg-emerald-900/40 border border-emerald-500/20 text-[10.5px] text-emerald-200 leading-tight flex items-start gap-2">' +
+                '<i class="fa-solid fa-circle-info text-amber-400 mt-0.5 text-xs flex-shrink-0"></i>' +
+                '<span>Untuk sementara waktu, infaq & sedekah dapat disalurkan langsung lewat <b>Kotak Amal Mushola</b>.</span>' +
+              '</div>' +
+              '<div class="pt-1 flex gap-2">' +
+                '<button type="button" onclick="window.app.openQrisModal()" class="flex-1 bg-emerald-600/90 hover:bg-emerald-600 active:scale-95 text-white font-semibold py-2 rounded-xl text-xs text-center transition flex items-center justify-center gap-1 border border-emerald-400/30">' +
+                  '<i class="fa-solid fa-circle-question text-[10px]"></i>' +
+                  '<span>Detail Status</span>' +
+                '</button>' +
+                '<button type="button" onclick="window.app.copyRekening()" class="flex-1 bg-white/10 hover:bg-white/20 active:scale-95 text-emerald-200 font-semibold py-2 rounded-xl text-xs text-center transition">' +
+                  'Cek Rekening' +
+                '</button>' +
+              '</div>';
+          } else {
+            // Status AKTIF
+            const qrisSrc = (p.qrisUrl && p.qrisUrl.trim() !== '') ? p.qrisUrl : ('https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent('INFAQ KAS ' + (p.nama || 'MUSHOLA PASAR')));
+            sidebarQrisContent.innerHTML = 
+              '<div class="flex items-center justify-between">' +
+                '<div class="flex items-center gap-2">' +
+                  '<i class="fa-solid fa-qrcode text-gold-400 text-base"></i>' +
+                  '<h4 class="text-xs font-bold uppercase tracking-wider text-emerald-100">Infaq Digital Pedagang</h4>' +
+                '</div>' +
+                '<span class="text-[9px] bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 px-2 py-0.5 rounded-full font-semibold">QRIS Resmi</span>' +
+              '</div>' +
+              '<div class="bg-white p-3 rounded-xl flex items-center justify-center shadow-inner">' +
+                '<img src="' + qrisSrc + '" alt="QRIS Mushola" class="w-36 h-36 object-contain rounded-lg">' +
+              '</div>' +
+              '<p class="text-[11px] text-emerald-100/90 text-center leading-relaxed">' +
+                'Scan QRIS di atas untuk infaq harian pedagang atau pengunjung pasar tanpa uang tunai.' +
+              '</p>' +
+              '<div class="pt-1 flex gap-2">' +
+                '<button type="button" onclick="window.app.openQrisModal()" class="flex-1 bg-gold-500 hover:bg-gold-600 text-amber-950 font-bold py-2 rounded-xl text-xs text-center transition">' +
+                  'Perbesar QRIS' +
+                '</button>' +
+                '<button type="button" onclick="window.app.copyRekening()" class="flex-1 bg-white/15 hover:bg-white/25 text-white font-semibold py-2 rounded-xl text-xs text-center transition">' +
+                  'Salin Rekening' +
+                '</button>' +
+              '</div>';
+          }
+        }
+      }
+
+      // Update Tampilan Modal QRIS
+      const modalQrisContent = document.getElementById('modal-qris-body');
+      if (modalQrisContent) {
+        if (statusQris === 'proses') {
+          modalQrisContent.innerHTML = 
+            '<div class="bg-gradient-to-br from-amber-50 to-emerald-50 border border-amber-200/80 rounded-2xl p-5 mb-4 text-center space-y-3">' +
+              '<div class="w-14 h-14 mx-auto rounded-3xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-600 text-2xl shadow-inner">' +
+                '<i class="fa-solid fa-clock-rotate-left"></i>' +
+              '</div>' +
+              '<span class="text-[10px] font-bold text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full inline-block">' +
+                '⏳ Tahap Pengajuan Perbankan' +
+              '</span>' +
+              '<h4 class="text-sm font-bold text-slate-800">Layanan Infaq Digital Sedang Diproses</h4>' +
+              '<p class="text-xs text-slate-600 leading-relaxed">' +
+                'Pendaftaran barcode QRIS dan rekening bank syariah resmi atas nama <b>' + escapeHtml(p.nama || DEFAULT_PROFILE.nama) + '</b> saat ini masih dalam proses peninjauan administrasi oleh pihak bank.' +
+              '</p>' +
+              '<div class="p-2.5 rounded-xl bg-white border border-amber-200 text-[11px] text-slate-700 leading-snug">' +
+                'Insya Allah layanan non-tunai segera aktif. Untuk saat ini jamaah dipersilakan menyalurkan infaq langsung melalui <b>Kotak Amal Fisik Mushola</b>.' +
+              '</div>' +
+            '</div>' +
+            '<button onclick="window.app.closeModal(\'modal-qris\')" class="w-full py-2.5 rounded-xl text-xs font-bold bg-mosque-700 text-white hover:bg-mosque-800 transition">' +
+              'Mengerti & Tutup' +
+            '</button>';
+        } else {
+          // Status AKTIF
+          const qrisSrc = (p.qrisUrl && p.qrisUrl.trim() !== '') ? p.qrisUrl : ('https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + encodeURIComponent('INFAQ KAS ' + (p.nama || 'MUSHOLA PASAR')));
+          modalQrisContent.innerHTML = 
+            '<div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-3 flex flex-col items-center">' +
+              '<div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 inline-block">' +
+                '<img src="' + qrisSrc + '" alt="QRIS Mushola" class="w-48 h-48 object-contain rounded-lg">' +
+              '</div>' +
+              '<span class="text-[10px] text-slate-500 font-medium mt-2">QRIS Standar Nasional Indonesia</span>' +
+              '<span class="text-[11px] font-bold text-slate-800">' + escapeHtml(p.nama || DEFAULT_PROFILE.nama) + '</span>' +
+            '</div>' +
+            '<p class="text-[11px] text-slate-500 mb-4 leading-relaxed">' +
+              'Pindai kode QRIS menggunakan mobile banking atau dompet digital (GoPay, OVO, Dana, ShopeePay, dll).' +
+            '</p>' +
+            '<div class="flex gap-2">' +
+              '<button onclick="window.app.copyRekening()" class="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center justify-center gap-1.5">' +
+                '<i class="fa-solid fa-copy"></i>' +
+                '<span>Salin Rekening</span>' +
+              '</button>' +
+              '<button onclick="window.app.closeModal(\'modal-qris\')" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-mosque-700 text-white hover:bg-mosque-800 transition">' +
+                'Tutup' +
+              '</button>' +
+            '</div>';
+        }
+      }
+
 
       // Render Susunan Pengurus Menarik di Tab Profil
       const pengurusCardsContainer = document.getElementById('pengurus-cards-container');
@@ -3118,9 +3253,13 @@
           ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
                <i class="fa-solid fa-crown text-[9px] text-amber-600"></i> Super Admin
              </span>`
-          : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-               <i class="fa-solid fa-shield text-[9px] text-emerald-600"></i> Admin Pengurus
-             </span>`;
+          : (adm.pengurusId
+              ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                   <i class="fa-solid fa-shield text-[9px] text-emerald-600"></i> Admin Pengurus
+                 </span>`
+              : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sky-100 text-sky-800 border border-sky-300">
+                   <i class="fa-solid fa-user-check text-[9px] text-sky-600"></i> Luar Pengurus / Relawan
+                 </span>`);
 
         const actionButtons = isThisSuper
           ? `<span class="text-[10px] text-slate-400 italic px-2">Akun Utama</span>`
@@ -3550,6 +3689,13 @@
 
       // Tab Navigation
       switchTab: (tabId) => {
+        const isSuper = state.adminRole === 'super_admin' || (state.adminEmail && state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase());
+        if (tabId === 'pengaturan' && !isSuper) {
+          showToast("Menu Pengaturan hanya dapat diakses oleh Super Admin.", "error");
+          window.app.switchTab('beranda');
+          return;
+        }
+
         state.activeTab = tabId;
 
         ['beranda', 'laporan', 'profil', 'pengaturan'].forEach(id => {
@@ -3641,10 +3787,10 @@
 
       // FIREBASE AUTH (EMAIL & PASSWORD)
       openLoginModal: () => {
-        document.getElementById('input-auth-email').value = state.adminEmail || SUPER_ADMIN_EMAIL;
+        document.getElementById('input-auth-email').value = '';
         document.getElementById('input-auth-password').value = '';
         window.app.openModal('modal-login');
-        setTimeout(() => document.getElementById('input-auth-password')?.focus(), 250);
+        setTimeout(() => document.getElementById('input-auth-email')?.focus(), 250);
       },
 
       togglePasswordVisibility: (inputId, btn) => {
@@ -3760,19 +3906,35 @@
             desktopAddBtn.classList.add('md:inline-flex');
           }
 
-          const isSuper = state.adminEmail && state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+          const isSuper = state.adminRole === 'super_admin' || (state.adminEmail && state.adminEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase());
+
+          // Pembatasan hak akses: Menu Pengaturan HANYA untuk Super Admin
+          if (isSuper) {
+            navPengaturan.classList.remove('hidden');
+            topNavPengaturan.classList.remove('hidden');
+          } else {
+            navPengaturan.classList.add('hidden');
+            topNavPengaturan.classList.add('hidden');
+          }
+
           const adminInfo = (state.profile.admins || []).find(a => a.email.toLowerCase() === (state.adminEmail || '').toLowerCase());
 
           let labelText = state.adminEmail;
           if (isSuper) {
             labelText = `Super Admin (${state.adminEmail})`;
           } else if (adminInfo) {
-            labelText = `${adminInfo.nama} (${adminInfo.jabatan})`;
+            labelText = `${adminInfo.nama} (Admin Kas)`;
+          } else {
+            labelText = `Admin Kas (${state.adminEmail})`;
           }
 
           document.getElementById('admin-user-display').innerText = labelText;
-          document.getElementById('settings-active-email').innerText = state.adminEmail;
-          document.getElementById('settings-admin-badge').innerText = isSuper ? "👑 Super Admin" : "Hak Akses Pengurus";
+          if (document.getElementById('settings-active-email')) {
+            document.getElementById('settings-active-email').innerText = state.adminEmail;
+          }
+          if (document.getElementById('settings-admin-badge')) {
+            document.getElementById('settings-admin-badge').innerText = isSuper ? "👑 Super Admin (Akses Penuh)" : "Admin Kas (Hanya Kelola Saldo)";
+          }
         } else {
           btnLogin.classList.remove('hidden');
           badgeAdmin.classList.add('hidden');
@@ -3804,29 +3966,56 @@
         }
       },
 
+      toggleAdminSourceType: (type) => {
+        const boxPengurus = document.getElementById('box-admin-select-pengurus');
+        const boxCustom = document.getElementById('box-admin-custom-input');
+        if (type === 'bebas') {
+          boxPengurus?.classList.add('hidden');
+          boxCustom?.classList.remove('hidden');
+          document.getElementById('new-admin-custom-nama')?.focus();
+        } else {
+          boxPengurus?.classList.remove('hidden');
+          boxCustom?.classList.add('hidden');
+        }
+      },
+
       promotePengurusToAdmin: async () => {
-        const selectPengurus = document.getElementById('admin-select-pengurus');
-        const pengurusId = selectPengurus.value;
-        const email = document.getElementById('new-admin-email').value.trim();
-        const password = document.getElementById('new-admin-password').value;
+        const isCustom = document.querySelector('input[name="admin-source-type"]:checked')?.value === 'bebas';
+        let nama = '';
+        let jabatan = 'Admin Kas';
+        let pengurusId = null;
+
+        if (isCustom) {
+          nama = (document.getElementById('new-admin-custom-nama')?.value || '').trim();
+          jabatan = (document.getElementById('new-admin-custom-jabatan')?.value || '').trim() || 'Admin Kas (Relawan)';
+          if (!nama) {
+            showToast("Nama admin baru wajib diisi!", "error");
+            return;
+          }
+        } else {
+          const selectPengurus = document.getElementById('admin-select-pengurus');
+          pengurusId = selectPengurus.value;
+          if (!pengurusId) {
+            showToast("Silakan pilih pengurus yang akan diangkat!", "error");
+            return;
+          }
+          const selectedOpt = selectPengurus.options[selectPengurus.selectedIndex];
+          nama = selectedOpt.getAttribute('data-nama');
+          jabatan = selectedOpt.getAttribute('data-jabatan');
+        }
+
+        const email = (document.getElementById('new-admin-email')?.value || '').trim();
+        const password = document.getElementById('new-admin-password')?.value || '';
         const btnSubmit = document.getElementById('btn-promote-admin');
 
-        if (!pengurusId) {
-          showToast("Silakan pilih pengurus yang akan diangkat!", "error");
-          return;
-        }
         if (!email || !email.includes('@')) {
-          showToast("Masukkan alamat email pengurus yang valid!", "error");
+          showToast("Masukkan alamat email yang valid!", "error");
           return;
         }
         if (!password || password.length < 6) {
           showToast("Password minimal 6 karakter!", "error");
           return;
         }
-
-        const selectedOpt = selectPengurus.options[selectPengurus.selectedIndex];
-        const nama = selectedOpt.getAttribute('data-nama');
-        const jabatan = selectedOpt.getAttribute('data-jabatan');
 
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses...`;
@@ -3836,7 +4025,7 @@
           pengurusId: pengurusId,
           nama: nama,
           jabatan: jabatan,
-          email: email,
+          email: email.toLowerCase(),
           role: 'admin',
           addedAt: new Date().toISOString(),
           addedBy: state.adminEmail || SUPER_ADMIN_EMAIL
@@ -3888,6 +4077,8 @@
           // Reset inputs
           document.getElementById('new-admin-email').value = '';
           document.getElementById('new-admin-password').value = 'mushola2026';
+          if (document.getElementById('new-admin-custom-nama')) document.getElementById('new-admin-custom-nama').value = '';
+          if (document.getElementById('new-admin-custom-jabatan')) document.getElementById('new-admin-custom-jabatan').value = '';
           
           renderAdminManager();
           showToast(`Akun admin untuk ${nama} berhasil dibuat!`, "success");
@@ -3900,9 +4091,10 @@
           showToast("Gagal mengangkat admin: " + translateAuthError(err.code || err.message), "error");
         } finally {
           btnSubmit.disabled = false;
-          btnSubmit.innerHTML = `<i class="fa-solid fa-user-plus text-[10px]"></i> <span>Angkat Menjadi Admin</span>`;
+          btnSubmit.innerHTML = `<i class="fa-solid fa-user-plus text-[10px]"></i> <span>Buat & Angkat Jadi Admin</span>`;
         }
       },
+
 
       revokeAdmin: async (adminId, nama) => {
         const adminToRevoke = (state.profile.admins || []).find(a => a.id === adminId);
@@ -4263,7 +4455,16 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       },
 
       copyRekening: () => {
+        const statusQris = state.profile.statusQrisRekening || 'proses';
+        if (statusQris === 'proses') {
+          showToast("Rekening bank resmi mushola masih dalam proses pengajuan perbankan.", "info");
+          return;
+        }
         const rek = state.profile.rekening || DEFAULT_PROFILE.rekening;
+        if (!rek) {
+          showToast("Nomor rekening belum diatur.", "info");
+          return;
+        }
         navigator.clipboard.writeText(rek).then(() => {
           showToast("Nomor rekening berhasil disalin!", "success");
         }).catch(() => {
@@ -4276,6 +4477,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         const alamat = document.getElementById('settings-alamat-masjid').value.trim();
         const rekening = document.getElementById('settings-rekening-masjid').value.trim();
         const qrisUrl = document.getElementById('settings-qris-url').value.trim();
+        const statusQrisRekening = document.getElementById('settings-status-qris-rekening')?.value || 'proses';
         const rawSaldoAwal = (document.getElementById('settings-saldo-awal')?.value || '').replace(/\D/g, '');
         const saldoAwal = parseInt(rawSaldoAwal, 10) || 0;
 
@@ -4288,20 +4490,22 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         state.profile.alamat = alamat;
         state.profile.rekening = rekening;
         state.profile.qrisUrl = qrisUrl;
+        state.profile.statusQrisRekening = statusQrisRekening;
         state.profile.saldoAwal = saldoAwal;
+
+        syncLocal();
 
         try {
           if (state.isFirebaseReady && state.db) {
-            await setDoc(doc(state.db, 'profile', 'info'), state.profile);
-          } else {
-            syncLocal();
+            await setDoc(doc(state.db, 'profile', 'info'), state.profile, { merge: true });
           }
           renderProfile();
           renderDashboard();
           renderLaporan();
-          showToast("Profil dan saldo awal mushola berhasil disimpan!", "success");
+          showToast("Profil dan pengaturan mushola berhasil disimpan!", "success");
         } catch (err) {
-          showToast("Gagal menyimpan profil: " + err.message, "error");
+          console.error("Save profile error:", err);
+          showToast("Gagal menyimpan ke server: " + err.message + " (tersimpan lokal)", "error");
         }
       },
 
