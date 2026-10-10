@@ -164,12 +164,16 @@
         <div class="flex items-center gap-3">
           <img src="icons/icon.svg" alt="Logo Kas Mushola" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl shadow-md border border-white/20 flex-shrink-0 object-contain bg-emerald-950/40 p-0.5">
           <div>
-            <div class="flex items-center gap-2">
-              <h1 id="header-nama-masjid" class="text-base md:text-lg font-extrabold tracking-tight leading-tight line-clamp-1">Mushola Al-Kautsar</h1>
-             
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 id="header-nama-masjid" class="text-base md:text-lg font-extrabold tracking-tight leading-tight">Mushola Al-Kautsar</h1>
+              <span id="header-lokasi-badge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400 text-amber-950 shadow-sm border border-amber-200">
+                <i class="fa-solid fa-location-dot text-[9px]"></i>
+                <span id="header-lokasi-text">PASAR INDUK PARE</span>
+              </span>
             </div>
-            <p id="header-tanggal" class="text-[11px] md:text-xs text-emerald-200/90 font-medium flex items-center gap-1.5 mt-0.5">
-              <i class="fa-regular fa-calendar-check text-[10px]"></i>
+            <p id="header-tanggal" class="text-[11px] md:text-xs text-emerald-200/95 font-medium flex items-center gap-1.5 mt-0.5">
+              <i class="fa-regular fa-calendar-check text-[10px] text-gold-400"></i>
+              <span class="font-semibold text-white/95 hidden sm:inline">Web Resmi Mushola Pasar Induk Pare •</span>
               <span id="current-date-text">Memuat tanggal...</span>
             </p>
           </div>
@@ -234,8 +238,8 @@
 
     <!-- PRINT HEADER -->
     <div class="print-only p-6 border-b-2 border-slate-800 text-center">
-      <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-KAUTSAR</h2>
-      <p id="print-alamat-masjid" class="text-sm text-slate-600">Pasar Induk Pare • Laporan Kas Transparan</p>
+      <h2 id="print-nama-masjid" class="text-2xl font-bold uppercase tracking-wider">MUSHOLA AL-KAUTSAR — PASAR INDUK PARE</h2>
+      <p id="print-alamat-masjid" class="text-sm text-slate-600">Pasar Induk Pare • Laporan Kas & Sedekah Transparan</p>
       <p id="print-tanggal" class="text-xs text-slate-500 mt-1">Dicetak pada: -</p>
       <div class="mt-4 pt-3 border-t border-slate-300 text-xs grid grid-cols-4 gap-2 text-center">
         <div><span class="text-slate-500 block">Saldo Bulan Lalu:</span><strong id="print-prior-saldo">Rp 0</strong></div>
@@ -253,6 +257,37 @@
       <!-- ============================================================ -->
       <section id="view-beranda" class="space-y-5">
 
+        <!-- BANNER TEGAS IDENTITAS RESMI MUSHOLA PASAR INDUK PARE -->
+        <div class="bg-gradient-to-r from-amber-50 via-emerald-50 to-amber-50 border-2 border-emerald-600/30 rounded-2xl p-3.5 md:p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden">
+          <div class="flex items-start sm:items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-mosque-700 text-gold-400 flex items-center justify-center text-lg shadow-md flex-shrink-0 border border-emerald-500">
+              <i class="fa-solid fa-mosque"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-mosque-800 text-amber-300">
+                  <i class="fa-solid fa-circle-check text-emerald-400"></i> PORTAL RESMI JAMAAH
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-amber-400/90 text-amber-950">
+                  <i class="fa-solid fa-location-dot"></i> <span id="banner-lokasi-masjid">PASAR INDUK PARE</span>
+                </span>
+              </div>
+              <h2 class="text-sm md:text-base font-black text-slate-900 tracking-tight mt-1 uppercase">
+                <span id="banner-nama-masjid">MUSHOLA AL-KAUTSAR</span> — PASAR INDUK PARE
+              </h2>
+              <p class="text-[11px] md:text-xs text-slate-600 font-medium leading-snug mt-0.5">
+                Sistem Informasi Transparansi Kas, Sedekah Barang, dan Kegiatan Ibadah Pedagang &amp; Pengunjung <strong>Pasar Induk Pare</strong>.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 sm:flex-shrink-0 pt-1 sm:pt-0 border-t sm:border-t-0 border-emerald-200/60">
+            <button onclick="window.app.switchTab('profil')" class="w-full sm:w-auto px-3 py-2 rounded-xl bg-white hover:bg-emerald-50 text-mosque-800 border border-emerald-300 text-xs font-bold shadow-2xs transition flex items-center justify-center gap-1.5 active:scale-95">
+              <i class="fa-solid fa-users text-emerald-600"></i>
+              <span>Lihat Pengurus DKM</span>
+            </button>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           
           <!-- LEFT / MAIN COLUMN -->
@@ -265,9 +300,9 @@
               </div>
 
               <div class="relative z-10">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-semibold uppercase tracking-wider text-emerald-200 flex items-center gap-1.5">
-                    <i class="fa-solid fa-wallet text-gold-400"></i> Saldo Kas Mushola Pasar
+                <div class="flex items-center justify-between mb-2 flex-wrap gap-1">
+                  <span class="text-xs font-extrabold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-wallet text-gold-400"></i> SALDO KAS MUSHOLA PASAR INDUK PARE
                   </span>
                   <span id="realtime-status-pill" class="text-[10px] font-medium bg-emerald-800/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full text-emerald-200 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Real-time
@@ -278,8 +313,8 @@
                   <span id="total-saldo-display">Rp 0</span>
                 </div>
 
-                <p class="text-xs text-emerald-100/90 mb-5 max-w-md">
-                  Amanah infaq pedagang, pembeli, dan jamaah pasar yang dikelola secara transparan dan bertanggung jawab.
+                <p class="text-xs text-emerald-100/95 mb-5 max-w-md font-medium">
+                  Amanah infaq &amp; sedekah pedagang, pembeli, serta jamaah <strong>Mushola Al-Kautsar Pasar Induk Pare</strong> yang dikelola secara transparan.
                 </p>
 
                 <div class="pt-3 border-t border-emerald-600/50 flex flex-wrap items-center gap-2.5">
@@ -377,6 +412,40 @@
               </div>
             </div>
 
+            <!-- 2.3. KOLOM SEDEKAH BARANG & INVENTARIS JAMAAH (NON-TUNAI) -->
+            <div class="bg-gradient-to-br from-amber-50/90 via-white to-orange-50/40 rounded-2xl p-4 md:p-5 shadow-sm border border-amber-200/90 space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shadow-sm flex-shrink-0">
+                    <i class="fa-solid fa-box-open"></i>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <h3 class="text-xs md:text-sm font-extrabold text-slate-800 uppercase tracking-wider">Sedekah Barang &amp; Wakaf Fasilitas</h3>
+                      <span id="beranda-barang-counter" class="text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full">
+                        0 Barang
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Pencatatan amanah sedekah berupa barang/fasilitas dari jamaah (Tidak mengubah saldo uang kas)</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="btn-beranda-add-barang" onclick="window.app.openAddTransactionModal('barang')" class="hidden text-[11px] font-bold bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl shadow-xs transition items-center gap-1 active:scale-95">
+                    <i class="fa-solid fa-plus text-[10px]"></i>
+                    <span>Catat Barang</span>
+                  </button>
+                  <button onclick="window.app.switchTab('laporan'); window.app.setFilterType('barang');" class="text-xs font-semibold text-amber-800 hover:text-amber-950 bg-amber-100/70 hover:bg-amber-200/70 px-2.5 py-1.5 rounded-xl flex items-center gap-1 transition">
+                    <span>Semua Barang</span>
+                    <i class="fa-solid fa-angle-right text-[10px]"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div id="beranda-barang-list" class="space-y-2 pt-1">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
             <!-- 2.5. KOLOM CANTIK AGENDA, PENGUMUMAN & RENCANA MUSHOLA -->
             <div id="beranda-agenda-container" class="hidden space-y-3">
               <div class="flex items-center justify-between">
@@ -405,7 +474,7 @@
               <div class="flex items-center justify-between mb-3.5">
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-4 bg-mosque-600 rounded-full"></div>
-                  <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider">Transaksi Terkini</h3>
+                  <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider">Transaksi &amp; Sedekah Terkini</h3>
                 </div>
                 <button onclick="window.app.switchTab('laporan')" class="text-xs font-semibold text-mosque-600 hover:text-mosque-800 flex items-center gap-1 transition">
                   <span>Lihat Semua</span>
@@ -520,8 +589,8 @@
         
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div>
-            <h2 class="text-base md:text-lg font-bold text-slate-800">Laporan Kas Mushola Pasar</h2>
-            <p class="text-xs text-slate-500">Transparansi seluruh riwayat pemasukan dan pengeluaran.</p>
+            <h2 class="text-base md:text-lg font-bold text-slate-800">Laporan Kas &amp; Sedekah Barang — Mushola Pasar Induk Pare</h2>
+            <p class="text-xs text-slate-500">Transparansi seluruh riwayat pemasukan kas, pengeluaran, dan sedekah berupa barang.</p>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="window.print()" class="no-print bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border border-slate-200">
@@ -533,7 +602,7 @@
 
         <!-- Filter Controls -->
         <div class="no-print grid grid-cols-1 sm:grid-cols-12 gap-2.5 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
-          <div class="sm:col-span-5 flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+          <div class="sm:col-span-6 flex bg-slate-100 p-1 rounded-xl text-xs font-semibold gap-0.5">
             <button id="filter-btn-semua" onclick="window.app.setFilterType('semua')" class="flex-1 py-1.5 rounded-lg bg-white text-mosque-700 shadow-sm transition-all duration-200 text-center font-bold">
               Semua
             </button>
@@ -543,9 +612,12 @@
             <button id="filter-btn-keluar" onclick="window.app.setFilterType('keluar')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center flex items-center justify-center gap-1">
               <i class="fa-solid fa-circle-arrow-up text-rose-600 text-[10px]"></i> Keluar
             </button>
+            <button id="filter-btn-barang" onclick="window.app.setFilterType('barang')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center flex items-center justify-center gap-1">
+              <i class="fa-solid fa-box-open text-amber-600 text-[10px]"></i> Barang
+            </button>
           </div>
 
-          <div class="sm:col-span-4 relative">
+          <div class="sm:col-span-3 relative">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
             <input type="text" id="filter-search-input" oninput="window.app.renderLaporan()" placeholder="Cari keterangan/kategori..." class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600 transition">
           </div>
@@ -618,8 +690,15 @@
               <div class="w-20 h-20 rounded-full mx-auto mb-3 p-1 border-4 border-mosque-100 bg-white shadow-inner flex items-center justify-center">
                 <img src="icons/icon.svg" alt="Logo Mushola" class="w-full h-full object-contain rounded-full">
               </div>
+              <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400/90 text-amber-950 mb-1.5 shadow-2xs">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>MUSHOLA RESMI PASAR INDUK PARE</span>
+              </div>
               <h2 id="profil-nama-masjid" class="text-xl font-black text-slate-800 tracking-tight">Mushola Al-Kautsar</h2>
-              <p id="profil-alamat-masjid" class="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">Pasar Induk Pare</p>
+              <p id="profil-alamat-masjid" class="text-xs font-bold text-emerald-700 mt-1 max-w-sm mx-auto leading-relaxed">Pasar Induk Pare</p>
+              <p class="text-[11px] text-slate-500 mt-1 max-w-md mx-auto">
+                Pusat ibadah berjamaah, transparansi dana infaq kas, serta pencatatan wakaf &amp; sedekah barang jamaah Pasar Induk Pare.
+              </p>
 
               <div class="mt-5 pt-4 border-t border-slate-100 flex justify-center gap-2">
                 <button onclick="window.app.openQrisModal()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-semibold py-2 px-4 rounded-xl flex items-center gap-2 shadow-sm transition">
@@ -654,7 +733,7 @@
                 <span>Komitmen Kas Terbuka & Bersih</span>
               </div>
               <p class="text-[11px] leading-relaxed text-mosque-800/90">
-                Mushola Pasar adalah sarana ibadah bersama bagi para pedagang dan pengunjung. Setiap rupiah infaq dicatat secara real-time untuk operasional, kebersihan, dan bisaroh petugas mushola.
+                Mushola Al-Kautsar Pasar Induk Pare adalah sarana ibadah bersama bagi para pedagang dan pengunjung. Setiap rupiah infaq maupun sedekah barang dicatat secara real-time untuk operasional, kebersihan, dan bisaroh petugas mushola.
               </p>
             </div>
 
@@ -665,9 +744,9 @@
             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-4 bg-mosque-600 rounded-full"></div>
-                <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider">Susunan Pengurus Mushola Pasar</h3>
+                <h3 class="text-xs md:text-sm font-bold text-slate-800 uppercase tracking-wider">Susunan Pengurus Mushola Pasar Induk Pare</h3>
               </div>
-              <span class="text-[10px] text-slate-400 font-medium">Pengelola Amanah</span>
+              <span class="text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">DKM Al-Kautsar</span>
             </div>
 
             <!-- Grid Kartu Pengurus Menarik -->
@@ -942,20 +1021,30 @@
           <div class="space-y-5">
             
             <!-- 1. MANAJEMEN SUSUNAN PENGURUS & UPLOAD FOTO -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3" id="pengurus-settings-card">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2">
                   <i class="fa-solid fa-users-gear text-mosque-600 text-sm"></i>
-                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pengurus & Foto Profil</h3>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pengurus &amp; Seksi (Bisa 1–3 Anggota)</h3>
                 </div>
                 <span class="text-[10px] bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">
-                  Auto Kompresi Canvas
+                  Support Multi-Anggota
                 </span>
               </div>
 
-              <!-- Form Tambah Pengurus Baru dengan Upload Foto -->
-              <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-3">
-                <span class="text-xs font-bold text-slate-700 block">Tambah Pengurus & Foto</span>
+              <!-- Form Tambah / Edit Pengurus Baru dengan Multi-Anggota & Upload Foto -->
+              <div id="pengurus-form-box" class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-3 transition-all">
+                <div class="flex items-center justify-between">
+                  <span id="pengurus-form-title" class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-plus text-emerald-600"></i>
+                    <span>Tambah Jabatan / Pengurus Baru</span>
+                  </span>
+                  <button type="button" id="btn-cancel-edit-pengurus" onclick="window.app.cancelEditPengurus()" class="hidden text-[10px] font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 px-2 py-0.5 rounded-lg border border-rose-200 transition">
+                    Batal Edit
+                  </button>
+                </div>
+
+                <input type="hidden" id="edit-pengurus-id" value="">
                 
                 <div class="flex items-center gap-3">
                   <!-- Avatar Picker & Preview -->
@@ -969,26 +1058,55 @@
                     <input type="file" id="new-pengurus-foto-input" accept="image/*" onchange="window.app.handleNewPengurusPhoto(this)" class="hidden">
                   </div>
                   <div class="text-[11px] text-slate-500 flex-1 leading-tight">
-                    <span class="font-semibold text-slate-700 block">Upload Foto Pengurus</span>
+                    <span class="font-semibold text-slate-700 block">Upload Foto Pengurus (Opsional)</span>
                     <span id="new-photo-compression-info" class="text-[10px] text-slate-400 block mt-0.5">Otomatis dikompres ringan (~25 KB)</span>
                     <button type="button" id="btn-cancel-new-photo" onclick="window.app.clearNewPengurusPhoto()" class="hidden text-[10px] text-rose-500 underline mt-0.5">Hapus Pilihan</button>
                   </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                  <input type="text" id="new-pengurus-nama" placeholder="Nama Lengkap" class="bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
-                  <input type="text" id="new-pengurus-jabatan" placeholder="Jabatan (e.g. Bendahara)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                <div class="space-y-2">
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Jabatan / Seksi DKM <span class="text-rose-500">*</span></label>
+                    <input type="text" id="new-pengurus-jabatan" placeholder="Contoh: Marbot / Seksi Keamanan / Bendahara" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div>
+                      <label class="block text-[10.5px] font-semibold text-slate-600 mb-1">Pengurus / Anggota 1 <span class="text-rose-500">*</span></label>
+                      <input type="text" id="new-pengurus-nama" placeholder="Nama Pengurus 1 (Wajib)" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    </div>
+                    <div>
+                      <label class="block text-[10.5px] font-semibold text-emerald-700 mb-1">Anggota 2 <span class="text-[9.5px] text-slate-400 font-normal">(Opsional, jika 2 orang)</span></label>
+                      <input type="text" id="new-pengurus-nama-2" placeholder="Nama Anggota 2 (Misal: Marbot/Keamanan 2)" class="w-full bg-white border border-emerald-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                    </div>
+                  </div>
+
+                  <!-- Input Anggota ke-3 (Opsional jika ada 3 anggota dalam 1 seksi) -->
+                  <div id="box-pengurus-nama-3" class="hidden">
+                    <label class="block text-[10.5px] font-semibold text-slate-600 mb-1">Anggota 3 (Opsional)</label>
+                    <input type="text" id="new-pengurus-nama-3" placeholder="Nama Anggota 3..." class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                  </div>
+
+                  <div class="flex items-center justify-between pt-0.5">
+                    <span class="text-[10px] text-slate-400 italic">💡 Isi Anggota 2 jika 1 jabatan diisi 2 orang (contoh: Marbot 2 orang, Keamanan 2 orang).</span>
+                    <button type="button" id="btn-toggle-anggota-3" onclick="window.app.toggleThirdPengurusInput()" class="text-[10px] font-bold text-mosque-700 hover:underline flex-shrink-0 ml-2">
+                      + Anggota ke-3
+                    </button>
+                  </div>
                 </div>
-                <button onclick="window.app.addPengurus()" class="w-full bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-semibold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm">
+
+                <button id="btn-submit-pengurus" onclick="window.app.addPengurus()" class="w-full bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-semibold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm">
                   <i class="fa-solid fa-user-plus text-[10px]"></i>
-                  <span>Simpan Pengurus Baru</span>
+                  <span id="btn-submit-pengurus-label">Simpan Pengurus / Seksi</span>
                 </button>
               </div>
 
               <!-- List Pengurus untuk Edit/Ganti Foto/Hapus -->
               <div class="pt-1">
-                <span class="text-[11px] font-semibold text-slate-500 block mb-1.5">Daftar Pengurus Terdaftar:</span>
-                <div id="settings-pengurus-list" class="space-y-2 max-h-60 overflow-y-auto">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold text-slate-500 block">Daftar Pengurus Terdaftar (Klik <i class="fa-solid fa-pen-to-square text-amber-600"></i> untuk Edit / Tambah Anggota 2):</span>
+                </div>
+                <div id="settings-pengurus-list" class="space-y-2 max-h-72 overflow-y-auto pr-0.5">
                   <!-- Dynamically populated -->
                 </div>
               </div>
@@ -1001,19 +1119,22 @@
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2">
                   <i class="fa-solid fa-tags text-mosque-600 text-sm"></i>
-                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Kategori Transaksi Dinamis</h3>
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Kategori Transaksi &amp; Barang Dinamis</h3>
                 </div>
                 <button onclick="window.app.resetDefaultCategories()" class="text-[10px] text-slate-400 hover:text-slate-600 underline" title="Kembalikan ke kategori standar mushola pasar">
                   Reset Bawaan
                 </button>
               </div>
 
-              <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+              <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold gap-0.5">
                 <button id="cat-tab-masuk" onclick="window.app.switchCategoryTab('masuk')" class="flex-1 py-1.5 rounded-lg bg-white text-emerald-600 shadow-sm transition font-bold flex items-center justify-center gap-1">
-                  <i class="fa-solid fa-circle-arrow-down text-[10px]"></i> Kategori Pemasukan
+                  <i class="fa-solid fa-circle-arrow-down text-[10px]"></i> Pemasukan
                 </button>
                 <button id="cat-tab-keluar" onclick="window.app.switchCategoryTab('keluar')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
-                  <i class="fa-solid fa-circle-arrow-up text-[10px]"></i> Kategori Pengeluaran
+                  <i class="fa-solid fa-circle-arrow-up text-[10px]"></i> Pengeluaran
+                </button>
+                <button id="cat-tab-barang" onclick="window.app.switchCategoryTab('barang')" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-box-open text-[10px]"></i> Barang 📦
                 </button>
               </div>
 
@@ -1445,8 +1566,8 @@
             <i class="fa-solid fa-pen-to-square"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-slate-800">Catat Transaksi Kas</h3>
-            <p class="text-[10px] text-slate-400">Pemasukan atau pengeluaran kas mushola pasar</p>
+            <h3 class="text-sm font-bold text-slate-800">Catat Kas &amp; Sedekah Barang</h3>
+            <p class="text-[10px] text-slate-400">Pemasukan kas, pengeluaran, atau sedekah berupa barang</p>
           </div>
         </div>
         <button onclick="window.app.closeModal('modal-add-trx')" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
@@ -1456,33 +1577,59 @@
 
       <form onsubmit="event.preventDefault(); window.app.submitNewTransaction();" class="space-y-3.5">
         
-        <!-- Toggle Jenis Transaksi -->
+        <!-- Toggle Jenis Transaksi (3 Pilihan: Masuk, Keluar, Barang) -->
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1.5">Jenis Transaksi</label>
-          <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-2xl">
-            <button type="button" id="btn-type-masuk" onclick="window.app.setFormType('masuk')" class="py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow-sm">
+          <label class="block text-xs font-semibold text-slate-700 mb-1.5">Jenis Pencatatan</label>
+          <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-2xl">
+            <button type="button" id="btn-type-masuk" onclick="window.app.setFormType('masuk')" class="py-2.5 px-1.5 rounded-xl text-[11px] font-bold transition-all duration-200 flex items-center justify-center gap-1 bg-emerald-600 text-white shadow-sm">
               <i class="fa-solid fa-circle-down"></i>
-              <span>Pemasukan (+)</span>
+              <span>Masuk (+)</span>
             </button>
-            <button type="button" id="btn-type-keluar" onclick="window.app.setFormType('keluar')" class="py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900">
+            <button type="button" id="btn-type-keluar" onclick="window.app.setFormType('keluar')" class="py-2.5 px-1.5 rounded-xl text-[11px] font-bold transition-all duration-200 flex items-center justify-center gap-1 text-slate-600 hover:text-slate-900">
               <i class="fa-solid fa-circle-up"></i>
-              <span>Pengeluaran (-)</span>
+              <span>Keluar (-)</span>
             </button>
+            <button type="button" id="btn-type-barang" onclick="window.app.setFormType('barang')" class="py-2.5 px-1.5 rounded-xl text-[11px] font-bold transition-all duration-200 flex items-center justify-center gap-1 text-slate-600 hover:text-slate-900">
+              <i class="fa-solid fa-box-open"></i>
+              <span>Barang 📦</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Box Khusus Sedekah Barang (Muncul saat tab Barang dipilih) -->
+        <div id="box-trx-barang-fields" class="hidden space-y-3 bg-amber-50/80 border border-amber-200/90 p-3.5 rounded-2xl">
+          <div class="flex items-start gap-2 text-[11px] text-amber-900 bg-white/90 p-2.5 rounded-xl border border-amber-200/70 leading-snug">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong>Skema Sedekah Barang (Non-Tunai):</strong> Dicatat sebagai inventaris &amp; laporan transparansi jamaah <u>tanpa mengubah jumlah Saldo Kas Uang Tunai</u>.</span>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1">Nama &amp; Jumlah Barang <span class="text-rose-500">*</span></label>
+            <input type="text" id="trx-nama-barang-input" placeholder="Contoh: 2 Unit Kipas Angin / 5 Potong Mukena / 3 Dus Air" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1">Nama Donatur / Pemberi Barang</label>
+            <input type="text" id="trx-donatur-input" placeholder="Contoh: Hamba Allah / Bpk. H. Ahmad (Blok Sayur)" class="w-full bg-white border border-amber-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <span class="text-[10px] text-slate-400 block mt-0.5">Kosongkan jika ingin ditulis sebagai <strong>Hamba Allah</strong>.</span>
           </div>
         </div>
 
         <!-- Input Nominal -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Nominal (Rupiah)</label>
+        <div id="box-trx-nominal">
+          <label id="label-trx-nominal" class="block text-xs font-semibold text-slate-700 mb-1">Nominal (Rupiah)</label>
           <div class="relative">
             <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">Rp</span>
             <input type="text" id="trx-nominal-input" inputmode="numeric" placeholder="0" required oninput="window.app.formatNominalInput(this)" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2.5 text-base font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
           </div>
+          <span id="hint-trx-nominal-barang" class="hidden text-[10px] text-amber-700 font-medium mt-1 block">
+            *Opsional: Boleh dikosongkan (Rp 0) atau diisi taksiran harga barang. Tidak akan menambah/mengurangi saldo uang kas.
+          </span>
         </div>
 
         <!-- Input Tanggal -->
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Tanggal Transaksi</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Tanggal Pencatatan</label>
           <input type="date" id="trx-tanggal-input" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600">
         </div>
 
@@ -1519,7 +1666,7 @@
 
         <!-- Input Keterangan -->
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Keterangan / Rincian</label>
+          <label id="label-trx-keterangan" class="block text-xs font-semibold text-slate-700 mb-1">Keterangan / Rincian</label>
           <textarea id="trx-keterangan-input" rows="2" placeholder="Contoh: Bisaroh bulanan marbot / Infaq pedagang blok sayur" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600"></textarea>
         </div>
 
@@ -1720,6 +1867,16 @@
         "Lain-lain (Keluar)",
         "Perbaikan Fasilitas Mushola",
         "Pengadaan Fasilitas Mushola"
+      ],
+      barang: [
+        "Perlengkapan Ibadah (Mukena/Sarung/Sajadah)",
+        "Alat Kebersihan & Sanitasi Mushola",
+        "Kipas Angin, AC & Elektronik",
+        "Sound System & Pengeras Suara",
+        "Al-Qur'an, Iqro & Buku Islam",
+        "Material Bangunan & Renovasi",
+        "Air Mineral & Konsumsi Jamaah",
+        "Lain-lain (Sedekah Barang)"
       ]
     };
 
@@ -2452,7 +2609,7 @@
             state.profile = { 
               ...DEFAULT_PROFILE, 
               ...data,
-              categories: data.categories || { ...DEFAULT_CATEGORIES },
+              categories: { ...DEFAULT_CATEGORIES, ...(data.categories || {}) },
               pengurus: (data.pengurus && data.pengurus.length > 0) ? data.pengurus : (state.profile.pengurus && state.profile.pengurus.length > 0 ? state.profile.pengurus : [...DEFAULT_PROFILE.pengurus]),
               admins: rawAdmins,
               agendas: data.agendas || [],
@@ -2479,7 +2636,12 @@
           const localProf = localStorage.getItem('kas_masjid_local_profile');
           if (localProf) {
             try {
-              state.profile = { ...DEFAULT_PROFILE, ...JSON.parse(localProf) };
+              const parsed = JSON.parse(localProf);
+              state.profile = { 
+                ...DEFAULT_PROFILE, 
+                ...parsed,
+                categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) }
+              };
             } catch (e) {}
           }
           renderProfile();
@@ -2545,7 +2707,7 @@
           state.profile = {
             ...DEFAULT_PROFILE,
             ...parsed,
-            categories: parsed.categories || { ...DEFAULT_CATEGORIES },
+            categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) },
             pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus],
             agendas: parsed.agendas || [],
             quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 0,
@@ -2673,6 +2835,7 @@
       let countIn = 0;
       let countOut = 0;
       let totalSaldo = saldoAwal;
+      const barangList = [];
 
       sorted.forEach(t => {
         const nominal = Number(t.nominal) || 0;
@@ -2686,7 +2849,7 @@
           } else if (tDate < firstDayOfCurrentMonth) {
             priorBalance += nominal;
           }
-        } else {
+        } else if (t.jenis === 'keluar') {
           totalSaldo -= nominal;
           if (tDate.startsWith(currentYearMonth)) {
             monthlyOut += nominal;
@@ -2694,6 +2857,8 @@
           } else if (tDate < firstDayOfCurrentMonth) {
             priorBalance -= nominal;
           }
+        } else if (t.jenis === 'barang') {
+          barangList.push(t);
         }
       });
 
@@ -2736,6 +2901,37 @@
 
       initOrUpdateChart(monthlyIn, monthlyOut);
 
+      // Render Sedekah Barang di Beranda
+      const barangCounterEl = document.getElementById('beranda-barang-counter');
+      if (barangCounterEl) {
+        barangCounterEl.innerText = `${barangList.length} Barang Tercatat`;
+      }
+      const btnBerandaAddBarang = document.getElementById('btn-beranda-add-barang');
+      if (btnBerandaAddBarang) {
+        if (state.isAdmin) {
+          btnBerandaAddBarang.classList.remove('hidden');
+          btnBerandaAddBarang.classList.add('inline-flex');
+        } else {
+          btnBerandaAddBarang.classList.add('hidden');
+          btnBerandaAddBarang.classList.remove('inline-flex');
+        }
+      }
+      const berandaBarangListEl = document.getElementById('beranda-barang-list');
+      if (berandaBarangListEl) {
+        if (barangList.length === 0) {
+          berandaBarangListEl.innerHTML = `
+            <div class="bg-white/80 rounded-xl p-3 border border-amber-200/70 text-xs text-slate-600 flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-hand-holding-heart text-amber-500 text-base"></i>
+                <span>Belum ada catatan sedekah barang. Jamaah yang menyumbang barang (mukena, kipas, alat kebersihan, air mineral, dll) akan tercatat transparan di sini.</span>
+              </div>
+            </div>
+          `;
+        } else {
+          berandaBarangListEl.innerHTML = barangList.slice(0, 4).map(item => createTransactionCard(item, false)).join('');
+        }
+      }
+
       const recentContainer = document.getElementById('recent-transactions-list');
       const recentItems = sorted.slice(0, 5);
 
@@ -2772,16 +2968,20 @@
       if (searchVal) {
         filtered = filtered.filter(t => 
           (t.keterangan || '').toLowerCase().includes(searchVal) ||
-          (t.kategori || '').toLowerCase().includes(searchVal)
+          (t.kategori || '').toLowerCase().includes(searchVal) ||
+          (t.namaBarang || '').toLowerCase().includes(searchVal) ||
+          (t.donatur || '').toLowerCase().includes(searchVal)
         );
       }
 
       const saldoAwal = Number(state.profile.saldoAwal) || 0;
       let netFiltered = 0;
+      let countBarangFiltered = 0;
       filtered.forEach(t => {
         const nom = Number(t.nominal) || 0;
         if (t.jenis === 'masuk') netFiltered += nom;
-        else netFiltered -= nom;
+        else if (t.jenis === 'keluar') netFiltered -= nom;
+        else if (t.jenis === 'barang') countBarangFiltered++;
       });
 
       // Monthly Accounting Breakdown if a specific month is selected
@@ -2800,7 +3000,7 @@
             if (t.jenis === 'masuk') {
               if (tDate < firstDayOfMonth) priorMonthBal += nom;
               else if (tDate.startsWith(monthVal)) pMasuk += nom;
-            } else {
+            } else if (t.jenis === 'keluar') {
               if (tDate < firstDayOfMonth) priorMonthBal -= nom;
               else if (tDate.startsWith(monthVal)) pKeluar += nom;
             }
@@ -2830,14 +3030,18 @@
         }
       }
 
-      document.getElementById('filtered-total-text').innerText = formatRupiah(netFiltered);
-      document.getElementById('filtered-count-text').innerText = `${filtered.length} Transaksi`;
+      if (state.filterType === 'barang') {
+        document.getElementById('filtered-total-text').innerText = `${countBarangFiltered} Sedekah Barang (Non-Tunai)`;
+      } else {
+        document.getElementById('filtered-total-text').innerText = formatRupiah(netFiltered);
+      }
+      document.getElementById('filtered-count-text').innerText = `${filtered.length} Catatan`;
 
       if (filtered.length === 0) {
         container.innerHTML = `
           <div class="text-center py-12 text-slate-400 text-xs bg-white rounded-2xl border border-slate-200/60 p-4">
             <i class="fa-solid fa-magnifying-glass text-3xl mb-2 text-slate-300"></i>
-            <p class="font-semibold text-slate-600">Tidak ada transaksi ditemukan</p>
+            <p class="font-semibold text-slate-600">Tidak ada catatan ditemukan</p>
             <p class="text-[11px] text-slate-400 mt-0.5">Coba ubah kata kunci atau pengaturan filter.</p>
           </div>
         `;
@@ -2848,6 +3052,51 @@
     };
 
     const createTransactionCard = (item, showDelete = false) => {
+      if (item.jenis === 'barang') {
+        const namaBarang = item.namaBarang || item.kategori || 'Sedekah Barang';
+        const donatur = item.donatur || 'Hamba Allah';
+        const estimasiVal = Number(item.nominal) || 0;
+
+        return `
+          <div class="bg-gradient-to-r from-amber-50/70 via-white to-amber-50/40 rounded-2xl p-3.5 shadow-sm border border-amber-200/90 flex items-center justify-between gap-3 hover:border-amber-300 transition duration-150">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 border border-amber-300/80 flex-shrink-0 flex items-center justify-center text-sm shadow-inner">
+                <i class="fa-solid fa-box-open"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="text-xs md:text-sm font-extrabold text-slate-800 truncate">${escapeHtml(namaBarang)}</span>
+                  <span class="text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full">
+                    Donatur: ${escapeHtml(donatur)}
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px] text-slate-500 mt-0.5 flex-wrap">
+                  <span class="font-semibold text-amber-800">${escapeHtml(item.kategori || 'Sedekah Barang')}</span>
+                  <span>•</span>
+                  <span>${formatDateIndo(item.tanggal)}</span>
+                  ${item.keterangan ? `<span>• ${escapeHtml(item.keterangan)}</span>` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="text-right flex-shrink-0 flex items-center gap-2">
+              <div>
+                <span class="text-[11px] md:text-xs font-extrabold text-amber-800 bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-lg inline-block whitespace-nowrap">
+                  📦 Sedekah Barang
+                </span>
+                <span class="text-[9.5px] font-semibold text-slate-400 block mt-0.5">
+                  ${estimasiVal > 0 ? `Taksiran ~${formatRupiah(estimasiVal)} (Non-Kas)` : 'Inventaris / Non-Tunai'}
+                </span>
+              </div>
+              ${showDelete ? `
+                <button onclick="window.app.confirmDeleteTransaction('${item.id}', '${escapeHtml(namaBarang)}', ${estimasiVal})" title="Hapus Catatan Barang" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-xs active:scale-90 transition">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+
       const isMasuk = item.jenis === 'masuk';
       const colorBg = isMasuk ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600';
       const arrowIcon = isMasuk ? 'fa-arrow-down-left' : 'fa-arrow-up-right';
@@ -2885,6 +3134,19 @@
       `;
     };
 
+    const getPengurusMembers = (item) => {
+      if (!item) return [];
+      if (Array.isArray(item.anggota) && item.anggota.filter(Boolean).length > 0) {
+        return item.anggota.map(s => String(s).trim()).filter(Boolean);
+      }
+      const raw = String(item.nama || '').trim();
+      if (!raw) return [];
+      if (/\s+(?:dan|&)\s+/i.test(raw)) {
+        return raw.split(/\s+(?:dan|&)\s+/i).map(s => s.trim()).filter(Boolean);
+      }
+      return [raw];
+    };
+
     const renderProfile = () => {
       const p = state.profile;
       const rawNama = p.nama || DEFAULT_PROFILE.nama;
@@ -2894,11 +3156,20 @@
       const headerNamaEl = document.getElementById('header-nama-masjid');
       if (headerNamaEl) headerNamaEl.innerText = displayNama;
 
+      const headerLokasiTextEl = document.getElementById('header-lokasi-text');
+      if (headerLokasiTextEl) headerLokasiTextEl.innerText = displayAlamat.toUpperCase();
+
+      const bannerNamaEl = document.getElementById('banner-nama-masjid');
+      if (bannerNamaEl) bannerNamaEl.innerText = displayNama.toUpperCase();
+
+      const bannerLokasiEl = document.getElementById('banner-lokasi-masjid');
+      if (bannerLokasiEl) bannerLokasiEl.innerText = displayAlamat.toUpperCase();
+
       const profilNamaEl = document.getElementById('profil-nama-masjid');
       if (profilNamaEl) profilNamaEl.innerText = displayNama;
 
       const printNamaEl = document.getElementById('print-nama-masjid');
-      if (printNamaEl) printNamaEl.innerText = displayNama;
+      if (printNamaEl) printNamaEl.innerText = `${displayNama.toUpperCase()} — ${displayAlamat.toUpperCase()}`;
 
       const qrisNamaEl = document.getElementById('qris-nama-masjid');
       if (qrisNamaEl) qrisNamaEl.innerText = displayNama;
@@ -2907,7 +3178,7 @@
       if (profilAlamatEl) profilAlamatEl.innerText = displayAlamat;
 
       const printAlamatEl = document.getElementById('print-alamat-masjid');
-      if (printAlamatEl) printAlamatEl.innerText = displayAlamat;
+      if (printAlamatEl) printAlamatEl.innerText = `${displayAlamat} • Laporan Kas & Sedekah Transparan`;
 
       const statusQris = p.statusQrisRekening || 'proses';
 
@@ -3016,7 +3287,7 @@
               '</span>' +
               '<h4 class="text-sm font-bold text-slate-800">Layanan Infaq Digital Sedang Diproses</h4>' +
               '<p class="text-xs text-slate-600 leading-relaxed">' +
-                'Pendaftaran barcode QRIS dan rekening bank syariah resmi atas nama <b>' + escapeHtml(p.nama || DEFAULT_PROFILE.nama) + '</b> saat ini masih dalam proses peninjauan administrasi oleh pihak bank.' +
+                'Pendaftaran barcode QRIS dan rekening bank syariah resmi atas nama <b>' + escapeHtml(displayNama) + ' (' + escapeHtml(displayAlamat) + ')</b> saat ini masih dalam proses peninjauan administrasi oleh pihak bank.' +
               '</p>' +
               '<div class="p-2.5 rounded-xl bg-white border border-amber-200 text-[11px] text-slate-700 leading-snug">' +
                 'Insya Allah layanan non-tunai segera aktif. Untuk saat ini jamaah dipersilakan menyalurkan infaq langsung melalui <b>Kotak Amal Fisik Mushola</b>.' +
@@ -3034,7 +3305,7 @@
                 '<img src="' + qrisSrc + '" alt="QRIS Mushola" class="w-48 h-48 object-contain rounded-lg">' +
               '</div>' +
               '<span class="text-[10px] text-slate-500 font-medium mt-2">QRIS Standar Nasional Indonesia</span>' +
-              '<span class="text-[11px] font-bold text-slate-800">' + escapeHtml(p.nama || DEFAULT_PROFILE.nama) + '</span>' +
+              '<span class="text-[11px] font-bold text-slate-800">' + escapeHtml(displayNama) + ' — ' + escapeHtml(displayAlamat) + '</span>' +
             '</div>' +
             '<p class="text-[11px] text-slate-500 mb-4 leading-relaxed">' +
               'Pindai kode QRIS menggunakan mobile banking atau dompet digital (GoPay, OVO, Dana, ShopeePay, dll).' +
@@ -3052,7 +3323,7 @@
       }
 
 
-      // Render Susunan Pengurus Menarik di Tab Profil
+      // Render Susunan Pengurus Menarik di Tab Profil (Support 1 Jabatan Multi-Anggota)
       const pengurusCardsContainer = document.getElementById('pengurus-cards-container');
       const settingsPengurusList = document.getElementById('settings-pengurus-list');
 
@@ -3063,19 +3334,60 @@
         if (settingsPengurusList) settingsPengurusList.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">Belum ada pengurus.</p>`;
       } else {
         if (pengurusCardsContainer) {
-          pengurusCardsContainer.innerHTML = pengurusList.map((item, idx) => {
+          pengurusCardsContainer.innerHTML = pengurusList.map((item) => {
+            const members = getPengurusMembers(item);
+            const isMulti = members.length > 1;
             const hasPhoto = item.foto && item.foto.startsWith('data:image');
+
+            if (isMulti) {
+              const avatarHtml = hasPhoto
+                ? `<img src="${item.foto}" alt="${escapeHtml(item.jabatan)}" class="w-11 h-11 rounded-full object-cover border-2 border-emerald-500 shadow-sm flex-shrink-0">`
+                : `<div class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-600 to-teal-800 text-white font-bold text-xs flex items-center justify-center border-2 border-emerald-400/50 shadow-sm flex-shrink-0">
+                    <i class="fa-solid fa-user-group"></i>
+                  </div>`;
+
+              const membersBadges = members.map((m, i) => `
+                <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-emerald-200/80 shadow-2xs">
+                  <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[9px] font-bold flex items-center justify-center flex-shrink-0">${i + 1}</span>
+                  <span class="text-xs font-bold text-slate-800 truncate">${escapeHtml(m)}</span>
+                </div>
+              `).join('');
+
+              return `
+                <div class="bg-gradient-to-br from-emerald-50/60 via-slate-50 to-white hover:from-emerald-50 p-3.5 rounded-2xl border border-emerald-200/80 flex flex-col gap-2.5 transition group">
+                  <div class="flex items-center gap-2.5">
+                    ${avatarHtml}
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-700 text-white truncate max-w-full">
+                          ${escapeHtml(item.jabatan)}
+                        </span>
+                        <span class="text-[9.5px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-1.5 py-0.5 rounded-full">
+                          ${members.length} Pengurus
+                        </span>
+                      </div>
+                      <p class="text-[10px] text-slate-500 mt-0.5">Tim Petugas / Seksi Mushola</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 gap-1.5 pt-1 border-t border-emerald-100">
+                    ${membersBadges}
+                  </div>
+                </div>
+              `;
+            }
+
+            const singleName = members[0] || item.nama || '-';
             const avatarHtml = hasPhoto 
-              ? `<img src="${item.foto}" alt="${escapeHtml(item.nama)}" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-500 shadow-sm flex-shrink-0">`
+              ? `<img src="${item.foto}" alt="${escapeHtml(singleName)}" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-500 shadow-sm flex-shrink-0">`
               : `<div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-teal-800 text-white font-bold text-sm flex items-center justify-center border-2 border-emerald-400/50 shadow-sm flex-shrink-0">
-                  ${getInitials(item.nama)}
+                  ${getInitials(singleName)}
                 </div>`;
 
             return `
               <div class="bg-slate-50 hover:bg-emerald-50/40 p-3 rounded-2xl border border-slate-200/80 flex items-center gap-3 transition group">
                 ${avatarHtml}
                 <div class="min-w-0 flex-1">
-                  <h4 class="text-xs md:text-sm font-bold text-slate-800 truncate">${escapeHtml(item.nama)}</h4>
+                  <h4 class="text-xs md:text-sm font-bold text-slate-800 truncate">${escapeHtml(singleName)}</h4>
                   <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100/80 text-emerald-800 mt-0.5 truncate max-w-full">
                     ${escapeHtml(item.jabatan)}
                   </span>
@@ -3087,23 +3399,37 @@
 
         if (settingsPengurusList) {
           settingsPengurusList.innerHTML = pengurusList.map((item) => {
+            const members = getPengurusMembers(item);
+            const isMulti = members.length > 1;
             const hasPhoto = item.foto && item.foto.startsWith('data:image');
             const avatarThumb = hasPhoto 
               ? `<img src="${item.foto}" alt="${escapeHtml(item.nama)}" class="w-9 h-9 rounded-full object-cover border border-emerald-500 shadow-inner flex-shrink-0">`
-              : `<div class="w-9 h-9 rounded-full bg-slate-200 text-slate-600 font-bold text-xs flex items-center justify-center flex-shrink-0">
-                  ${getInitials(item.nama)}
+              : `<div class="w-9 h-9 rounded-full ${isMulti ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'} font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  ${isMulti ? `<i class="fa-solid fa-user-group text-[10px]"></i>` : getInitials(members[0] || item.nama)}
                 </div>`;
+
+            const membersDisplay = isMulti
+              ? `<div class="flex flex-wrap gap-1 mt-0.5">
+                  ${members.map((m, idx) => `<span class="text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.2 rounded-md">${idx + 1}. ${escapeHtml(m)}</span>`).join('')}
+                 </div>`
+              : `<span class="font-bold text-slate-800 block truncate">${escapeHtml(members[0] || item.nama)}</span>`;
 
             return `
               <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 text-xs gap-2 hover:border-slate-300 transition">
                 <div class="flex items-center gap-2.5 min-w-0">
                   ${avatarThumb}
                   <div class="min-w-0">
-                    <span class="font-bold text-slate-800 block truncate">${escapeHtml(item.nama)}</span>
-                    <span class="text-slate-500 text-[10px] block truncate">${escapeHtml(item.jabatan)}</span>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="text-mosque-800 font-extrabold text-[10.5px] uppercase tracking-wide">${escapeHtml(item.jabatan)}</span>
+                      ${isMulti ? `<span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded-full">${members.length} Anggota</span>` : ''}
+                    </div>
+                    ${membersDisplay}
                   </div>
                 </div>
                 <div class="flex items-center gap-1 flex-shrink-0">
+                  <button onclick="window.app.editPengurus('${item.id}')" title="Edit Jabatan / Tambah Anggota ke-2" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 active:scale-90 transition">
+                    <i class="fa-solid fa-pen-to-square text-xs"></i>
+                  </button>
                   <button onclick="window.app.triggerReplacePhoto('${item.id}')" title="Upload / Ganti Foto" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 active:scale-90 transition">
                     <i class="fa-solid fa-camera text-xs"></i>
                   </button>
@@ -3160,10 +3486,11 @@
       const currentType = state.categoryTab || 'masuk';
       const categories = getCategories(currentType);
 
-      const isKeluar = currentType === 'keluar';
       const labelEl = document.getElementById('cat-list-label');
       if (labelEl) {
-        labelEl.innerText = isKeluar ? 'Daftar Kategori Pengeluaran Dinamis:' : 'Daftar Kategori Pemasukan Dinamis:';
+        if (currentType === 'keluar') labelEl.innerText = 'Daftar Kategori Pengeluaran Dinamis:';
+        else if (currentType === 'barang') labelEl.innerText = 'Daftar Kategori Sedekah Barang Dinamis:';
+        else labelEl.innerText = 'Daftar Kategori Pemasukan Dinamis:';
       }
       const countEl = document.getElementById('cat-count-badge');
       if (countEl) {
@@ -3171,9 +3498,13 @@
       }
       const inputEl = document.getElementById('new-category-name');
       if (inputEl) {
-        inputEl.placeholder = isKeluar 
-          ? 'Tambah kategori pengeluaran baru (Bisaroh, dll)...'
-          : 'Tambah kategori pemasukan baru (Infaq Pedagang, dll)...';
+        if (currentType === 'keluar') {
+          inputEl.placeholder = 'Tambah kategori pengeluaran baru (Bisaroh, dll)...';
+        } else if (currentType === 'barang') {
+          inputEl.placeholder = 'Tambah kategori sedekah barang (Karpet, Kipas, dll)...';
+        } else {
+          inputEl.placeholder = 'Tambah kategori pemasukan baru (Infaq Pedagang, dll)...';
+        }
       }
 
       if (categories.length === 0) {
@@ -3181,7 +3512,11 @@
         return;
       }
 
-      const bgClass = isKeluar ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      const bgClass = currentType === 'keluar'
+        ? 'bg-rose-50 text-rose-700 border-rose-200'
+        : (currentType === 'barang'
+            ? 'bg-amber-50 text-amber-800 border-amber-300'
+            : 'bg-emerald-50 text-emerald-700 border-emerald-200');
 
       container.innerHTML = categories.map(cat => `
         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold border ${bgClass}">
@@ -3779,13 +4114,14 @@
 
       setFilterType: (type) => {
         state.filterType = type;
-        ['semua', 'masuk', 'keluar'].forEach(t => {
+        ['semua', 'masuk', 'keluar', 'barang'].forEach(t => {
           const btn = document.getElementById(`filter-btn-${t}`);
           if (btn) {
             if (t === type) {
-              btn.className = "flex-1 py-1.5 rounded-lg bg-white text-mosque-700 shadow-sm transition-all duration-200 text-center font-bold";
+              const activeColor = t === 'barang' ? 'text-amber-700' : (t === 'keluar' ? 'text-rose-600' : 'text-mosque-700');
+              btn.className = `py-1.5 rounded-lg bg-white ${activeColor} shadow-sm transition-all duration-200 text-center font-bold flex items-center justify-center gap-1`;
             } else {
-              btn.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center";
+              btn.className = "py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center flex items-center justify-center gap-1";
             }
           }
         });
@@ -3985,6 +4321,7 @@
           }
         }
 
+        renderDashboard();
         renderLaporan();
         renderAdminManager();
         renderAgendaManager();
@@ -4242,12 +4579,14 @@ Password: ${adm.rawPassword}`;
       },
 
       // Add Transaction Form
-      openAddTransactionModal: () => {
+      openAddTransactionModal: (initialType = 'masuk') => {
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('trx-tanggal-input').value = today;
         document.getElementById('trx-nominal-input').value = '';
         document.getElementById('trx-keterangan-input').value = '';
-        window.app.setFormType('masuk');
+        if (document.getElementById('trx-nama-barang-input')) document.getElementById('trx-nama-barang-input').value = '';
+        if (document.getElementById('trx-donatur-input')) document.getElementById('trx-donatur-input').value = '';
+        window.app.setFormType(initialType || 'masuk');
         window.app.openModal('modal-add-trx');
       },
 
@@ -4255,13 +4594,39 @@ Password: ${adm.rawPassword}`;
         state.formType = type;
         const btnMasuk = document.getElementById('btn-type-masuk');
         const btnKeluar = document.getElementById('btn-type-keluar');
+        const btnBarang = document.getElementById('btn-type-barang');
+        const boxBarangFields = document.getElementById('box-trx-barang-fields');
+        const labelNominal = document.getElementById('label-trx-nominal');
+        const hintNominalBarang = document.getElementById('hint-trx-nominal-barang');
+        const nominalInput = document.getElementById('trx-nominal-input');
+        const submitBtn = document.getElementById('btn-submit-trx');
+
+        const inactiveClass = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
+        if (btnMasuk) btnMasuk.className = inactiveClass;
+        if (btnKeluar) btnKeluar.className = inactiveClass;
+        if (btnBarang) btnBarang.className = inactiveClass;
 
         if (type === 'masuk') {
-          btnMasuk.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow-sm";
-          btnKeluar.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
-        } else {
-          btnKeluar.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-rose-600 text-white shadow-sm";
-          btnMasuk.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
+          if (btnMasuk) btnMasuk.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow-sm";
+          boxBarangFields?.classList.add('hidden');
+          if (labelNominal) labelNominal.innerHTML = 'Nominal Kas Masuk (Rp) <span class="text-rose-500">*</span>';
+          hintNominalBarang?.classList.add('hidden');
+          if (nominalInput) nominalInput.placeholder = "0";
+          if (submitBtn) submitBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Simpan Pemasukan Kas</span>`;
+        } else if (type === 'keluar') {
+          if (btnKeluar) btnKeluar.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-rose-600 text-white shadow-sm";
+          boxBarangFields?.classList.add('hidden');
+          if (labelNominal) labelNominal.innerHTML = 'Nominal Kas Keluar (Rp) <span class="text-rose-500">*</span>';
+          hintNominalBarang?.classList.add('hidden');
+          if (nominalInput) nominalInput.placeholder = "0";
+          if (submitBtn) submitBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Simpan Pengeluaran Kas</span>`;
+        } else if (type === 'barang') {
+          if (btnBarang) btnBarang.className = "py-2.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 bg-amber-600 text-white shadow-sm";
+          boxBarangFields?.classList.remove('hidden');
+          if (labelNominal) labelNominal.innerHTML = 'Estimasi Nilai Barang (Opsional - Rp) <span class="text-[10px] font-semibold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded ml-1">Tidak Masuk Saldo Tunai</span>';
+          hintNominalBarang?.classList.remove('hidden');
+          if (nominalInput) nominalInput.placeholder = "Kosongkan jika tidak ditaksir";
+          if (submitBtn) submitBtn.innerHTML = `<i class="fa-solid fa-box-open"></i> <span>Simpan Sedekah Barang</span>`;
         }
 
         window.app.toggleQuickAddCategory(false);
@@ -4290,7 +4655,7 @@ Password: ${adm.rawPassword}`;
             input.value = '';
             input.placeholder = state.formType === 'masuk' 
               ? 'Nama kategori pemasukan baru...' 
-              : 'Nama kategori pengeluaran baru...';
+              : (state.formType === 'barang' ? 'Nama kategori sedekah barang baru...' : 'Nama kategori pengeluaran baru...');
             setTimeout(() => input.focus(), 50);
           }
         } else {
@@ -4346,23 +4711,37 @@ Password: ${adm.rawPassword}`;
 
       submitNewTransaction: async () => {
         const rawNominal = document.getElementById('trx-nominal-input').value.replace(/\D/g, '');
-        const nominal = parseInt(rawNominal, 10);
+        const nominal = rawNominal ? parseInt(rawNominal, 10) : 0;
         const tanggal = document.getElementById('trx-tanggal-input').value;
         const kategori = document.getElementById('trx-kategori-select').value;
         const keterangan = document.getElementById('trx-keterangan-input').value.trim();
         const jenis = state.formType;
 
-        if (!nominal || nominal <= 0) {
-          showToast("Nominal transaksi harus lebih dari 0!", "error");
-          return;
+        let namaBarang = '';
+        let donatur = '';
+
+        if (jenis === 'barang') {
+          namaBarang = (document.getElementById('trx-nama-barang-input')?.value || '').trim();
+          donatur = (document.getElementById('trx-donatur-input')?.value || '').trim() || 'Hamba Allah';
+          if (!namaBarang) {
+            showToast("Nama & jumlah barang sedekah wajib diisi!", "error");
+            document.getElementById('trx-nama-barang-input')?.focus();
+            return;
+          }
+        } else {
+          if (!nominal || nominal <= 0) {
+            showToast("Nominal transaksi harus lebih dari 0!", "error");
+            return;
+          }
         }
 
         const newTrx = {
           jenis,
           kategori,
-          nominal,
+          nominal: nominal || 0,
           tanggal,
           keterangan,
+          ...(jenis === 'barang' ? { namaBarang, donatur } : {}),
           timestamp: new Date().toISOString()
         };
 
@@ -4383,7 +4762,7 @@ Password: ${adm.rawPassword}`;
 
           state.lastSavedTransaction = newTrx;
           window.app.closeModal('modal-add-trx');
-          showToast("Transaksi kas mushola berhasil dicatat!", "success");
+          showToast(jenis === 'barang' ? "Sedekah barang berhasil dicatat ke inventaris!" : "Transaksi kas mushola berhasil dicatat!", "success");
 
           setTimeout(() => {
             window.app.openWhatsAppModal(newTrx);
@@ -4394,13 +4773,17 @@ Password: ${adm.rawPassword}`;
           showToast("Gagal menyimpan transaksi: " + err.message, "error");
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Simpan Transaksi</span>`;
+          window.app.setFormType(state.formType);
         }
       },
 
-      confirmDeleteTransaction: (id, kategori, nominal) => {
+      confirmDeleteTransaction: (id, kategori, nominal, isBarang = false) => {
         state.pendingDeleteId = id;
-        document.getElementById('delete-confirm-desc').innerText = `Hapus transaksi "${kategori}" senilai ${formatRupiah(nominal)}?`;
+        if (isBarang) {
+          document.getElementById('delete-confirm-desc').innerText = `Hapus catatan sedekah barang "${kategori}"? (Tidak mempengaruhi saldo kas tunai)`;
+        } else {
+          document.getElementById('delete-confirm-desc').innerText = `Hapus transaksi "${kategori}" senilai ${formatRupiah(nominal)}?`;
+        }
         window.app.openModal('modal-delete-confirm');
       },
 
@@ -4417,7 +4800,7 @@ Password: ${adm.rawPassword}`;
             renderAll();
           }
           window.app.closeModal('modal-delete-confirm');
-          showToast("Transaksi berhasil dihapus.", "info");
+          showToast("Data berhasil dihapus.", "info");
         } catch (err) {
           console.error("Delete error:", err);
           showToast("Gagal menghapus: " + err.message, "error");
@@ -4442,7 +4825,7 @@ Password: ${adm.rawPassword}`;
             total += nom;
             if (tDate.startsWith(currentYearMonth)) monthlyIn += nom;
             else if (tDate < firstDayOfCurrentMonth) priorBalance += nom;
-          } else {
+          } else if (t.jenis === 'keluar') {
             total -= nom;
             if (tDate.startsWith(currentYearMonth)) monthlyOut += nom;
             else if (tDate < firstDayOfCurrentMonth) priorBalance -= nom;
@@ -4450,13 +4833,36 @@ Password: ${adm.rawPassword}`;
         });
 
         const namaMasjid = state.profile.nama || DEFAULT_PROFILE.nama;
-        const jenisLabel = trx.jenis === 'masuk' ? '🟢 Pemasukan Kas Mushola' : '🔴 Pengeluaran Kas Mushola';
+        let waText = '';
 
-        const waText = 
-`*LAPORAN KAS ${namaMasjid.toUpperCase()}*
+        if (trx.jenis === 'barang') {
+          const estimasiLine = trx.nominal && Number(trx.nominal) > 0
+            ? `\n*Estimasi Nilai:* ~${formatRupiah(trx.nominal)} _(Non-Tunai)_`
+            : '';
+          waText =
+`*LAPORAN SEDEKAH BARANG / WAKAF FASILITAS*
+*${namaMasjid.toUpperCase()} — PASAR INDUK PARE*
 _Bismillahirrohmanirrohim_
 
-Alhamdulillah, telah dicatat transaksi kas mushola pasar:
+Alhamdulillah, telah diterima amanah sedekah berupa barang / fasilitas untuk jamaah Mushola Pasar Induk Pare:
+*Status:* 📦 Sedekah Barang / Wakaf Non-Tunai
+*Tanggal:* ${formatDateIndo(trx.tanggal)}
+*Barang & Jumlah:* *${trx.namaBarang || trx.kategori}*
+*Donatur / Muhsinin:* ${trx.donatur || 'Hamba Allah'}
+*Kategori:* ${trx.kategori}${estimasiLine}
+*Keterangan:* ${trx.keterangan || '-'}
+
+ℹ️ _Catatan: Sedekah berupa barang dicatat sebagai inventaris & wakaf fasilitas mushola (tidak menambah/mengurangi saldo kas uang tunai)._
+💰 *Saldo Kas Tunai Saat Ini:* *${formatRupiah(total)}*
+
+_Jazakumullahu khairan katsiran kepada ${trx.donatur || 'Hamba Allah'} serta segenap pedagang & pengunjung Pasar Induk Pare. Semoga menjadi amal jariyah yang terus mengalir pahalanya._`;
+        } else {
+          const jenisLabel = trx.jenis === 'masuk' ? '🟢 Pemasukan Kas Mushola' : '🔴 Pengeluaran Kas Mushola';
+          waText = 
+`*LAPORAN KAS ${namaMasjid.toUpperCase()} — PASAR INDUK PARE*
+_Bismillahirrohmanirrohim_
+
+Alhamdulillah, telah dicatat transaksi kas Mushola Pasar Induk Pare:
 *Status:* ${jenisLabel}
 *Tanggal:* ${formatDateIndo(trx.tanggal)}
 *Kategori:* ${trx.kategori}
@@ -4472,8 +4878,9 @@ Alhamdulillah, telah dicatat transaksi kas mushola pasar:
 💰 *SALDO KAS SAAT INI: ${formatRupiah(total)}*
 ━━━━━━━━━━━━━━━━━━━
 
-_Jazakumullahu khairan katsiran kepada segenap pedagang, pengunjung pasar, & para muhsinin atas infaq dan dukungannya._
+_Jazakumullahu khairan katsiran kepada segenap pedagang, pengunjung Pasar Induk Pare, & para muhsinin atas infaq dan dukungannya._
 _Amanah jamaah, berkah bersama pasar kita._`;
+        }
 
         state.waMessageText = waText;
         document.getElementById('wa-preview-text').innerText = waText;
@@ -4652,30 +5059,147 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         }
       },
 
+      toggleThirdPengurusInput: () => {
+        const box3 = document.getElementById('box-pengurus-anggota-3');
+        const btnShow = document.getElementById('btn-show-anggota-3');
+        if (!box3) return;
+        const isHidden = box3.classList.contains('hidden');
+        if (isHidden) {
+          box3.classList.remove('hidden');
+          btnShow?.classList.add('hidden');
+          document.getElementById('new-pengurus-nama-3')?.focus();
+        } else {
+          box3.classList.add('hidden');
+          btnShow?.classList.remove('hidden');
+          if (document.getElementById('new-pengurus-nama-3')) {
+            document.getElementById('new-pengurus-nama-3').value = '';
+          }
+        }
+      },
+
+      editPengurus: (id) => {
+        const pList = state.profile.pengurus || [];
+        const target = pList.find(p => p.id === id);
+        if (!target) return;
+
+        const members = getPengurusMembers(target);
+        document.getElementById('edit-pengurus-id').value = target.id;
+        document.getElementById('new-pengurus-jabatan').value = target.jabatan || '';
+        document.getElementById('new-pengurus-nama').value = members[0] || '';
+        if (document.getElementById('new-pengurus-nama-2')) {
+          document.getElementById('new-pengurus-nama-2').value = members[1] || '';
+        }
+        if (document.getElementById('new-pengurus-nama-3')) {
+          document.getElementById('new-pengurus-nama-3').value = members[2] || '';
+          const box3 = document.getElementById('box-pengurus-anggota-3');
+          const btnShow = document.getElementById('btn-show-anggota-3');
+          if (members[2]) {
+            box3?.classList.remove('hidden');
+            btnShow?.classList.add('hidden');
+          } else {
+            box3?.classList.add('hidden');
+            btnShow?.classList.remove('hidden');
+          }
+        }
+
+        state.newPengurusFotoBase64 = target.foto || null;
+        const previewEl = document.getElementById('new-pengurus-photo-preview');
+        if (previewEl) {
+          if (target.foto) {
+            previewEl.innerHTML = `<img src="${target.foto}" class="w-full h-full object-cover">`;
+            document.getElementById('btn-cancel-new-photo')?.classList.remove('hidden');
+          } else {
+            previewEl.innerHTML = `<i class="fa-solid fa-user text-xl"></i>`;
+            document.getElementById('btn-cancel-new-photo')?.classList.add('hidden');
+          }
+        }
+
+        const titleEl = document.getElementById('form-pengurus-title');
+        if (titleEl) {
+          titleEl.innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-600 mr-1"></i> Edit Seksi / Pengurus: <span class="text-mosque-700">${target.jabatan}</span>`;
+        }
+        const btnLabel = document.getElementById('btn-save-pengurus-label');
+        if (btnLabel) {
+          btnLabel.innerText = "Simpan Perubahan Pengurus";
+        }
+        document.getElementById('btn-cancel-edit-pengurus')?.classList.remove('hidden');
+
+        const formBox = document.getElementById('form-pengurus-box');
+        if (formBox) {
+          formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          formBox.classList.add('ring-2', 'ring-amber-400');
+          setTimeout(() => formBox.classList.remove('ring-2', 'ring-amber-400'), 2000);
+        }
+      },
+
+      cancelEditPengurus: () => {
+        if (document.getElementById('edit-pengurus-id')) document.getElementById('edit-pengurus-id').value = '';
+        if (document.getElementById('new-pengurus-jabatan')) document.getElementById('new-pengurus-jabatan').value = '';
+        if (document.getElementById('new-pengurus-nama')) document.getElementById('new-pengurus-nama').value = '';
+        if (document.getElementById('new-pengurus-nama-2')) document.getElementById('new-pengurus-nama-2').value = '';
+        if (document.getElementById('new-pengurus-nama-3')) document.getElementById('new-pengurus-nama-3').value = '';
+
+        document.getElementById('box-pengurus-anggota-3')?.classList.add('hidden');
+        document.getElementById('btn-show-anggota-3')?.classList.remove('hidden');
+        document.getElementById('btn-cancel-edit-pengurus')?.classList.add('hidden');
+
+        const titleEl = document.getElementById('form-pengurus-title');
+        if (titleEl) {
+          titleEl.innerText = "Tambah Pengurus / Seksi (Bisa 1 atau 2 Anggota)";
+        }
+        const btnLabel = document.getElementById('btn-save-pengurus-label');
+        if (btnLabel) {
+          btnLabel.innerText = "Simpan Pengurus";
+        }
+
+        window.app.clearNewPengurusPhoto();
+      },
+
       addPengurus: async () => {
-        const namaInput = document.getElementById('new-pengurus-nama');
+        const editId = (document.getElementById('edit-pengurus-id')?.value || '').trim();
         const jabatanInput = document.getElementById('new-pengurus-jabatan');
+        const nama1Input = document.getElementById('new-pengurus-nama');
+        const nama2Input = document.getElementById('new-pengurus-nama-2');
+        const nama3Input = document.getElementById('new-pengurus-nama-3');
 
-        const nama = namaInput.value.trim();
-        const jabatan = jabatanInput.value.trim();
+        const jabatan = (jabatanInput?.value || '').trim();
+        const nama1 = (nama1Input?.value || '').trim();
+        const nama2 = (nama2Input?.value || '').trim();
+        const nama3 = (nama3Input?.value || '').trim();
 
-        if (!nama || !jabatan) {
-          showToast("Nama dan jabatan pengurus harus diisi!", "error");
+        const anggota = [nama1, nama2, nama3].filter(Boolean);
+
+        if (anggota.length === 0 || !jabatan) {
+          showToast("Jabatan/Seksi dan minimal Nama Anggota 1 wajib diisi!", "error");
           return;
         }
 
+        const combinedNama = anggota.join(' & ');
+
         if (!state.profile.pengurus) state.profile.pengurus = [];
-        state.profile.pengurus.push({
-          id: "pengurus-" + Date.now(),
-          nama,
-          jabatan,
-          foto: state.newPengurusFotoBase64 || null
-        });
 
-        namaInput.value = '';
-        jabatanInput.value = '';
-        window.app.clearNewPengurusPhoto();
+        if (editId) {
+          const idx = state.profile.pengurus.findIndex(p => p.id === editId);
+          if (idx !== -1) {
+            state.profile.pengurus[idx] = {
+              ...state.profile.pengurus[idx],
+              nama: combinedNama,
+              anggota,
+              jabatan,
+              foto: state.newPengurusFotoBase64 !== undefined ? state.newPengurusFotoBase64 : (state.profile.pengurus[idx].foto || null)
+            };
+          }
+        } else {
+          state.profile.pengurus.push({
+            id: "pengurus-" + Date.now(),
+            nama: combinedNama,
+            anggota,
+            jabatan,
+            foto: state.newPengurusFotoBase64 || null
+          });
+        }
 
+        window.app.cancelEditPengurus();
         syncLocal();
 
         try {
@@ -4684,14 +5208,22 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           }
           renderProfile();
           renderAdminManager();
-          showToast("Pengurus baru berhasil ditambahkan!", "success");
+          showToast(
+            editId
+              ? `Data pengurus "${jabatan}" (${anggota.length} orang) berhasil diperbarui!`
+              : `Pengurus "${jabatan}" (${anggota.length} anggota) berhasil ditambahkan!`,
+            "success"
+          );
         } catch (err) {
-          showToast("Gagal menambah pengurus: " + err.message, "error");
+          showToast("Gagal menyimpan pengurus: " + err.message, "error");
         }
       },
 
       deletePengurus: async (id) => {
         state.profile.pengurus = (state.profile.pengurus || []).filter(p => p.id !== id);
+        if (document.getElementById('edit-pengurus-id')?.value === id) {
+          window.app.cancelEditPengurus();
+        }
         syncLocal();
 
         try {
@@ -4709,15 +5241,21 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       // Dynamic Categories
       switchCategoryTab: (type) => {
         state.categoryTab = type;
-        const btnKeluar = document.getElementById('cat-tab-keluar');
         const btnMasuk = document.getElementById('cat-tab-masuk');
+        const btnKeluar = document.getElementById('cat-tab-keluar');
+        const btnBarang = document.getElementById('cat-tab-barang');
+
+        const inactiveClass = "py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1";
+        if (btnMasuk) btnMasuk.className = inactiveClass;
+        if (btnKeluar) btnKeluar.className = inactiveClass;
+        if (btnBarang) btnBarang.className = inactiveClass;
 
         if (type === 'keluar') {
-          btnKeluar.className = "flex-1 py-1.5 rounded-lg bg-white text-rose-600 shadow-sm transition font-bold flex items-center justify-center gap-1";
-          btnMasuk.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1";
+          if (btnKeluar) btnKeluar.className = "py-1.5 rounded-lg bg-white text-rose-600 shadow-sm transition font-bold flex items-center justify-center gap-1";
+        } else if (type === 'barang') {
+          if (btnBarang) btnBarang.className = "py-1.5 rounded-lg bg-white text-amber-600 shadow-sm transition font-bold flex items-center justify-center gap-1";
         } else {
-          btnMasuk.className = "flex-1 py-1.5 rounded-lg bg-white text-emerald-600 shadow-sm transition font-bold flex items-center justify-center gap-1";
-          btnKeluar.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1";
+          if (btnMasuk) btnMasuk.className = "py-1.5 rounded-lg bg-white text-emerald-600 shadow-sm transition font-bold flex items-center justify-center gap-1";
         }
         renderCategoryManager();
       },
@@ -4754,7 +5292,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           }
           renderCategoryManager();
           window.app.setFormType(state.formType);
-          showToast(`Kategori ${type === 'masuk' ? 'pemasukan' : 'pengeluaran'} "${val}" berhasil ditambahkan!`, "success");
+          const typeLabel = type === 'masuk' ? 'pemasukan' : (type === 'barang' ? 'sedekah barang' : 'pengeluaran');
+          showToast(`Kategori ${typeLabel} "${val}" berhasil ditambahkan!`, "success");
         } catch (err) {
           showToast("Gagal menambah kategori: " + err.message, "error");
         }
@@ -4782,7 +5321,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       resetDefaultCategories: async () => {
         state.profile.categories = {
           masuk: [...DEFAULT_CATEGORIES.masuk],
-          keluar: [...DEFAULT_CATEGORIES.keluar]
+          keluar: [...DEFAULT_CATEGORIES.keluar],
+          barang: [...DEFAULT_CATEGORIES.barang]
         };
         syncLocal();
 
@@ -5356,7 +5896,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           state.profile = {
             ...DEFAULT_PROFILE,
             ...parsed,
-            categories: parsed.categories || { ...DEFAULT_CATEGORIES },
+            categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) },
             pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus]
           };
         } catch(e) {}

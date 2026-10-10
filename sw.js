@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kas-mushola-v8';
+const CACHE_NAME = 'kas-mushola-v9';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
@@ -12,7 +12,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Pre-caching offline app shell v8');
+      console.log('[SW] Pre-caching offline app shell v9');
       return cache.addAll(STATIC_ASSETS);
     }).then(() => self.skipWaiting())
   );
