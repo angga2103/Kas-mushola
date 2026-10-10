@@ -1404,6 +1404,129 @@
 
             </div>
 
+            <!-- 3. PENGATURAN AUDIO / MUSIK LATAR OTOMATIS (.MP3) -->
+            <div id="settings-audio-manager-card" class="bg-white rounded-3xl p-5 shadow-sm border border-emerald-200/90 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center text-sm shadow-sm">
+                    <i class="fa-solid fa-music"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-800">Audio / Musik Latar Otomatis (.MP3)</h3>
+                    <p class="text-[11px] text-slate-400">Putar sholawat, murottal, atau instrumen otomatis saat website dibuka</p>
+                  </div>
+                </div>
+                <span id="settings-audio-status-badge" class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">
+                  Nonaktif
+                </span>
+              </div>
+
+              <!-- Pengaturan Utama Audio -->
+              <div class="space-y-3 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200/80">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Status Audio Saat Web Diakses</label>
+                    <select id="settings-audio-enabled" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                      <option value="true">🔊 Aktif — Putar Otomatis Saat Web Dibuka</option>
+                      <option value="false">🔇 Nonaktif — Matikan Audio Latar</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Volume Suara &amp; Pengulangan</label>
+                    <div class="flex items-center gap-2">
+                      <select id="settings-audio-volume" class="flex-1 bg-white border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                        <option value="0.2">Volume 20% (Lembut)</option>
+                        <option value="0.4">Volume 40% (Sedang)</option>
+                        <option value="0.6" selected>Volume 60% (Ideal)</option>
+                        <option value="0.8">Volume 80% (Nyaring)</option>
+                        <option value="1.0">Volume 100% (Maksimal)</option>
+                      </select>
+                      <label class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-2.5 py-2 rounded-xl cursor-pointer select-none whitespace-nowrap">
+                        <input type="checkbox" id="settings-audio-loop" checked class="w-3.5 h-3.5 accent-emerald-600 rounded">
+                        <span>Loop</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Judul Audio / Nama Musik (Tampil di Pemutar Jamaah)</label>
+                  <input type="text" id="settings-audio-title" placeholder="Contoh: Sholawat / Murottal Mushola Al-Kautsar" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                </div>
+              </div>
+
+              <!-- Box Upload File .MP3 Langsung -->
+              <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-3.5 space-y-3">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div>
+                    <span class="text-xs font-extrabold text-emerald-950 flex items-center gap-1.5">
+                      <i class="fa-solid fa-file-audio text-emerald-600"></i>
+                      <span>Upload File Audio (.MP3) dari HP / Laptop</span>
+                    </span>
+                    <span class="text-[10.5px] text-slate-500 block mt-0.5">
+                      Pilih file <b>.mp3</b> (maksimal ~10 MB). Otomatis tersimpan di Cloud Server &amp; langsung aktif di semua HP jamaah.
+                    </span>
+                  </div>
+                  <div>
+                    <input type="file" id="settings-audio-file-input" accept=".mp3,audio/mpeg,audio/mp3,audio/*" class="hidden" onchange="window.app.handleUploadAudioMp3(this)">
+                    <button type="button" id="btn-trigger-upload-mp3" onclick="document.getElementById('settings-audio-file-input').click()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5">
+                      <i class="fa-solid fa-cloud-arrow-up"></i>
+                      <span>Pilih &amp; Upload File .MP3</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Progress Bar Upload MP3 -->
+                <div id="audio-upload-progress-box" class="hidden bg-white rounded-xl p-3 border border-emerald-200 space-y-1.5">
+                  <div class="flex items-center justify-between text-[11px] font-bold text-emerald-800">
+                    <span id="audio-upload-progress-text" class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-spinner animate-spin"></i>
+                      <span>Mengunggah file .mp3 ke server...</span>
+                    </span>
+                    <span id="audio-upload-progress-pct">0%</span>
+                  </div>
+                  <div class="w-full h-2 bg-emerald-100 rounded-full overflow-hidden">
+                    <div id="audio-upload-progress-bar" class="h-full bg-emerald-600 rounded-full transition-all duration-200" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <!-- Info File MP3 yang Sedang Terpasang & Preview Player -->
+                <div id="settings-audio-current-info" class="bg-white rounded-xl p-3 border border-emerald-200/80 space-y-2">
+                  <div class="flex items-center justify-between gap-2 flex-wrap">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs flex-shrink-0">
+                        <i class="fa-solid fa-headphones"></i>
+                      </div>
+                      <div class="min-w-0">
+                        <span id="settings-audio-filename-display" class="text-xs font-bold text-slate-800 block truncate">Belum ada file .mp3 diupload</span>
+                        <span id="settings-audio-filesize-display" class="text-[10px] text-slate-400 block">Silakan upload file .mp3 atau isi link URL di bawah</span>
+                      </div>
+                    </div>
+                    <button type="button" id="btn-delete-audio-mp3" onclick="window.app.deleteUploadedAudio()" class="hidden text-[11px] font-bold bg-rose-50 hover:bg-rose-100 text-rose-600 px-2.5 py-1.5 rounded-lg transition items-center gap-1">
+                      <i class="fa-solid fa-trash-can text-[10px]"></i>
+                      <span>Hapus MP3</span>
+                    </button>
+                  </div>
+                  <audio id="settings-audio-preview" controls class="hidden w-full h-9 mt-1"></audio>
+                </div>
+
+                <!-- Opsi Alternatif: Link URL MP3 Eksternal -->
+                <div class="pt-1 border-t border-emerald-200/60">
+                  <label class="block text-[10.5px] font-semibold text-slate-600 mb-1">
+                    Atau Gunakan Link URL .MP3 Eksternal (Opsional — kosongkan jika sudah upload file .mp3 di atas):
+                  </label>
+                  <input type="url" id="settings-audio-external-url" placeholder="https://contoh.com/sholawat.mp3" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-mosque-600">
+                </div>
+              </div>
+
+              <!-- Tombol Simpan Pengaturan Audio -->
+              <button type="button" onclick="window.app.saveAudioSettings()" class="w-full bg-mosque-700 hover:bg-mosque-800 active:scale-98 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Simpan Pengaturan Audio Otomatis</span>
+              </button>
+            </div>
+
           </div>
 
         </div>
@@ -1411,6 +1534,25 @@
       </section>
 
     </main>
+
+    <!-- ==================== GLOBAL BACKGROUND AUDIO PLAYER & FLOATING WIDGET ==================== -->
+    <audio id="bg-audio-player" preload="auto" class="hidden"></audio>
+
+    <div id="floating-audio-widget" class="hidden no-print fixed bottom-20 md:bottom-6 left-4 md:left-6 z-40">
+      <button type="button" onclick="window.app.toggleBgAudio()" id="btn-floating-audio" class="group bg-gradient-to-r from-emerald-900 via-mosque-800 to-emerald-900 hover:from-emerald-800 hover:to-mosque-700 text-white pl-2.5 pr-3.5 py-2 rounded-full shadow-xl border border-amber-400/50 flex items-center gap-2.5 active:scale-95 transition-all duration-200 max-w-[230px] sm:max-w-xs">
+        <div id="floating-audio-icon-box" class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center text-xs shadow-sm flex-shrink-0">
+          <i id="floating-audio-icon" class="fa-solid fa-play"></i>
+        </div>
+        <div class="text-left min-w-0 flex-1">
+          <span id="floating-audio-status" class="text-[9px] font-extrabold uppercase tracking-wider text-amber-300 block leading-none">
+            Ketuk Putar Audio
+          </span>
+          <span id="floating-audio-title" class="text-[11px] font-bold text-white block truncate leading-tight mt-0.5">
+            Audio Mushola
+          </span>
+        </div>
+      </button>
+    </div>
 
     <!-- ==================== FLOATING ACTION BUTTON (CATAT TRANSAKSI) ==================== -->
     <button id="fab-add-btn" onclick="window.app.openAddTransactionModal()" title="Catat Transaksi Kas" class="hidden no-print fixed bottom-20 md:bottom-8 right-5 md:right-8 z-40 bg-gradient-to-r from-mosque-600 to-emerald-500 hover:from-mosque-700 hover:to-emerald-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all duration-200 border-2 border-white/50">
@@ -1847,6 +1989,7 @@
       getFirestore, 
       collection, 
       doc, 
+      getDoc,
       onSnapshot, 
       addDoc, 
       deleteDoc, 
@@ -2366,7 +2509,19 @@
       ],
       agendas: [],
       quotesIntervalHours: 0,
-      quotes: [...DEFAULT_QUOTES]
+      quotes: [...DEFAULT_QUOTES],
+      audioConfig: {
+        enabled: false,
+        title: "Sholawat & Murottal Mushola Al-Kautsar",
+        volume: 0.6,
+        loop: true,
+        mode: "upload",
+        fileName: "",
+        fileSizeKb: 0,
+        chunkCount: 0,
+        externalUrl: "",
+        updatedAt: ""
+      }
     };
 
     const DEFAULT_TRANSACTIONS = [
@@ -2428,7 +2583,324 @@
       db: null,
       auth: null,
       currentQuoteIndex: 0,
-      adminQuotesFilter: "semua"
+      adminQuotesFilter: "semua",
+      loadedAudioUpdatedAt: null,
+      loadedAudioDataUrl: null,
+      isAudioPlaying: false,
+      userManuallyPausedAudio: false,
+      audioUnlockListenerBound: false
+    };
+
+    /* ==========================================================================
+       2.5. INDEXEDDB CACHE & FIRESTORE CHUNKED AUDIO ENGINE (.MP3)
+       ========================================================================== */
+    const AUDIO_IDB_NAME = 'kas_mushola_audio_db';
+    const AUDIO_IDB_STORE = 'audio_files';
+
+    const openAudioIDB = () => {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) {
+          resolve(null);
+          return;
+        }
+        const req = window.indexedDB.open(AUDIO_IDB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(AUDIO_IDB_STORE)) {
+            db.createObjectStore(AUDIO_IDB_STORE);
+          }
+        };
+        req.onsuccess = (e) => resolve(e.target.result);
+        req.onerror = () => resolve(null);
+      });
+    };
+
+    const saveAudioToIDB = async (updatedAt, dataUrl) => {
+      try {
+        const db = await openAudioIDB();
+        if (!db) return;
+        return new Promise((resolve) => {
+          const tx = db.transaction(AUDIO_IDB_STORE, 'readwrite');
+          tx.objectStore(AUDIO_IDB_STORE).put({ updatedAt, dataUrl }, 'active_mp3');
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => resolve(false);
+        });
+      } catch (e) {}
+    };
+
+    const getAudioFromIDB = async (expectedUpdatedAt) => {
+      try {
+        const db = await openAudioIDB();
+        if (!db) return null;
+        return new Promise((resolve) => {
+          const tx = db.transaction(AUDIO_IDB_STORE, 'readonly');
+          const req = tx.objectStore(AUDIO_IDB_STORE).get('active_mp3');
+          req.onsuccess = () => {
+            const res = req.result;
+            if (res && res.dataUrl && (!expectedUpdatedAt || res.updatedAt === expectedUpdatedAt)) {
+              resolve(res.dataUrl);
+            } else {
+              resolve(null);
+            }
+          };
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const clearAudioFromIDB = async () => {
+      try {
+        const db = await openAudioIDB();
+        if (!db) return;
+        return new Promise((resolve) => {
+          const tx = db.transaction(AUDIO_IDB_STORE, 'readwrite');
+          tx.objectStore(AUDIO_IDB_STORE).delete('active_mp3');
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => resolve(false);
+        });
+      } catch (e) {}
+    };
+
+    const updateFloatingAudioUI = () => {
+      const widget = document.getElementById('floating-audio-widget');
+      const audioEl = document.getElementById('bg-audio-player');
+      const iconEl = document.getElementById('floating-audio-icon');
+      const iconBoxEl = document.getElementById('floating-audio-icon-box');
+      const statusEl = document.getElementById('floating-audio-status');
+      const titleEl = document.getElementById('floating-audio-title');
+
+      const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+      const hasSource = (cfg.mode === 'url' && cfg.externalUrl) || (cfg.mode === 'upload' && (cfg.chunkCount > 0 || state.loadedAudioDataUrl));
+
+      if (!widget || !audioEl) return;
+
+      if (!cfg.enabled || !hasSource) {
+        widget.classList.add('hidden');
+        return;
+      }
+
+      widget.classList.remove('hidden');
+      if (titleEl) {
+        titleEl.innerText = cfg.title || 'Sholawat & Murottal Mushola';
+      }
+
+      const isPlaying = !audioEl.paused && !audioEl.ended && audioEl.currentTime > 0;
+      state.isAudioPlaying = isPlaying;
+
+      if (isPlaying) {
+        if (iconEl) iconEl.className = 'fa-solid fa-compact-disc animate-spin text-sm';
+        if (iconBoxEl) iconBoxEl.className = 'w-8 h-8 rounded-full bg-emerald-400 text-emerald-950 flex items-center justify-center text-xs shadow-sm flex-shrink-0';
+        if (statusEl) {
+          statusEl.innerText = '🔊 Sedang Diputar (Ketuk Jeda)';
+          statusEl.className = 'text-[9px] font-extrabold uppercase tracking-wider text-emerald-300 block leading-none';
+        }
+      } else {
+        if (iconEl) iconEl.className = 'fa-solid fa-play text-xs ml-0.5';
+        if (iconBoxEl) iconBoxEl.className = 'w-8 h-8 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center text-xs shadow-sm flex-shrink-0 animate-pulse';
+        if (statusEl) {
+          statusEl.innerText = '🎵 Ketuk Putar Audio';
+          statusEl.className = 'text-[9px] font-extrabold uppercase tracking-wider text-amber-300 block leading-none';
+        }
+      }
+    };
+
+    const tryAutoPlayBgAudio = async () => {
+      const audioEl = document.getElementById('bg-audio-player');
+      const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+      if (!audioEl || !cfg.enabled || !audioEl.src || state.userManuallyPausedAudio) return;
+
+      audioEl.volume = Number(cfg.volume) || 0.6;
+      audioEl.loop = cfg.loop !== false;
+
+      try {
+        await audioEl.play();
+        state.isAudioPlaying = true;
+        updateFloatingAudioUI();
+      } catch (err) {
+        // Browser Autoplay Policy requires a user gesture (tap, click, or scroll) on first visit
+        updateFloatingAudioUI();
+        if (!state.audioUnlockListenerBound) {
+          state.audioUnlockListenerBound = true;
+          const unlockHandler = async () => {
+            const currentCfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+            if (!currentCfg.enabled || state.userManuallyPausedAudio || !audioEl.src) return;
+            try {
+              audioEl.volume = Number(currentCfg.volume) || 0.6;
+              audioEl.loop = currentCfg.loop !== false;
+              await audioEl.play();
+              state.isAudioPlaying = true;
+              updateFloatingAudioUI();
+              ['click', 'touchstart', 'touchend', 'scroll', 'keydown'].forEach(ev => {
+                window.removeEventListener(ev, unlockHandler);
+              });
+              state.audioUnlockListenerBound = false;
+            } catch (e) {
+              // Keep listener active if scroll didn't unlock audio on strict iOS Safari
+            }
+          };
+          ['click', 'touchstart', 'touchend', 'scroll', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, unlockHandler, { passive: true });
+          });
+        }
+      }
+    };
+
+    const loadAndSyncBgAudio = async () => {
+      const audioEl = document.getElementById('bg-audio-player');
+      if (!audioEl) return;
+
+      // Bind play/pause events once
+      if (!audioEl.dataset.boundEvents) {
+        audioEl.dataset.boundEvents = 'true';
+        audioEl.addEventListener('play', updateFloatingAudioUI);
+        audioEl.addEventListener('pause', updateFloatingAudioUI);
+        audioEl.addEventListener('ended', updateFloatingAudioUI);
+      }
+
+      const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+      audioEl.volume = Number(cfg.volume) || 0.6;
+      audioEl.loop = cfg.loop !== false;
+
+      if (!cfg.enabled) {
+        if (!audioEl.paused) audioEl.pause();
+        updateFloatingAudioUI();
+        return;
+      }
+
+      // Case 1: External URL mode (or if externalUrl is set and no chunks)
+      if ((cfg.mode === 'url' || (!cfg.chunkCount && cfg.externalUrl)) && cfg.externalUrl) {
+        if (audioEl.src !== cfg.externalUrl) {
+          audioEl.src = cfg.externalUrl;
+        }
+        updateFloatingAudioUI();
+        tryAutoPlayBgAudio();
+        return;
+      }
+
+      // Case 2: Uploaded .MP3 in Firestore Chunks / IndexedDB
+      if (cfg.chunkCount > 0 && cfg.updatedAt) {
+        if (state.loadedAudioUpdatedAt === cfg.updatedAt && state.loadedAudioDataUrl) {
+          if (audioEl.src !== state.loadedAudioDataUrl) {
+            audioEl.src = state.loadedAudioDataUrl;
+          }
+          updateFloatingAudioUI();
+          tryAutoPlayBgAudio();
+          return;
+        }
+
+        // Check IndexedDB cache first
+        let dataUrl = await getAudioFromIDB(cfg.updatedAt);
+
+        // If not in IndexedDB, download chunks from Firestore profile/audio_chunk_0..N
+        if (!dataUrl && state.isFirebaseReady && state.db) {
+          try {
+            const chunkPromises = [];
+            for (let i = 0; i < cfg.chunkCount; i++) {
+              chunkPromises.push(getDoc(doc(state.db, 'profile', `audio_chunk_${i}`)));
+            }
+            const snaps = await Promise.all(chunkPromises);
+            const parts = [];
+            let allFound = true;
+            for (let i = 0; i < snaps.length; i++) {
+              if (snaps[i].exists() && snaps[i].data().data) {
+                parts.push(snaps[i].data().data);
+              } else {
+                allFound = false;
+                break;
+              }
+            }
+            if (allFound && parts.length > 0) {
+              dataUrl = parts.join('');
+              await saveAudioToIDB(cfg.updatedAt, dataUrl);
+            }
+          } catch (err) {
+            console.warn("Error fetching audio chunks:", err);
+          }
+        }
+
+        if (dataUrl) {
+          state.loadedAudioUpdatedAt = cfg.updatedAt;
+          state.loadedAudioDataUrl = dataUrl;
+          audioEl.src = dataUrl;
+          const previewEl = document.getElementById('settings-audio-preview');
+          if (previewEl) {
+            previewEl.src = dataUrl;
+            previewEl.classList.remove('hidden');
+          }
+          updateFloatingAudioUI();
+          tryAutoPlayBgAudio();
+        }
+      }
+    };
+
+    const renderAudioManager = async () => {
+      const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+      const badgeEl = document.getElementById('settings-audio-status-badge');
+      const enabledSelect = document.getElementById('settings-audio-enabled');
+      const volSelect = document.getElementById('settings-audio-volume');
+      const loopCheck = document.getElementById('settings-audio-loop');
+      const titleInput = document.getElementById('settings-audio-title');
+      const urlInput = document.getElementById('settings-audio-external-url');
+      const fileNameEl = document.getElementById('settings-audio-filename-display');
+      const fileSizeEl = document.getElementById('settings-audio-filesize-display');
+      const btnDelete = document.getElementById('btn-delete-audio-mp3');
+      const previewEl = document.getElementById('settings-audio-preview');
+
+      if (badgeEl) {
+        if (cfg.enabled && (cfg.chunkCount > 0 || cfg.externalUrl)) {
+          badgeEl.innerText = "🔊 Aktif (Autoplay)";
+          badgeEl.className = "text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full";
+        } else {
+          badgeEl.innerText = "🔇 Nonaktif";
+          badgeEl.className = "text-[10px] font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full";
+        }
+      }
+
+      if (enabledSelect) enabledSelect.value = cfg.enabled ? "true" : "false";
+      if (volSelect) volSelect.value = String(cfg.volume || 0.6);
+      if (loopCheck) loopCheck.checked = cfg.loop !== false;
+      if (titleInput) titleInput.value = cfg.title || "Sholawat & Murottal Mushola Al-Kautsar";
+      if (urlInput) urlInput.value = cfg.externalUrl || "";
+
+      if (cfg.fileName && (cfg.chunkCount > 0 || state.loadedAudioDataUrl)) {
+        const sizeMb = cfg.fileSizeKb >= 1024
+          ? `${(cfg.fileSizeKb / 1024).toFixed(2)} MB`
+          : `${cfg.fileSizeKb || 0} KB`;
+        if (fileNameEl) fileNameEl.innerText = `🎵 ${cfg.fileName}`;
+        if (fileSizeEl) fileSizeEl.innerText = `Ukuran: ${sizeMb} • Tersimpan di Server Cloud (${cfg.chunkCount || 1} bagian)`;
+        if (btnDelete) {
+          btnDelete.classList.remove('hidden');
+          btnDelete.classList.add('inline-flex');
+        }
+        if (previewEl && state.loadedAudioDataUrl) {
+          if (previewEl.src !== state.loadedAudioDataUrl) previewEl.src = state.loadedAudioDataUrl;
+          previewEl.classList.remove('hidden');
+        }
+      } else if (cfg.externalUrl) {
+        if (fileNameEl) fileNameEl.innerText = `🌐 Menggunakan Link URL .MP3 Eksternal`;
+        if (fileSizeEl) fileSizeEl.innerText = cfg.externalUrl;
+        if (btnDelete) {
+          btnDelete.classList.remove('hidden');
+          btnDelete.classList.add('inline-flex');
+        }
+        if (previewEl) {
+          if (previewEl.src !== cfg.externalUrl) previewEl.src = cfg.externalUrl;
+          previewEl.classList.remove('hidden');
+        }
+      } else {
+        if (fileNameEl) fileNameEl.innerText = "Belum ada file .mp3 diupload";
+        if (fileSizeEl) fileSizeEl.innerText = "Silakan klik 'Pilih & Upload File .MP3' di sebelah kanan";
+        if (btnDelete) {
+          btnDelete.classList.add('hidden');
+          btnDelete.classList.remove('inline-flex');
+        }
+        if (previewEl) {
+          previewEl.removeAttribute('src');
+          previewEl.classList.add('hidden');
+        }
+      }
     };
 
     /* ==========================================================================
@@ -2633,7 +3105,8 @@
               admins: rawAdmins,
               agendas: data.agendas || [],
               quotesIntervalHours: data.quotesIntervalHours !== undefined ? Number(data.quotesIntervalHours) : 0,
-              quotes: (data.quotes && data.quotes.length > 0) ? data.quotes : (state.profile.quotes && state.profile.quotes.length > 0 ? state.profile.quotes : [...DEFAULT_QUOTES])
+              quotes: (data.quotes && data.quotes.length > 0) ? data.quotes : (state.profile.quotes && state.profile.quotes.length > 0 ? state.profile.quotes : [...DEFAULT_QUOTES]),
+              audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(data.audioConfig || {}) }
             };
             syncLocal();
           } else {
@@ -2650,6 +3123,8 @@
           renderAgendaSection();
           renderRandomQuote();
           renderQuotesManager();
+          renderAudioManager();
+          loadAndSyncBgAudio();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
           const localProf = localStorage.getItem('kas_masjid_local_profile');
@@ -2659,11 +3134,14 @@
               state.profile = { 
                 ...DEFAULT_PROFILE, 
                 ...parsed,
-                categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) }
+                categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) },
+                audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) }
               };
             } catch (e) {}
           }
           renderProfile();
+          renderAudioManager();
+          loadAndSyncBgAudio();
         });
 
         // Real-time listener on transactions
@@ -2730,7 +3208,8 @@
             pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus],
             agendas: parsed.agendas || [],
             quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 0,
-            quotes: (parsed.quotes && parsed.quotes.length > 0) ? parsed.quotes : [...DEFAULT_QUOTES]
+            quotes: (parsed.quotes && parsed.quotes.length > 0) ? parsed.quotes : [...DEFAULT_QUOTES],
+            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) }
           };
         } catch (e) {
           state.profile = { ...DEFAULT_PROFILE };
@@ -2755,6 +3234,8 @@
       renderAgendaSection();
       renderRandomQuote();
       renderQuotesManager();
+      renderAudioManager();
+      loadAndSyncBgAudio();
     };
 
     const syncLocal = () => {
@@ -4233,6 +4714,7 @@
           renderProfile();
           renderCategoryManager();
           renderAdminManager();
+          renderAudioManager();
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4453,6 +4935,7 @@
         renderAgendaManager();
         renderAgendaSection();
         renderQuotesManager();
+        renderAudioManager();
       },
 
       // PENGURUS ADMIN ACCESS MANAGEMENT
@@ -5968,6 +6451,243 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           console.error("Error resetting quotes:", err);
           showToast("Gagal reset di server: " + err.message + " (di-reset lokal)", "error");
         }
+      },
+
+      // BACKGROUND AUDIO / MP3 PLAYER & ADMIN MANAGER
+      toggleBgAudio: async () => {
+        const player = document.getElementById('bg-audio-player');
+        if (!player) return;
+
+        if (!player.src || player.src === window.location.href) {
+          await loadAndSyncBgAudio();
+        }
+        if (!player.src || player.src === window.location.href) {
+          showToast("File audio belum tersedia atau sedang dimuat.", "info");
+          return;
+        }
+
+        if (!player.paused) {
+          player.pause();
+          state.isAudioPlaying = false;
+          state.userManuallyPausedAudio = true;
+          updateFloatingAudioUI(false);
+        } else {
+          state.userManuallyPausedAudio = false;
+          try {
+            const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+            player.volume = Math.max(0, Math.min(1, (Number(cfg.volume) || 70) / 100));
+            player.loop = cfg.loop !== false;
+            await player.play();
+            state.isAudioPlaying = true;
+            updateFloatingAudioUI(true);
+          } catch (err) {
+            console.warn("Play audio failed:", err);
+            showToast("Gagal memutar audio: " + (err.message || "Format/URL tidak didukung"), "error");
+          }
+        }
+      },
+
+      handleUploadAudioMp3: async (input) => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        const isAudio = file.type.startsWith('audio/') || /\.(mp3|m4a|ogg|wav|aac)$/i.test(file.name);
+        if (!isAudio) {
+          showToast("Pilih file audio (.mp3, .m4a, .ogg, .wav)!", "error");
+          input.value = '';
+          return;
+        }
+
+        const maxBytes = 15 * 1024 * 1024; // 15 MB
+        if (file.size > maxBytes) {
+          showToast("Ukuran file maksimal 15 MB agar ringan dimuat pengunjung!", "error");
+          input.value = '';
+          return;
+        }
+
+        const progressBox = document.getElementById('audio-upload-progress-box');
+        const progressText = document.getElementById('audio-upload-progress-text');
+        const progressPct = document.getElementById('audio-upload-progress-pct');
+        const progressBar = document.getElementById('audio-upload-progress-bar');
+
+        if (progressBox) progressBox.classList.remove('hidden');
+        if (progressText) progressText.innerText = "Membaca file .mp3...";
+        if (progressPct) progressPct.innerText = "5%";
+        if (progressBar) progressBar.style.width = "5%";
+
+        try {
+          const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => resolve(ev.target.result);
+            reader.onerror = (err) => reject(err);
+            reader.readAsDataURL(file);
+          });
+
+          const CHUNK_SIZE = 700000; // ~700 KB per Firestore doc (safe under 1MB limit)
+          const chunks = [];
+          for (let i = 0; i < dataUrl.length; i += CHUNK_SIZE) {
+            chunks.push(dataUrl.slice(i, i + CHUNK_SIZE));
+          }
+
+          const updatedAt = new Date().toISOString();
+
+          if (state.isFirebaseReady && state.db) {
+            for (let idx = 0; idx < chunks.length; idx++) {
+              const pct = Math.round(((idx + 1) / (chunks.length + 1)) * 100);
+              if (progressText) progressText.innerText = `Mengunggah ke server (${idx + 1}/${chunks.length} bagian)...`;
+              if (progressPct) progressPct.innerText = `${pct}%`;
+              if (progressBar) progressBar.style.width = `${pct}%`;
+
+              await setDoc(doc(state.db, 'profile', `audio_chunk_${idx}`), {
+                index: idx,
+                totalChunks: chunks.length,
+                data: chunks[idx],
+                updatedAt: updatedAt
+              });
+            }
+          }
+
+          if (progressText) progressText.innerText = "Menyimpan konfigurasi audio...";
+          if (progressPct) progressPct.innerText = "100%";
+          if (progressBar) progressBar.style.width = "100%";
+
+          const enabledEl = document.getElementById('settings-audio-enabled');
+          const volumeEl = document.getElementById('settings-audio-volume');
+          const loopEl = document.getElementById('settings-audio-loop');
+          const titleEl = document.getElementById('settings-audio-title');
+          const extUrlEl = document.getElementById('settings-audio-external-url');
+
+          const defaultTitle = file.name.replace(/\.[^/.]+$/, '');
+          const currentTitle = (titleEl?.value || '').trim();
+
+          const newAudioConfig = {
+            enabled: enabledEl ? enabledEl.checked : true,
+            title: currentTitle || defaultTitle || 'Murottal / Musik Latar Mushola',
+            fileName: file.name,
+            fileSize: file.size,
+            mimeType: file.type || 'audio/mpeg',
+            chunkCount: chunks.length,
+            externalUrl: (extUrlEl?.value || '').trim(),
+            volume: volumeEl ? Number(volumeEl.value) : 70,
+            loop: loopEl ? loopEl.checked : true,
+            updatedAt: updatedAt
+          };
+
+          state.profile.audioConfig = newAudioConfig;
+          state.loadedAudioDataUrl = dataUrl;
+          state.loadedAudioUpdatedAt = updatedAt;
+
+          await saveAudioToIDB(updatedAt, dataUrl);
+          syncLocal();
+
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), { audioConfig: newAudioConfig }, { merge: true });
+          }
+
+          renderAudioManager();
+          await loadAndSyncBgAudio();
+          showToast(`File "${file.name}" berhasil diupload & diaktifkan!`, "success");
+        } catch (err) {
+          console.error("Upload audio error:", err);
+          showToast("Gagal mengunggah file .mp3: " + (err.message || err), "error");
+        } finally {
+          setTimeout(() => {
+            if (progressBox) progressBox.classList.add('hidden');
+          }, 800);
+          input.value = '';
+        }
+      },
+
+      saveAudioSettings: async () => {
+        const currentCfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+        const enabledEl = document.getElementById('settings-audio-enabled');
+        const volumeEl = document.getElementById('settings-audio-volume');
+        const loopEl = document.getElementById('settings-audio-loop');
+        const titleEl = document.getElementById('settings-audio-title');
+        const extUrlEl = document.getElementById('settings-audio-external-url');
+
+        const updatedConfig = {
+          ...currentCfg,
+          enabled: enabledEl ? enabledEl.checked : true,
+          title: (titleEl?.value || '').trim() || 'Murottal / Musik Latar Mushola',
+          volume: volumeEl ? Number(volumeEl.value) : 70,
+          loop: loopEl ? loopEl.checked : true,
+          externalUrl: (extUrlEl?.value || '').trim()
+        };
+
+        state.profile.audioConfig = updatedConfig;
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), { audioConfig: updatedConfig }, { merge: true });
+          }
+          renderAudioManager();
+          await loadAndSyncBgAudio();
+          showToast("Pengaturan Audio Otomatis berhasil disimpan!", "success");
+        } catch (err) {
+          console.error("Save audio settings error:", err);
+          showToast("Gagal menyimpan ke server: " + err.message, "error");
+        }
+      },
+
+      deleteUploadedAudio: async () => {
+        const currentCfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
+        if (!currentCfg.fileName && !currentCfg.chunkCount) return;
+
+        if (!confirm(`Hapus file audio "${currentCfg.fileName || 'terupload'}" dari server?`)) {
+          return;
+        }
+
+        try {
+          const oldChunkCount = Number(currentCfg.chunkCount) || 0;
+          if (state.isFirebaseReady && state.db && oldChunkCount > 0) {
+            for (let idx = 0; idx < oldChunkCount; idx++) {
+              try {
+                await deleteDoc(doc(state.db, 'profile', `audio_chunk_${idx}`));
+              } catch (e) {}
+            }
+          }
+
+          await clearAudioFromIDB();
+          state.loadedAudioDataUrl = null;
+          state.loadedAudioUpdatedAt = null;
+
+          const updatedConfig = {
+            ...currentCfg,
+            fileName: '',
+            fileSize: 0,
+            chunkCount: 0,
+            updatedAt: null
+          };
+
+          state.profile.audioConfig = updatedConfig;
+          syncLocal();
+
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), { audioConfig: updatedConfig }, { merge: true });
+          }
+
+          const player = document.getElementById('bg-audio-player');
+          if (player) {
+            player.pause();
+            player.removeAttribute('src');
+            player.load();
+          }
+          const previewEl = document.getElementById('settings-audio-preview');
+          if (previewEl) {
+            previewEl.pause();
+            previewEl.removeAttribute('src');
+            previewEl.load();
+          }
+
+          renderAudioManager();
+          await loadAndSyncBgAudio();
+          showToast("File audio .mp3 berhasil dihapus!", "info");
+        } catch (err) {
+          console.error("Delete audio error:", err);
+          showToast("Gagal menghapus audio: " + err.message, "error");
+        }
       }
 
     };
@@ -6023,7 +6743,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             ...DEFAULT_PROFILE,
             ...parsed,
             categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) },
-            pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus]
+            pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus],
+            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) }
           };
         } catch(e) {}
       }
@@ -6043,11 +6764,13 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         window.app.applyAdminState();
       }
 
-      // Render profile, transactions, agenda, and quotes immediately!
+      // Render profile, transactions, agenda, quotes, and audio immediately!
       renderProfile();
       renderAll();
       renderAgendaSection();
       renderRandomQuote();
+      renderAudioManager();
+      loadAndSyncBgAudio();
 
       // Init Firebase or Local Demo
       initFirebase();
