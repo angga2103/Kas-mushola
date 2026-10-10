@@ -2663,6 +2663,12 @@
       } catch (e) {}
     };
 
+    const normalizeAudioVolume = (val) => {
+      const num = Number(val);
+      if (isNaN(num) || num <= 0) return 0.6;
+      return num > 1 ? Math.min(1, num / 100) : Math.min(1, num);
+    };
+
     const updateFloatingAudioUI = () => {
       const widget = document.getElementById('floating-audio-widget');
       const audioEl = document.getElementById('bg-audio-player');
@@ -2672,7 +2678,7 @@
       const titleEl = document.getElementById('floating-audio-title');
 
       const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
-      const hasSource = (cfg.mode === 'url' && cfg.externalUrl) || (cfg.mode === 'upload' && (cfg.chunkCount > 0 || state.loadedAudioDataUrl));
+      const hasSource = Boolean((Number(cfg.chunkCount) > 0) || state.loadedAudioDataUrl || (cfg.externalUrl && cfg.externalUrl.trim()));
 
       if (!widget || !audioEl) return;
 
@@ -2711,7 +2717,7 @@
       const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
       if (!audioEl || !cfg.enabled || !audioEl.src || state.userManuallyPausedAudio) return;
 
-      audioEl.volume = Number(cfg.volume) || 0.6;
+      audioEl.volume = normalizeAudioVolume(cfg.volume);
       audioEl.loop = cfg.loop !== false;
 
       try {
@@ -2727,7 +2733,7 @@
             const currentCfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
             if (!currentCfg.enabled || state.userManuallyPausedAudio || !audioEl.src) return;
             try {
-              audioEl.volume = Number(currentCfg.volume) || 0.6;
+              audioEl.volume = normalizeAudioVolume(currentCfg.volume);
               audioEl.loop = currentCfg.loop !== false;
               await audioEl.play();
               state.isAudioPlaying = true;
@@ -6470,16 +6476,16 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           player.pause();
           state.isAudioPlaying = false;
           state.userManuallyPausedAudio = true;
-          updateFloatingAudioUI(false);
+          updateFloatingAudioUI();
         } else {
           state.userManuallyPausedAudio = false;
           try {
             const cfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
-            player.volume = Math.max(0, Math.min(1, (Number(cfg.volume) || 70) / 100));
+            player.volume = normalizeAudioVolume(cfg.volume);
             player.loop = cfg.loop !== false;
             await player.play();
             state.isAudioPlaying = true;
-            updateFloatingAudioUI(true);
+            updateFloatingAudioUI();
           } catch (err) {
             console.warn("Play audio failed:", err);
             showToast("Gagal memutar audio: " + (err.message || "Format/URL tidak didukung"), "error");
@@ -6491,7 +6497,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         const file = input.files && input.files[0];
         if (!file) return;
 
-        const isAudio = file.type.startsWith('audio/') || /\.(mp3|m4a|ogg|wav|aac)$/i.test(file.name);
+        const isAudio = (file.type && file.type.startsWith('audio/')) || /\.(mp3|m4a|ogg|wav|aac)$/i.test(file.name);
         if (!isAudio) {
           showToast("Pilih file audio (.mp3, .m4a, .ogg, .wav)!", "error");
           input.value = '';
@@ -6539,10 +6545,10 @@ _Amanah jamaah, berkah bersama pasar kita._`;
               if (progressBar) progressBar.style.width = `${pct}%`;
 
               await setDoc(doc(state.db, 'profile', `audio_chunk_${idx}`), {
-                index: idx,
-                totalChunks: chunks.length,
-                data: chunks[idx],
-                updatedAt: updatedAt
+                index: Number(idx),
+                totalChunks: Number(chunks.length),
+                data: String(chunks[idx] || ''),
+                updatedAt: String(updatedAt)
               });
             }
           }
@@ -6557,20 +6563,25 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           const titleEl = document.getElementById('settings-audio-title');
           const extUrlEl = document.getElementById('settings-audio-external-url');
 
-          const defaultTitle = file.name.replace(/\.[^/.]+$/, '');
+          // Automatically activate audio when uploading a new .mp3
+          if (enabledEl) enabledEl.value = "true";
+
+          const defaultTitle = (file.name || 'Audio Mushola').replace(/\.[^/.]+$/, '');
           const currentTitle = (titleEl?.value || '').trim();
+          const fileSizeKb = Math.max(1, Math.round((Number(file.size) || 0) / 1024));
 
           const newAudioConfig = {
-            enabled: enabledEl ? enabledEl.checked : true,
-            title: currentTitle || defaultTitle || 'Murottal / Musik Latar Mushola',
-            fileName: file.name,
-            fileSize: file.size,
-            mimeType: file.type || 'audio/mpeg',
-            chunkCount: chunks.length,
-            externalUrl: (extUrlEl?.value || '').trim(),
-            volume: volumeEl ? Number(volumeEl.value) : 70,
-            loop: loopEl ? loopEl.checked : true,
-            updatedAt: updatedAt
+            enabled: true,
+            mode: "upload",
+            title: String(currentTitle || defaultTitle || "Sholawat & Murottal Mushola Al-Kautsar"),
+            fileName: String(file.name || "audio.mp3"),
+            fileSizeKb: Number(fileSizeKb),
+            mimeType: String(file.type || "audio/mpeg"),
+            chunkCount: Number(chunks.length),
+            externalUrl: String((extUrlEl?.value || '').trim()),
+            volume: normalizeAudioVolume(volumeEl ? volumeEl.value : 0.6),
+            loop: loopEl ? Boolean(loopEl.checked) : true,
+            updatedAt: String(updatedAt)
           };
 
           state.profile.audioConfig = newAudioConfig;
@@ -6586,7 +6597,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
           renderAudioManager();
           await loadAndSyncBgAudio();
-          showToast(`File "${file.name}" berhasil diupload & diaktifkan!`, "success");
+          showToast(`File "${file.name}" berhasil diupload & langsung aktif!`, "success");
         } catch (err) {
           console.error("Upload audio error:", err);
           showToast("Gagal mengunggah file .mp3: " + (err.message || err), "error");
@@ -6606,13 +6617,25 @@ _Amanah jamaah, berkah bersama pasar kita._`;
         const titleEl = document.getElementById('settings-audio-title');
         const extUrlEl = document.getElementById('settings-audio-external-url');
 
+        const isEnabled = enabledEl
+          ? (enabledEl.type === 'checkbox' ? Boolean(enabledEl.checked) : enabledEl.value === 'true')
+          : Boolean(currentCfg.enabled);
+
+        const extUrl = String((extUrlEl?.value || '').trim());
+        const chunkCount = Number(currentCfg.chunkCount) || 0;
+
         const updatedConfig = {
-          ...currentCfg,
-          enabled: enabledEl ? enabledEl.checked : true,
-          title: (titleEl?.value || '').trim() || 'Murottal / Musik Latar Mushola',
-          volume: volumeEl ? Number(volumeEl.value) : 70,
-          loop: loopEl ? loopEl.checked : true,
-          externalUrl: (extUrlEl?.value || '').trim()
+          enabled: Boolean(isEnabled),
+          mode: (chunkCount > 0) ? "upload" : (extUrl ? "url" : "upload"),
+          title: String((titleEl?.value || '').trim() || "Sholawat & Murottal Mushola Al-Kautsar"),
+          volume: normalizeAudioVolume(volumeEl ? volumeEl.value : currentCfg.volume),
+          loop: loopEl ? Boolean(loopEl.checked) : (currentCfg.loop !== false),
+          fileName: String(currentCfg.fileName || ""),
+          fileSizeKb: Number(currentCfg.fileSizeKb) || 0,
+          mimeType: String(currentCfg.mimeType || "audio/mpeg"),
+          chunkCount: chunkCount,
+          externalUrl: extUrl,
+          updatedAt: String(currentCfg.updatedAt || "")
         };
 
         state.profile.audioConfig = updatedConfig;
@@ -6633,7 +6656,7 @@ _Amanah jamaah, berkah bersama pasar kita._`;
 
       deleteUploadedAudio: async () => {
         const currentCfg = state.profile.audioConfig || DEFAULT_PROFILE.audioConfig;
-        if (!currentCfg.fileName && !currentCfg.chunkCount) return;
+        if (!currentCfg.fileName && !currentCfg.chunkCount && !currentCfg.externalUrl) return;
 
         if (!confirm(`Hapus file audio "${currentCfg.fileName || 'terupload'}" dari server?`)) {
           return;
@@ -6654,11 +6677,17 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           state.loadedAudioUpdatedAt = null;
 
           const updatedConfig = {
-            ...currentCfg,
-            fileName: '',
-            fileSize: 0,
+            enabled: false,
+            mode: "upload",
+            title: String(currentCfg.title || "Sholawat & Murottal Mushola Al-Kautsar"),
+            volume: normalizeAudioVolume(currentCfg.volume),
+            loop: currentCfg.loop !== false,
+            fileName: "",
+            fileSizeKb: 0,
+            mimeType: "audio/mpeg",
             chunkCount: 0,
-            updatedAt: null
+            externalUrl: "",
+            updatedAt: ""
           };
 
           state.profile.audioConfig = updatedConfig;
