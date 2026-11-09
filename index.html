@@ -180,7 +180,7 @@
         </div>
 
         <!-- Desktop & Tablet Top Navigation Tabs -->
-        <nav class="hidden md:flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 backdrop-blur-md">
+        <nav id="desktop-top-nav" class="hidden md:flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 backdrop-blur-md">
           <button id="top-nav-btn-beranda" onclick="window.app.switchTab('beranda')" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-white text-mosque-800 shadow-sm transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-house-chimney text-xs"></i>
             <span>Beranda</span>
@@ -235,6 +235,30 @@
         </div>
       </div>
     </header>
+
+    <!-- STICKY MAINTENANCE WARNING BANNER (KHUSUS ADMIN KETIKA MODE MAINTENANCE AKTIF) -->
+    <div id="admin-maintenance-warning-banner" class="hidden no-print bg-gradient-to-r from-rose-700 via-amber-600 to-rose-700 text-white px-4 py-2.5 text-xs font-bold flex flex-wrap items-center justify-between gap-2 shadow-md z-30">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+        </span>
+        <i class="fa-solid fa-triangle-exclamation text-amber-200 text-sm flex-shrink-0"></i>
+        <span class="truncate">
+          <strong>Perhatian:</strong> Mode Pemeliharaan (Maintenance) sedang <strong>AKTIF</strong>. Pengunjung umum diarahkan ke halaman pemeliharaan.
+        </span>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button type="button" onclick="window.app.quickDisableMaintenance()" class="bg-white hover:bg-rose-50 text-rose-700 px-3 py-1 rounded-xl text-xs font-extrabold shadow-sm active:scale-95 transition flex items-center gap-1">
+          <i class="fa-solid fa-power-off text-[10px]"></i>
+          <span>Matikan Mode Maintenance</span>
+        </button>
+        <button type="button" onclick="window.app.switchTab('pengaturan'); document.getElementById('settings-maintenance-card')?.scrollIntoView({behavior: 'smooth'})" class="bg-black/20 hover:bg-black/30 text-white px-3 py-1 rounded-xl text-xs font-semibold transition hidden sm:inline-flex items-center gap-1">
+          <i class="fa-solid fa-sliders text-[10px]"></i>
+          <span>Pengaturan</span>
+        </button>
+      </div>
+    </div>
 
     <!-- PRINT HEADER -->
     <div class="print-only p-6 border-b-2 border-slate-800 text-center">
@@ -892,6 +916,72 @@
               </button>
             </div>
 
+            <!-- PENGATURAN MODE PEMELIHARAAN WEBSITE (MAINTENANCE MODE) -->
+            <div id="settings-maintenance-card" class="bg-white rounded-3xl p-5 shadow-sm border border-amber-300/90 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-rose-600 text-white flex items-center justify-center text-sm shadow-sm">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-800">Mode Pemeliharaan Website (Maintenance)</h3>
+                    <p class="text-[11px] text-slate-400">Tutup akses publik sementara saat perbaikan atau audit kas berkala</p>
+                  </div>
+                </div>
+                <span id="settings-maintenance-status-badge" class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                  <span>Website Normal</span>
+                </span>
+              </div>
+
+              <div class="space-y-3 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200/80">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Status Akses Website untuk Pengunjung</label>
+                  <select id="settings-maintenance-enabled" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <option value="false">🟢 Nonaktif — Website Normal (Dapat Diakses Seluruh Jamaah &amp; Publik)</option>
+                    <option value="true">🔴 Aktif — Mode Pemeliharaan (Publik Melihat Halaman Perbaikan)</option>
+                  </select>
+                  <p class="text-[10.5px] text-slate-400 mt-1">
+                    Saat aktif, seluruh pengunjung biasa akan melihat halaman pemeliharaan. <strong>Admin yang telah login tetap dapat mengakses website secara penuh.</strong>
+                  </p>
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Judul Halaman Pemeliharaan</label>
+                  <input type="text" id="settings-maintenance-title" placeholder="Contoh: Website Sedang Dalam Pemeliharaan" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Pesan / Keterangan untuk Pengunjung</label>
+                  <textarea id="settings-maintenance-message" rows="3" placeholder="Tuliskan keterangan perbaikan sistem..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Estimasi Waktu Selesai</label>
+                    <input type="text" id="settings-maintenance-estimasi" placeholder="Contoh: Pukul 16:00 WIB / 1-2 Jam" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                  </div>
+
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">No. WhatsApp Bantuan / Pengurus</label>
+                    <input type="text" id="settings-maintenance-kontak" placeholder="Contoh: 081775700114" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tombol Simpan & Pratinjau -->
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" onclick="window.app.saveMaintenanceSettings()" class="flex-1 bg-amber-600 hover:bg-amber-700 active:scale-98 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Simpan Pengaturan Maintenance</span>
+                </button>
+                <button type="button" onclick="window.app.previewMaintenanceView()" class="bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5" title="Lihat pratinjau halaman pemeliharaan">
+                  <i class="fa-solid fa-eye"></i>
+                  <span>Pratinjau</span>
+                </button>
+              </div>
+            </div>
+
             <!-- 2. Akun Pengurus Aktif & Info Login -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-3">
               <div class="flex items-center justify-between border-b border-slate-100 pb-2">
@@ -1533,6 +1623,113 @@
 
       </section>
 
+      <!-- ============================================================ -->
+      <!-- TAB 5: MODE PEMELIHARAAN (MAINTENANCE VIEW UNTUK PUBLIK)     -->
+      <!-- ============================================================ -->
+      <section id="view-maintenance" class="hidden min-h-[75vh] flex items-center justify-center py-6 px-2">
+        <div class="w-full max-w-xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-300/80 text-center relative overflow-hidden">
+          
+          <!-- Subtle Islamic Geometric Background Accent -->
+          <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-100/50 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-emerald-100/50 rounded-full blur-2xl pointer-events-none"></div>
+
+          <!-- Mode Pratinjau Banner (Khusus Admin saat klik tombol Pratinjau) -->
+          <div id="maintenance-btn-exit-preview" class="hidden mb-4 p-3 bg-amber-500 text-white rounded-2xl flex items-center justify-between text-xs font-bold shadow-md">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-eye"></i> Mode Pratinjau Tampilan Jamaah</span>
+            <button type="button" onclick="window.app.exitMaintenancePreview()" class="bg-white text-slate-800 hover:bg-slate-100 px-3 py-1 rounded-xl text-xs font-bold active:scale-95 transition">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Pengaturan
+            </button>
+          </div>
+
+          <!-- Basmalah / Greeting Accent -->
+          <div class="mb-3">
+            <span class="font-arabic text-amber-800 text-sm opacity-80 block select-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mt-0.5">Assalamu'alaikum Warahmatullahi Wabarakatuh</span>
+          </div>
+
+          <!-- Animated Maintenance Icon Badge -->
+          <div class="relative mx-auto w-20 h-20 mb-4 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-3xl bg-amber-400/20 animate-ping"></div>
+            <div class="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-500 via-amber-600 to-emerald-700 text-white flex items-center justify-center shadow-xl border-2 border-amber-200">
+              <i class="fa-solid fa-screwdriver-wrench text-2xl text-amber-100 animate-pulse"></i>
+            </div>
+          </div>
+
+          <!-- Status Pill -->
+          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-900 border border-amber-300 mb-3 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            <span>PEMELIHARAAN SISTEM BERKALA</span>
+          </div>
+
+          <!-- Judul Dinamis -->
+          <h2 id="maintenance-display-title" class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight leading-snug mb-1.5">
+            Website Sedang Dalam Pemeliharaan
+          </h2>
+
+          <!-- Mushola Identity -->
+          <p class="text-xs font-bold text-mosque-700 uppercase tracking-wider mb-4 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-mosque text-gold-500"></i>
+            <span id="maintenance-display-mushola">Mushola Al-Kautsar • Pasar Induk Pare</span>
+          </p>
+
+          <!-- Pesan Pemeliharaan Dinamis -->
+          <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-4 sm:p-5 text-xs sm:text-sm text-slate-600 leading-relaxed text-justify sm:text-center mb-5 shadow-inner">
+            <p id="maintenance-display-message">
+              Mohon maaf atas ketidaknyamanannya. Website transparansi kas dan informasi kegiatan Mushola Al-Kautsar Pasar Induk Pare sedang dalam pemeliharaan dan pembaruan sistem rutin. Layanan akan segera kembali aktif.
+            </p>
+          </div>
+
+          <!-- Detail Info Grid: Estimasi & Kontak -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left">
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/90 rounded-2xl p-3.5 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 text-base shadow-sm">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-[10px] uppercase font-bold text-amber-800 block">Estimasi Selesai</span>
+                <span id="maintenance-display-estimasi" class="text-xs font-extrabold text-slate-800 truncate block">
+                  Segera kembali normal
+                </span>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/90 rounded-2xl p-3.5 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 text-base shadow-sm">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-[10px] uppercase font-bold text-emerald-800 block">Bantuan / Pengurus</span>
+                <span id="maintenance-display-kontak-label" class="text-xs font-extrabold text-slate-800 truncate block">
+                  081775700114
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="space-y-2.5">
+            <a id="maintenance-btn-wa" href="https://wa.me/6281775700114" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span>Hubungi Pengurus DKM via WhatsApp</span>
+            </a>
+
+            <button type="button" onclick="window.location.reload()" class="w-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-semibold py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Cek Status / Muat Ulang Halaman</span>
+            </button>
+          </div>
+
+          <!-- Discrete Admin Access Footer -->
+          <div class="pt-5 mt-5 border-t border-slate-100 flex items-center justify-center">
+            <button type="button" onclick="window.app.openLoginModal()" class="text-xs font-semibold text-slate-400 hover:text-slate-700 transition flex items-center gap-1.5 py-1 px-3 rounded-lg hover:bg-slate-50">
+              <i class="fa-solid fa-lock text-[10px]"></i>
+              <span>Akses Khusus Login Pengurus / Admin</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
     </main>
 
     <!-- ==================== GLOBAL BACKGROUND AUDIO PLAYER & FLOATING WIDGET ==================== -->
@@ -1560,7 +1757,7 @@
     </button>
 
     <!-- ==================== BOTTOM NAVIGATION BAR (MOBILE ONLY) ==================== -->
-    <nav class="md:hidden no-print bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-30 shadow-lg">
+    <nav id="mobile-bottom-nav" class="md:hidden no-print bg-white/95 backdrop-blur-md border-t border-slate-200/80 fixed bottom-0 left-0 right-0 z-30 shadow-lg">
       <div class="max-w-lg mx-auto flex items-center justify-around py-2 px-3">
         
         <button id="nav-btn-beranda" onclick="window.app.switchTab('beranda')" class="flex flex-col items-center justify-center text-mosque-700 py-1 px-3 rounded-2xl transition-all duration-200 active:scale-95">
@@ -2521,6 +2718,14 @@
         chunkCount: 0,
         externalUrl: "",
         updatedAt: ""
+      },
+      maintenanceConfig: {
+        enabled: false,
+        title: "Website Sedang Dalam Pemeliharaan",
+        message: "Mohon maaf atas ketidaknyamanannya. Website transparansi kas dan informasi kegiatan Mushola Al-Kautsar Pasar Induk Pare sedang dalam pemeliharaan dan pembaruan sistem rutin. Layanan akan segera kembali aktif.",
+        estimasi: "Segera kembali normal",
+        kontak: "081775700114",
+        updatedAt: ""
       }
     };
 
@@ -2910,6 +3115,129 @@
     };
 
     /* ==========================================================================
+       2.6. WEBSITE MAINTENANCE ENGINE & VIEWS
+       ========================================================================== */
+    const renderMaintenanceView = () => {
+      const cfg = state.profile.maintenanceConfig || DEFAULT_PROFILE.maintenanceConfig;
+      const namaMushola = state.profile.nama || DEFAULT_PROFILE.nama;
+      const alamatMushola = state.profile.alamat || DEFAULT_PROFILE.alamat;
+
+      const titleEl = document.getElementById('maintenance-display-title');
+      const musholaEl = document.getElementById('maintenance-display-mushola');
+      const messageEl = document.getElementById('maintenance-display-message');
+      const estimasiEl = document.getElementById('maintenance-display-estimasi');
+      const kontakLabelEl = document.getElementById('maintenance-display-kontak-label');
+      const btnWa = document.getElementById('maintenance-btn-wa');
+
+      if (titleEl) titleEl.innerText = cfg.title || "Website Sedang Dalam Pemeliharaan";
+      if (musholaEl) musholaEl.innerText = `${namaMushola} • ${alamatMushola}`;
+      if (messageEl) messageEl.innerText = cfg.message || "Mohon maaf atas ketidaknyamanannya. Website transparansi kas dan informasi kegiatan Mushola Al-Kautsar Pasar Induk Pare sedang dalam pemeliharaan dan pembaruan sistem rutin. Layanan akan segera kembali aktif.";
+      if (estimasiEl) estimasiEl.innerText = cfg.estimasi || "Segera kembali normal";
+      if (kontakLabelEl) kontakLabelEl.innerText = cfg.kontak || "081775700114";
+
+      if (btnWa) {
+        let cleanPhone = (cfg.kontak || "081775700114").replace(/[^0-9]/g, '');
+        if (cleanPhone.startsWith('0')) cleanPhone = '62' + cleanPhone.substring(1);
+        const waText = encodeURIComponent(`Assalamu'alaikum Pengurus DKM ${namaMushola}, saya ingin menanyakan informasi terkait website kas yang sedang dalam pemeliharaan.`);
+        btnWa.href = `https://wa.me/${cleanPhone}?text=${waText}`;
+      }
+    };
+
+    const renderMaintenanceManager = () => {
+      const cfg = state.profile.maintenanceConfig || DEFAULT_PROFILE.maintenanceConfig;
+      const isEnabled = Boolean(cfg.enabled);
+
+      const enabledSelect = document.getElementById('settings-maintenance-enabled');
+      const titleInput = document.getElementById('settings-maintenance-title');
+      const messageInput = document.getElementById('settings-maintenance-message');
+      const estimasiInput = document.getElementById('settings-maintenance-estimasi');
+      const kontakInput = document.getElementById('settings-maintenance-kontak');
+      const badgeEl = document.getElementById('settings-maintenance-status-badge');
+
+      if (enabledSelect) enabledSelect.value = isEnabled ? "true" : "false";
+      if (titleInput) titleInput.value = cfg.title || "Website Sedang Dalam Pemeliharaan";
+      if (messageInput) messageInput.value = cfg.message || "Mohon maaf atas ketidaknyamanannya. Website transparansi kas Mushola Al-Kautsar Pasar Induk Pare sedang dalam pemeliharaan dan pembaruan sistem rutin. Layanan akan segera kembali aktif.";
+      if (estimasiInput) estimasiInput.value = cfg.estimasi || "Segera kembali normal";
+      if (kontakInput) kontakInput.value = cfg.kontak || "081775700114";
+
+      if (badgeEl) {
+        if (isEnabled) {
+          badgeEl.className = "text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300 px-2.5 py-1 rounded-full flex items-center gap-1.5 animate-pulse";
+          badgeEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-600"></span> <span>Maintenance Aktif</span>`;
+        } else {
+          badgeEl.className = "text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full flex items-center gap-1.5";
+          badgeEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-600"></span> <span>Website Normal</span>`;
+        }
+      }
+    };
+
+    const checkAndApplyMaintenanceView = () => {
+      const cfg = state.profile.maintenanceConfig || DEFAULT_PROFILE.maintenanceConfig;
+      const isEnabled = Boolean(cfg && cfg.enabled);
+      const maintenanceView = document.getElementById('view-maintenance');
+      const warningBanner = document.getElementById('admin-maintenance-warning-banner');
+      const bottomNav = document.getElementById('mobile-bottom-nav') || document.querySelector('nav.md\\:hidden');
+      const topNav = document.getElementById('desktop-top-nav');
+      const fabBtn = document.getElementById('fab-add-btn');
+
+      if (isEnabled) {
+        if (state.isAdmin) {
+          // Admin can see the entire website normally with a clear top warning banner
+          if (warningBanner) warningBanner.classList.remove('hidden');
+          if (maintenanceView && maintenanceView.dataset.previewing !== 'true') {
+            maintenanceView.classList.add('hidden');
+          }
+          const currentTab = state.activeTab || 'beranda';
+          const currentView = document.getElementById(`view-${currentTab}`);
+          if (currentView && maintenanceView?.dataset.previewing !== 'true') {
+            currentView.classList.remove('hidden');
+          }
+          if (bottomNav) bottomNav.classList.remove('hidden');
+          if (topNav) topNav.classList.remove('hidden');
+        } else {
+          // Public visitor is presented with the maintenance screen
+          if (warningBanner) warningBanner.classList.add('hidden');
+          renderMaintenanceView();
+          if (maintenanceView) maintenanceView.classList.remove('hidden');
+
+          ['beranda', 'laporan', 'profil', 'pengaturan'].forEach(id => {
+            const el = document.getElementById(`view-${id}`);
+            if (el) el.classList.add('hidden');
+          });
+
+          if (bottomNav) bottomNav.classList.add('hidden');
+          if (topNav) topNav.classList.add('hidden');
+          if (fabBtn) fabBtn.classList.add('hidden');
+
+          // Pause background audio for maintenance visitors
+          const player = document.getElementById('bg-audio-player');
+          if (player && !player.paused) {
+            player.pause();
+            state.isAudioPlaying = false;
+            updateFloatingAudioUI();
+          }
+          const floatingAudio = document.getElementById('floating-audio-widget');
+          if (floatingAudio) floatingAudio.classList.add('hidden');
+        }
+      } else {
+        // Maintenance is disabled (normal public mode)
+        if (warningBanner) warningBanner.classList.add('hidden');
+        if (maintenanceView && maintenanceView.dataset.previewing !== 'true') {
+          maintenanceView.classList.add('hidden');
+        }
+        if (!state.isAdmin) {
+          if (bottomNav) bottomNav.classList.remove('hidden');
+          if (topNav) topNav.classList.remove('hidden');
+          const activeEl = document.getElementById(`view-${state.activeTab || 'beranda'}`);
+          if (activeEl && maintenanceView?.dataset.previewing !== 'true') {
+            activeEl.classList.remove('hidden');
+          }
+          updateFloatingAudioUI();
+        }
+      }
+    };
+
+    /* ==========================================================================
        3. CLIENT-SIDE CANVAS IMAGE COMPRESSION (~25 KB)
        ========================================================================== */
     const compressImage = (file, maxDim = 320, quality = 0.78) => {
@@ -3112,7 +3440,8 @@
               agendas: data.agendas || [],
               quotesIntervalHours: data.quotesIntervalHours !== undefined ? Number(data.quotesIntervalHours) : 0,
               quotes: (data.quotes && data.quotes.length > 0) ? data.quotes : (state.profile.quotes && state.profile.quotes.length > 0 ? state.profile.quotes : [...DEFAULT_QUOTES]),
-              audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(data.audioConfig || {}) }
+              audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(data.audioConfig || {}) },
+              maintenanceConfig: { ...DEFAULT_PROFILE.maintenanceConfig, ...(data.maintenanceConfig || {}) }
             };
             syncLocal();
           } else {
@@ -3131,6 +3460,8 @@
           renderQuotesManager();
           renderAudioManager();
           loadAndSyncBgAudio();
+          renderMaintenanceManager();
+          checkAndApplyMaintenanceView();
         }, (error) => {
           console.warn("Profile snapshot error:", error);
           const localProf = localStorage.getItem('kas_masjid_local_profile');
@@ -3215,7 +3546,8 @@
             agendas: parsed.agendas || [],
             quotesIntervalHours: parsed.quotesIntervalHours !== undefined ? Number(parsed.quotesIntervalHours) : 0,
             quotes: (parsed.quotes && parsed.quotes.length > 0) ? parsed.quotes : [...DEFAULT_QUOTES],
-            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) }
+            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) },
+            maintenanceConfig: { ...DEFAULT_PROFILE.maintenanceConfig, ...(parsed.maintenanceConfig || {}) }
           };
         } catch (e) {
           state.profile = { ...DEFAULT_PROFILE };
@@ -3242,6 +3574,8 @@
       renderQuotesManager();
       renderAudioManager();
       loadAndSyncBgAudio();
+      renderMaintenanceManager();
+      checkAndApplyMaintenanceView();
     };
 
     const syncLocal = () => {
@@ -4682,6 +5016,11 @@
           return;
         }
 
+        if (state.profile.maintenanceConfig?.enabled && !state.isAdmin) {
+          checkAndApplyMaintenanceView();
+          return;
+        }
+
         state.activeTab = tabId;
 
         ['beranda', 'laporan', 'profil', 'pengaturan'].forEach(id => {
@@ -4721,6 +5060,7 @@
           renderCategoryManager();
           renderAdminManager();
           renderAudioManager();
+          renderMaintenanceManager();
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4942,6 +5282,8 @@
         renderAgendaSection();
         renderQuotesManager();
         renderAudioManager();
+        renderMaintenanceManager();
+        checkAndApplyMaintenanceView();
       },
 
       // PENGURUS ADMIN ACCESS MANAGEMENT
@@ -6717,6 +7059,107 @@ _Amanah jamaah, berkah bersama pasar kita._`;
           console.error("Delete audio error:", err);
           showToast("Gagal menghapus audio: " + err.message, "error");
         }
+      },
+
+      // WEBSITE MAINTENANCE CONTROLLER
+      saveMaintenanceSettings: async () => {
+        const enabledEl = document.getElementById('settings-maintenance-enabled');
+        const titleEl = document.getElementById('settings-maintenance-title');
+        const messageEl = document.getElementById('settings-maintenance-message');
+        const estimasiEl = document.getElementById('settings-maintenance-estimasi');
+        const kontakEl = document.getElementById('settings-maintenance-kontak');
+
+        const isEnabled = enabledEl ? enabledEl.value === 'true' : false;
+        const title = (titleEl?.value || '').trim() || "Website Sedang Dalam Pemeliharaan";
+        const message = (messageEl?.value || '').trim() || "Mohon maaf atas ketidaknyamanannya. Website transparansi kas dan informasi kegiatan Mushola Al-Kautsar Pasar Induk Pare sedang dalam pemeliharaan dan pembaruan sistem rutin. Layanan akan segera kembali aktif.";
+        const estimasi = (estimasiEl?.value || '').trim() || "Segera kembali normal";
+        const kontak = (kontakEl?.value || '').trim() || "081775700114";
+        const updatedAt = new Date().toISOString();
+
+        const newMaintenanceConfig = {
+          enabled: Boolean(isEnabled),
+          title: String(title),
+          message: String(message),
+          estimasi: String(estimasi),
+          kontak: String(kontak),
+          updatedAt: String(updatedAt)
+        };
+
+        state.profile.maintenanceConfig = newMaintenanceConfig;
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), { maintenanceConfig: newMaintenanceConfig }, { merge: true });
+          }
+          renderMaintenanceManager();
+          checkAndApplyMaintenanceView();
+          if (isEnabled) {
+            showToast("Mode Pemeliharaan DIAKTIFKAN. Website kini ditutup sementara untuk publik.", "info");
+          } else {
+            showToast("Mode Pemeliharaan DINONAKTIFKAN. Website normal kembali untuk publik!", "success");
+          }
+        } catch (err) {
+          console.error("Save maintenance error:", err);
+          showToast("Gagal menyimpan ke server: " + err.message, "error");
+        }
+      },
+
+      quickDisableMaintenance: async () => {
+        const currentCfg = state.profile.maintenanceConfig || DEFAULT_PROFILE.maintenanceConfig;
+        const updatedConfig = {
+          ...currentCfg,
+          enabled: false,
+          updatedAt: new Date().toISOString()
+        };
+
+        state.profile.maintenanceConfig = updatedConfig;
+        syncLocal();
+
+        try {
+          if (state.isFirebaseReady && state.db) {
+            await setDoc(doc(state.db, 'profile', 'info'), { maintenanceConfig: updatedConfig }, { merge: true });
+          }
+          renderMaintenanceManager();
+          checkAndApplyMaintenanceView();
+          showToast("Mode Pemeliharaan berhasil dimatikan. Website kembali normal!", "success");
+        } catch (err) {
+          console.error("Quick disable maintenance error:", err);
+          showToast("Gagal mematikan mode maintenance: " + err.message, "error");
+        }
+      },
+
+      previewMaintenanceView: () => {
+        const maintenanceView = document.getElementById('view-maintenance');
+        const exitBtn = document.getElementById('maintenance-btn-exit-preview');
+        if (!maintenanceView) return;
+
+        renderMaintenanceView();
+        maintenanceView.dataset.previewing = 'true';
+        maintenanceView.classList.remove('hidden');
+
+        ['beranda', 'laporan', 'profil', 'pengaturan'].forEach(id => {
+          const el = document.getElementById(`view-${id}`);
+          if (el) el.classList.add('hidden');
+        });
+
+        if (exitBtn) exitBtn.classList.remove('hidden');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast("Menampilkan pratinjau halaman maintenance. Klik 'Kembali ke Pengaturan' untuk keluar.", "info");
+      },
+
+      exitMaintenancePreview: () => {
+        const maintenanceView = document.getElementById('view-maintenance');
+        const exitBtn = document.getElementById('maintenance-btn-exit-preview');
+        if (maintenanceView) {
+          maintenanceView.dataset.previewing = 'false';
+          maintenanceView.classList.add('hidden');
+        }
+        if (exitBtn) exitBtn.classList.add('hidden');
+
+        window.app.switchTab('pengaturan');
+        document.getElementById('settings-maintenance-card')?.scrollIntoView({ behavior: 'smooth' });
       }
 
     };
@@ -6773,7 +7216,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
             ...parsed,
             categories: { ...DEFAULT_CATEGORIES, ...(parsed.categories || {}) },
             pengurus: (parsed.pengurus && parsed.pengurus.length > 0) ? parsed.pengurus : [...DEFAULT_PROFILE.pengurus],
-            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) }
+            audioConfig: { ...DEFAULT_PROFILE.audioConfig, ...(parsed.audioConfig || {}) },
+            maintenanceConfig: { ...DEFAULT_PROFILE.maintenanceConfig, ...(parsed.maintenanceConfig || {}) }
           };
         } catch(e) {}
       }
@@ -6800,6 +7244,8 @@ _Amanah jamaah, berkah bersama pasar kita._`;
       renderRandomQuote();
       renderAudioManager();
       loadAndSyncBgAudio();
+      renderMaintenanceManager();
+      checkAndApplyMaintenanceView();
 
       // Init Firebase or Local Demo
       initFirebase();
